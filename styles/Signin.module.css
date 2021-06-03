@@ -1,0 +1,235 @@
+.roundedButtonFilled {
+  cursor: pointer;
+  display: inline-block;
+  outline: none;
+  background-color: #067bc2;
+  border: 2px solid #067bc2;
+  font-size: 1.28rem;
+  font-weight: 500;
+  color: #ffffff;
+  padding: 1.3em 4em;
+  border-radius: calc(1.5em + 1.6rem);
+  white-space: nowrap;
+}
+
+@media (min-width: 40em) {
+  .roundedButtonFilled {
+    font-size: 1.6rem;
+  }
+}
+
+.roundedButtonBorder {
+  cursor: pointer;
+  -webkit-backdrop-filter: blur(5px);
+          backdrop-filter: blur(5px);
+  font-weight: 500;
+  display: inline-block;
+  outline: none;
+  background-color: transparent;
+  border: 2px solid #067bc2;
+  font-size: 1.28rem;
+  font-weight: 500;
+  color: #067bc2;
+  padding: 1.3em 4em;
+  border-radius: calc(1.5em + 1.6rem);
+  white-space: nowrap;
+}
+
+@media (min-width: 40em) {
+  .roundedButtonBorder {
+    font-size: 1.6rem;
+  }
+}
+
+.inputRounded {
+  -webkit-backdrop-filter: blur(5px);
+          backdrop-filter: blur(5px);
+  font-weight: 500;
+  outline: none;
+  background-color: transparent;
+  border: 2px solid #c5c9cf;
+  font-size: 1.28rem;
+  font-weight: 500;
+  color: #000000;
+  padding: 1.3em 1em;
+  border-radius: calc(1.5em + 1.6rem);
+}
+
+@media (min-width: 40em) {
+  .inputRounded {
+    font-size: 1.6rem;
+  }
+}
+
+.container {
+  width: 100vw;
+  padding: 0px 20px;
+}
+
+@media (min-width: 40em) {
+  .container {
+    width: 95%;
+    margin: auto;
+  }
+}
+
+@media (min-width: 64em) {
+  .container {
+    padding: 0;
+    max-width: 1440px;
+  }
+}
+
+.title {
+  font-size: 2.5rem;
+  font-weight: 900;
+  color: #067bc2;
+}
+
+@media (min-width: 40em) {
+  .title {
+    font-size: 3.125rem;
+  }
+}
+
+@media (min-width: 64em) {
+  .title {
+    font-size: 4.9035rem;
+  }
+}
+
+.subtitle {
+  font-size: 1.6rem;
+  font-weight: 500;
+  color: #001827;
+}
+
+@media (min-width: 40em) {
+  .subtitle {
+    font-size: 2rem;
+  }
+}
+
+.signin {
+  background-color: #f2f7ff;
+  min-height: 100vh;
+  overflow-x: hidden;
+  background-image: url("../public/images/login-background.svg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.signin .container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: flex-end;
+  text-align: left;
+  white-space: normal;
+  margin-top: 60px;
+}
+
+@media (min-width: 64em) {
+  .signin .container {
+    text-align: left;
+    margin-top: 120px;
+  }
+}
+
+.signin .subtitle {
+  margin-top: 10px;
+}
+
+@media (min-width: 40em) {
+  .signin .subtitle {
+    font-size: 2rem;
+    max-width: 870px;
+  }
+}
+
+.signin .buttons {
+  margin-top: 50px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: flex-end;
+  gap: 10px;
+}
+
+@media (min-width: 64em) {
+  .signin .buttons {
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: end;
+        -ms-flex-pack: end;
+            justify-content: flex-end;
+  }
+}
+
+.signin .form {
+  margin-top: 20px;
+  min-width: 280px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  gap: 20px;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+@media (min-width: 40em) {
+  .signin .form {
+    min-width: 480px;
+  }
+}
+
+.signin .form .roundedButtonFilled {
+  margin-top: 40px;
+  -ms-flex-item-align: end;
+      align-self: flex-end;
+}
+
+.signin .form .buttonsBox {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -ms-flex-item-align: end;
+      align-self: flex-end;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.signin .form .buttonsBox a {
+  margin-top: 10px;
+  font-size: 1.28rem;
+  color: #000000;
+}
+/*# sourceMappingURL=Signin.module.css.map */

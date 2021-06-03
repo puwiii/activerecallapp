@@ -1,0 +1,83 @@
+@import "mixins";
+@import "variables";
+@import "globals";
+
+.signin {
+  background-color: $bg-color;
+  min-height: 100vh;
+  overflow-x: hidden;
+
+  //bg properties
+  background-image: url("../public/images/login-background.svg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    text-align: left;
+    white-space: normal;
+    margin-top: 60px;
+
+    @include breakpoint-up(large) {
+      text-align: left;
+      margin-top: 120px;
+    }
+  }
+
+  .subtitle {
+    margin-top: 10px;
+
+    @include breakpoint-up(medium) {
+      font-size: $font-size-medium;
+      max-width: 870px;
+    }
+  }
+
+  .buttons {
+    margin-top: 50px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+
+    @include breakpoint-up(large) {
+      flex-direction: row;
+      align-items: center;
+      justify-content: flex-end;
+    }
+  }
+
+  .form {
+    margin-top: 20px;
+    min-width: 280px;
+    display: flex;
+    gap: 20px;
+    flex-direction: column;
+
+    @include breakpoint-up(medium) {
+      min-width: 480px;
+    }
+
+    .roundedButtonFilled {
+      margin-top: 40px;
+      align-self: flex-end;
+    }
+
+    .buttonsBox {
+      display: flex;
+      flex-direction: column;
+      align-self: flex-end;
+      align-items: center;
+
+      a {
+        margin-top: 10px;
+        font-size: $font-size-xSmall;
+        color: $text-black;
+      }
+    }
+  }
+}
