@@ -1,64 +1,100 @@
-.roundedButtonFilled {
+.disabledButton {
+  cursor: not-allowed !important;
+  -webkit-filter: grayscale(100);
+          filter: grayscale(100);
+}
+
+.roundedButtonFilled,
+.roundedButtonSecondary,
+.roundedButtonTerciary {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  max-width: -webkit-max-content;
+  max-width: -moz-max-content;
+  max-width: max-content;
   cursor: pointer;
-  display: inline-block;
   outline: none;
-  background-color: #067bc2;
-  border: 2px solid #067bc2;
+  border: none;
   font-size: 1.28rem;
   font-weight: 500;
-  color: #ffffff;
-  padding: 1.3em 4em;
-  border-radius: calc(1.5em + 1.6rem);
+  padding: 0.9em 1.5em;
   white-space: nowrap;
+  border-radius: calc(1.5em + 1.6rem);
+  -webkit-transition: all 0.26s ease-in-out;
+  transition: all 0.26s ease-in-out;
 }
 
 @media (min-width: 40em) {
-  .roundedButtonFilled {
+  .roundedButtonFilled,
+  .roundedButtonSecondary,
+  .roundedButtonTerciary {
     font-size: 1.6rem;
   }
 }
 
-.roundedButtonBorder {
-  cursor: pointer;
+.roundedButtonFilled {
+  background-color: #0a6fad;
+  color: #ffffff;
+  background: -webkit-gradient(linear, right top, left top, color-stop(50%, #0a6fad), color-stop(50%, #127cbe));
+  background: linear-gradient(to left, #0a6fad 50%, #127cbe 50%);
+  background-size: 200% 100%;
+  background-position: right bottom;
+}
+
+.roundedButtonFilled:hover {
+  background-position: left bottom;
+}
+
+.roundedButtonSecondary {
   -webkit-backdrop-filter: blur(5px);
           backdrop-filter: blur(5px);
-  font-weight: 500;
-  display: inline-block;
-  outline: none;
-  background-color: transparent;
-  border: 2px solid #067bc2;
-  font-size: 1.28rem;
-  font-weight: 500;
-  color: #067bc2;
-  padding: 1.3em 4em;
-  border-radius: calc(1.5em + 1.6rem);
-  white-space: nowrap;
+  background-color: #bbddf7;
+  color: #0a6fad;
+  background: -webkit-gradient(linear, right top, left top, color-stop(50%, #cde6f7), color-stop(50%, #bbddf7));
+  background: linear-gradient(to left, #cde6f7 50%, #bbddf7 50%);
+  background-size: 200% 100%;
+  background-position: right bottom;
 }
 
-@media (min-width: 40em) {
-  .roundedButtonBorder {
-    font-size: 1.6rem;
-  }
+.roundedButtonSecondary:hover {
+  background-position: left bottom;
+}
+
+.roundedButtonTerciary {
+  background-color: transparent;
+  border-color: transparent;
+  color: #0a6fad;
 }
 
 .inputRounded {
+  display: block;
+  width: 100%;
   -webkit-backdrop-filter: blur(5px);
           backdrop-filter: blur(5px);
-  font-weight: 500;
   outline: none;
   background-color: transparent;
   border: 2px solid #c5c9cf;
   font-size: 1.28rem;
-  font-weight: 500;
+  font-weight: 400;
   color: #000000;
   padding: 1.3em 1em;
   border-radius: calc(1.5em + 1.6rem);
+  -webkit-transition: border-color 0.21s ease-in-out;
+  transition: border-color 0.21s ease-in-out;
 }
 
 @media (min-width: 40em) {
   .inputRounded {
     font-size: 1.6rem;
   }
+}
+
+.inputRounded:focus {
+  border-color: #0a6fad;
 }
 
 .container {
@@ -68,7 +104,6 @@
 
 @media (min-width: 40em) {
   .container {
-    width: 95%;
     margin: auto;
   }
 }
@@ -76,14 +111,13 @@
 @media (min-width: 64em) {
   .container {
     padding: 0;
-    max-width: 1440px;
   }
 }
 
 .title {
   font-size: 2.5rem;
   font-weight: 900;
-  color: #067bc2;
+  color: #0a6fad;
 }
 
 @media (min-width: 40em) {
@@ -115,9 +149,16 @@
   min-height: 100vh;
   overflow-x: hidden;
   background-image: url("../public/images/login-background.svg");
-  background-position: center;
+  background-position: right;
   background-repeat: no-repeat;
   background-size: cover;
+}
+
+@media (min-width: 40em) {
+  .signin {
+    background-size: 130%;
+    background-position: right;
+  }
 }
 
 .signin .container {
@@ -128,12 +169,10 @@
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  -webkit-box-align: end;
-      -ms-flex-align: end;
-          align-items: flex-end;
-  text-align: left;
-  white-space: normal;
-  margin-top: 60px;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin-top: 20px;
 }
 
 @media (min-width: 64em) {
@@ -143,76 +182,26 @@
   }
 }
 
-.signin .subtitle {
-  margin-top: 10px;
-}
-
-@media (min-width: 40em) {
-  .signin .subtitle {
-    font-size: 2rem;
-    max-width: 870px;
-  }
-}
-
-.signin .buttons {
-  margin-top: 50px;
+.signin .form {
+  width: 100%;
+  border-radius: 40px;
+  text-align: center;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  -webkit-box-align: end;
-      -ms-flex-align: end;
-          align-items: flex-end;
   gap: 10px;
 }
 
-@media (min-width: 64em) {
-  .signin .buttons {
-    -webkit-box-orient: horizontal;
-    -webkit-box-direction: normal;
-        -ms-flex-direction: row;
-            flex-direction: row;
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
-    -webkit-box-pack: end;
-        -ms-flex-pack: end;
-            justify-content: flex-end;
-  }
-}
-
-.signin .form {
-  margin-top: 20px;
-  min-width: 280px;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  gap: 20px;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-}
-
-@media (min-width: 40em) {
-  .signin .form {
-    min-width: 480px;
-  }
-}
-
-.signin .form .roundedButtonFilled {
-  margin-top: 40px;
-  -ms-flex-item-align: end;
-      align-self: flex-end;
+.signin .form h1 {
+  margin-bottom: 20px;
 }
 
 .signin .form .buttonsBox {
+  margin-top: 20px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -220,16 +209,30 @@
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  -ms-flex-item-align: end;
-      align-self: flex-end;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  gap: 10px;
 }
 
-.signin .form .buttonsBox a {
-  margin-top: 10px;
+.signin .form .buttonsBox svg {
+  margin-left: 10px;
+}
+
+@media (min-width: 64em) {
+  .signin .form {
+    width: -webkit-max-content;
+    width: -moz-max-content;
+    width: max-content;
+  }
+}
+
+.signin .ErrorMsg {
   font-size: 1.28rem;
-  color: #000000;
+  font-weight: 500;
+  margin-left: 1em;
+  color: #c43d3d;
+  -ms-flex-item-align: start;
+      align-self: flex-start;
 }
 /*# sourceMappingURL=Signin.module.css.map */

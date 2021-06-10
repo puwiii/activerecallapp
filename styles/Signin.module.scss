@@ -9,75 +9,138 @@
 
   //bg properties
   background-image: url("../public/images/login-background.svg");
-  background-position: center;
+  background-position: right;
   background-repeat: no-repeat;
   background-size: cover;
+
+  @include breakpoint-up(medium) {
+    background-size: 130%;
+    background-position: right;
+  }
 
   .container {
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
-    text-align: left;
-    white-space: normal;
-    margin-top: 60px;
+    align-items: center;
+    margin-top: 20px;
 
     @include breakpoint-up(large) {
       text-align: left;
       margin-top: 120px;
-    }
-  }
-
-  .subtitle {
-    margin-top: 10px;
-
-    @include breakpoint-up(medium) {
-      font-size: $font-size-medium;
-      max-width: 870px;
-    }
-  }
-
-  .buttons {
-    margin-top: 50px;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 10px;
-
-    @include breakpoint-up(large) {
-      flex-direction: row;
-      align-items: center;
-      justify-content: flex-end;
+      //align-items: flex-end;
     }
   }
 
   .form {
-    margin-top: 20px;
-    min-width: 280px;
+    width: 100%;
+    border-radius: 40px;
+    text-align: center;
     display: flex;
-    gap: 20px;
     flex-direction: column;
+    gap: 10px;
 
-    @include breakpoint-up(medium) {
-      min-width: 480px;
-    }
-
-    .roundedButtonFilled {
-      margin-top: 40px;
-      align-self: flex-end;
+    h1 {
+      margin-bottom: 20px;
     }
 
     .buttonsBox {
+      margin-top: 20px;
       display: flex;
       flex-direction: column;
-      align-self: flex-end;
       align-items: center;
+      gap: 10px;
 
-      a {
-        margin-top: 10px;
-        font-size: $font-size-xSmall;
-        color: $text-black;
+      svg {
+        margin-left: 10px;
       }
     }
+
+    @include breakpoint-up(large) {
+      width: max-content;
+    }
+  }
+  //   .container {
+  //     display: flex;
+  //     flex-direction: column;
+  //     align-items: center;
+  //     text-align: left;
+  //     white-space: normal;
+  //     margin-top: 60px;
+
+  //     @include breakpoint-up(large) {
+  //       text-align: left;
+  //       margin-top: 120px;
+  //     }
+  //   }
+
+  //   .subtitle {
+  //     margin-top: 10px;
+  //     text-align: justify;
+  //     @include breakpoint-up(medium) {
+  //       font-size: $font-size-medium;
+  //       max-width: 1090px;
+  //     }
+  //   }
+
+  //   .buttons {
+  //     margin-top: 50px;
+  //     display: flex;
+  //     justify-content: center;
+  //     flex-direction: column;
+  //     align-items: flex-end;
+  //     gap: 20px;
+
+  //     @include breakpoint-up(large) {
+  //       flex-direction: row;
+  //       align-items: center;
+  //       justify-content: flex-end;
+  //     }
+  //   }
+
+  //   .form {
+  //     padding: 40px 20px;
+  //     background-color: #fff;
+  //     position: relative;
+  //     min-width: 280px;
+  //     display: flex;
+  //     align-items: center;
+  //     gap: 20px;
+  //     flex-direction: column;
+
+  //     @include breakpoint-up(medium) {
+  //       min-width: 480px;
+  //     }
+
+  //     .roundedButtonFilled {
+  //       margin-top: 40px;
+  //     }
+
+  //     .buttonsBox {
+  //       display: flex;
+  //       flex-direction: column;
+  //       align-items: center;
+
+  //       a:nth-child(1) {
+  //         margin-top: 10px;
+  //         font-size: $font-size-xSmall;
+  //         font-weight: $font-weight-medium;
+  //         color: $text-black;
+  //       }
+  //     }
+  //   }
+  // }
+
+  .ErrorMsg {
+    font-size: $font-size-xSmall;
+    font-weight: $font-weight-medium;
+    margin-left: 1em;
+    color: $error;
+    align-self: flex-start;
+    // position: absolute;
+    // bottom: 70px;
+
+    // @include breakpoint-up(medium) {
+    //   bottom: 90px;
+    // }
   }
 }

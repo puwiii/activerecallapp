@@ -1,0 +1,26 @@
+@import "mixins";
+@import "variables";
+@import "globals";
+
+.header {
+  border-bottom: 1px solid $primary-light-color;
+  box-shadow: 0px 0px 10px rgba(#000, 0.15);
+  @include breakpoint-up(large) {
+    border-bottom: none;
+  }
+
+  .container {
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    svg {
+      margin-left: 10px;
+    }
+
+    a {
+      font-size: $font-size-xSmall;
+    }
+  }
+}

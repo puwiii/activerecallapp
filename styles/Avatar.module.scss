@@ -1,0 +1,58 @@
+@import "variables";
+@import "mixins";
+@import "globals";
+
+.avatar {
+  position: relative;
+  margin-right: 10px;
+  //   &::before {
+  //     content: "";
+  //     position: absolute;
+  //     top: -50%;
+  //     left: 50%;
+  //     width: 400px;
+  //     height: 400px;
+  //     background-color: $primary-light-color;
+  //   }
+
+  div {
+    cursor: pointer;
+    > span {
+      font-size: $font-size-small;
+      font-weight: $font-weight-medium;
+      margin-right: 5px;
+      pointer-events: none;
+    }
+
+    img {
+      pointer-events: none;
+    }
+  }
+
+  ul {
+    display: none;
+    position: absolute;
+    top: 100%;
+    width: 100%;
+    gap: 10px;
+    align-items: flex-end;
+    flex-direction: column;
+    padding: 10px 0;
+
+    li {
+      cursor: pointer;
+      border-radius: 2em;
+      padding: 1em;
+      text-align: center;
+      width: 125px;
+      color: $primary-color;
+      background-color: $primary-light-color;
+      font-size: $font-size-xSmall;
+      font-weight: $font-weight-bold;
+
+      &:hover {
+        filter: brightness(102%);
+      }
+    }
+  }
+}

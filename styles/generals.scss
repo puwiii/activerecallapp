@@ -1,10 +1,12 @@
 @import "variables";
 @import "mixins";
+@import "globals";
 
 html {
   font-size: 62.5%;
   box-sizing: border-box;
   scroll-behavior: smooth;
+  min-height: 100%;
 }
 
 *,
@@ -18,23 +20,29 @@ html {
 body {
   @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap");
   font-family: "Roboto", sans-serif;
+  color: $text-primary;
+  min-height: 100% !important;
+  height: 100%;
 }
 
 //general
 button {
   font-family: "Roboto", sans-serif;
+  justify-content: center;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  user-select: none;
 }
 
-input {
-  font-family: "Roboto", sans-serif;
-}
-
-label {
-  font-family: "Roboto", sans-serif;
-}
-
+input,
+label,
 select {
   font-family: "Roboto", sans-serif;
+  &::placeholder {
+    color: $light-gray;
+  }
 }
 
 ul {
@@ -43,4 +51,5 @@ ul {
 
 a {
   text-decoration: none;
+  user-select: none;
 }
