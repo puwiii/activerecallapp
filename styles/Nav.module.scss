@@ -1,0 +1,98 @@
+@import "mixins";
+@import "variables";
+@import "globals";
+
+.nav {
+  background-color: $bg-color;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  border-right: 1px solid rgba($primary-color, 0.1);
+
+  button {
+    justify-self: flex-end;
+    align-self: center;
+    display: none;
+    place-items: center;
+    color: $primary-color;
+    border-radius: 15px;
+    padding: 7px;
+    margin: 10px;
+
+    @include breakpoint-up(medium) {
+      display: grid;
+    }
+
+    &:hover {
+      background-color: rgba($primary-color, 0.2);
+    }
+  }
+
+  ul {
+    color: $primary-color;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    padding: 5px 0;
+    gap: 10px;
+    transition: padding 0.4s cubic-bezier(0.215, 0.61, 0.355, 1);
+
+    @include breakpoint-up(medium) {
+      flex-direction: column;
+      padding: 20px 10px;
+    }
+
+    li {
+      border-radius: 40px;
+      cursor: pointer;
+      font-size: $font-size-xSmall;
+      font-weight: $font-weight-medium;
+      transition: background-color 0.1s ease-in-out,
+        padding 0.4s cubic-bezier(0.215, 0.61, 0.355, 1);
+
+      &.selected {
+        background-color: rgba($primary-color, 0.1);
+      }
+
+      & > div {
+        padding: 7px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        transition: padding 0.4s cubic-bezier(0.215, 0.61, 0.355, 1);
+
+        @include breakpoint-up(medium) {
+          padding: 15px;
+        }
+      }
+
+      span {
+        display: none;
+      }
+
+      &:hover {
+        background-color: rgba($primary-color, 0.1);
+      }
+    }
+  }
+
+  &.expanded {
+    @include breakpoint-up(medium) {
+      > ul {
+        padding: 20px 10px;
+      }
+      > ul li div {
+        padding: 15px 25px;
+      }
+      > ul li span {
+        display: block;
+      }
+
+      button {
+        align-self: flex-end;
+      }
+    }
+  }
+}

@@ -12,6 +12,8 @@
 /.next/
 /out/
 
+firebase/firebase-keys.js
+
 # production
 /build
 
@@ -32,3 +34,4 @@ yarn-error.log*
 
 # vercel
 .vercel
+firebase/firebase-keys.json

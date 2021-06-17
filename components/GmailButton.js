@@ -9,7 +9,7 @@ function GmailButton(){
 
     const login = e => {
         e.preventDefault()
-        loginWithGmail().then(res=>{
+        loginWithGmail().then(credentials=>{
             router.push('/')
         })
     }

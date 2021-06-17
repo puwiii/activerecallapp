@@ -5,6 +5,7 @@ import { auth } from 'firebase/client'
 import {useRouter} from 'next/router'
 import GmailButton from 'components/GmailButton'
 import RightArrowIcon from './icons/RightArrowIcon'
+import PushLeftIcon from './icons/PushLeftIcon'
 
 function index() {
 
@@ -30,12 +31,20 @@ function index() {
         
         auth
             .signInWithEmailAndPassword(userEmail, userPassword)
-            .then((user)=>{
-                console.log(user)
-                router.push('/')
+            .then(()=>{
+                router.back()
             })
             .catch(error=>{
-                ErrorMsg.innerText= error
+
+                const ERROR_MESSAGES = {
+                    'auth/user-not-found': "No se ha encontrado un usuario registrado con ese Email.",
+                    'auth/wrong-password': "La contraseña y/o el email no son validos, verifique los datos ingresados."
+                }
+
+                const DEFAULT_ERROR_MESSAGE = 'Aparentemente hay un error, ponte en contacto con bla bla bla...'
+        
+
+                ErrorMsg.innerText= ERROR_MESSAGES[error.code] || DEFAULT_ERROR_MESSAGE
                 ErrorMsg.style.display="block"
             })
     }
@@ -50,11 +59,11 @@ function index() {
                     <input type="password" placeholder="Ingresa tu contraseña" aria-label="Ingresa tu contraseña" className={styles.inputRounded} onChange={(e) => setUserPassword(e.target.value)} />
                     <span id="ErrorMsg" className={styles.ErrorMsg}></span>
                     <div className={styles.buttonsBox}>
-                        <a href="">¿Has olvidado tu contraseña?</a>
+                        {/* <a href="">¿Has olvidado tu contraseña?</a> */}
                         <button type="submit" className={styles.roundedButtonFilled} onClick={e=>login(e)}>Iniciar sesión <RightArrowIcon/></button>
-                        <GmailButton/>
+                        {/* <GmailButton/> */}
                         <Link href={"/signin/createaccount"}>
-                            <a className={styles.roundedButtonTerciary}>¡Soy nuevo!</a> 
+                            <a className={styles.roundedButtonSecondary}>¡Soy nuevo! <PushLeftIcon/></a> 
                         </Link>
                     </div>
                 </form>

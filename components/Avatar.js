@@ -17,7 +17,7 @@ function Avatar({username, avatar, short}) {
         <div className={styles.avatar}>
             <div onClick={toggleMenu}>
                 {
-                    short && <span>{username}</span>
+                    !short && <span>{username}</span>
                 }
                 <img src={avatar} alt={username} />
             </div>

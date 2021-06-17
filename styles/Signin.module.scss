@@ -3,10 +3,12 @@
 @import "globals";
 
 .signin {
+  flex: 1;
   background-color: $bg-color;
-  min-height: 100vh;
+  height: 100%;
   overflow-x: hidden;
-
+  display: grid;
+  place-items: center;
   //bg properties
   background-image: url("../public/images/login-background.svg");
   background-position: right;
@@ -14,26 +16,30 @@
   background-size: cover;
 
   @include breakpoint-up(medium) {
-    background-size: 130%;
-    background-position: right;
+    background-position: right top;
   }
 
   .container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 20px;
+    width: 100%;
+    z-index: 200;
+    display: grid;
+    place-items: center;
+    //margin-top: 20px;
 
     @include breakpoint-up(large) {
-      text-align: left;
-      margin-top: 120px;
+      //text-align: left;
+      //margin-top: 120px;
       //align-items: flex-end;
     }
   }
 
   .form {
+    padding: 80px 60px;
+    background-color: rgba(#fff, 0.05);
+    backdrop-filter: blur(7px);
+    box-shadow: 5px 5px 20px #00000011;
     width: 100%;
-    border-radius: 40px;
+    border-radius: 10px;
     text-align: center;
     display: flex;
     flex-direction: column;
@@ -41,6 +47,7 @@
 
     h1 {
       margin-bottom: 20px;
+      color: $text-black;
     }
 
     .buttonsBox {
@@ -49,14 +56,11 @@
       flex-direction: column;
       align-items: center;
       gap: 10px;
-
-      svg {
-        margin-left: 10px;
-      }
     }
 
     @include breakpoint-up(large) {
       width: max-content;
+      min-width: 600px;
     }
   }
   //   .container {

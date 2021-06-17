@@ -1,7 +1,8 @@
 import React, {useState, useEffect} from 'react'
 import Head from 'next/head'
 import styles from '../../../styles/Signin.module.css'
-import { auth } from '../../../firebase/client'
+import { auth, saveUserInFirestore } from '../../../firebase/client'
+import {useRouter} from 'next/router'
 import RightArrowIcon from 'components/icons/RightArrowIcon'
 
 function index() {
@@ -11,40 +12,46 @@ function index() {
     const [userPassword, setUserPassword] = useState('')
     const [userRepeatedPassword, setUserRepeatedPassword] = useState('')
  
+    const router = useRouter()
+
     const register = e => {
         e.preventDefault();
         
         auth
             .createUserWithEmailAndPassword(userEmail, userPassword)
-            .then((res)=>{
-                console.log(res)
+            .then(()=>{
                 let user = auth.currentUser
                 user.updateProfile({
-                    displayName: username
-                }).then((res) =>{
+                    displayName: username,
+                    photoURL: 'https://cdn4.iconfinder.com/data/icons/instagram-ui-twotone/48/Paul-18-512.png'
+                }).then(() =>{
                     console.log('username created with username')
+                    saveUserInFirestore(auth.currentUser)
+                    .then(router.replace('/'))
+                    .catch(error=>{
+                        ErrorMsg.innerText= error.message
+                        ErrorMsg.style.display="block"
+                    })
                 })
             })
             .catch(error=>{
-                ErrorMsg.innerText= error
+
+                ErrorMsg.innerText= error.message
                 ErrorMsg.style.display="block"
+
             })
     }
 
     useEffect(() => {
         const ErrorMsg = document.getElementById('ErrorMsg')
-        const submitButton = document.getElementById('submitButton')
 
         if(userRepeatedPassword != userPassword){
             ErrorMsg.innerText="Las contraseñas no coinciden"
             ErrorMsg.style.display="block"
-            if(!submitButton.classList.contains('disabledButton')) submitButton.classList.add(`${styles.disabledButton}`)
-            submitButton.setAttribute('disabled', true)
+           
         }
         else{
             ErrorMsg.style.display="none"
-            if(submitButton.classList.contains(`${styles.disabledButton}`)) submitButton.classList.remove(`${styles.disabledButton}`)
-            submitButton.removeAttribute('disabled', false)
         }
     }, [userPassword, userRepeatedPassword])
 
@@ -63,7 +70,7 @@ function index() {
                     <input type="password" placeholder="Repetir contraseña" aria-label="Repetir contraseña" className={styles.inputRounded} onChange={(e) => setUserRepeatedPassword(e.target.value)} required/>
                     <span id="ErrorMsg" className={styles.ErrorMsg}></span>
                     <div className={styles.buttonsBox}>
-                        <button type="submit" className={styles.roundedButtonFilled} id="submitButton" onClick={e=>register(e)}>Crear cuenta<RightArrowIcon/></button>
+                        <button type="submit" className={styles.roundedButtonFilled} id="submitButton" onClick={e=>register(e)} disabled={userPassword!==userRepeatedPassword}>Crear cuenta<RightArrowIcon/></button>
                     </div>
                 </form>
             </div>

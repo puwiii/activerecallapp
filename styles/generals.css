@@ -1,10 +1,4 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap");
-.disabledButton {
-  cursor: not-allowed !important;
-  -webkit-filter: grayscale(100);
-          filter: grayscale(100);
-}
-
 .roundedButtonFilled,
 .roundedButtonSecondary,
 .roundedButtonTerciary {
@@ -29,12 +23,10 @@
   transition: all 0.26s ease-in-out;
 }
 
-@media (min-width: 40em) {
-  .roundedButtonFilled,
-  .roundedButtonSecondary,
-  .roundedButtonTerciary {
-    font-size: 1.6rem;
-  }
+.roundedButtonFilled svg,
+.roundedButtonSecondary svg,
+.roundedButtonTerciary svg {
+  margin-left: 10px;
 }
 
 .roundedButtonFilled {
@@ -55,8 +47,8 @@
           backdrop-filter: blur(5px);
   background-color: #bbddf7;
   color: #0a6fad;
-  background: -webkit-gradient(linear, right top, left top, color-stop(50%, #cde6f7), color-stop(50%, #bbddf7));
-  background: linear-gradient(to left, #cde6f7 50%, #bbddf7 50%);
+  background: -webkit-gradient(linear, right top, left top, color-stop(50%, #e6f1fc), color-stop(50%, #bbddf7));
+  background: linear-gradient(to left, #e6f1fc 50%, #bbddf7 50%);
   background-size: 200% 100%;
   background-position: right bottom;
 }
@@ -74,16 +66,14 @@
 .inputRounded {
   display: block;
   width: 100%;
-  -webkit-backdrop-filter: blur(5px);
-          backdrop-filter: blur(5px);
   outline: none;
   background-color: transparent;
-  border: 2px solid #c5c9cf;
+  border: 1px solid #ccc;
   font-size: 1.28rem;
   font-weight: 400;
   color: #000000;
   padding: 1.3em 1em;
-  border-radius: calc(1.5em + 1.6rem);
+  border-radius: 0.3em;
   -webkit-transition: border-color 0.21s ease-in-out;
   transition: border-color 0.21s ease-in-out;
 }
@@ -129,7 +119,7 @@
 
 @media (min-width: 64em) {
   .title {
-    font-size: 4.9035rem;
+    font-size: 3.906rem;
   }
 }
 
@@ -142,6 +132,29 @@
 @media (min-width: 40em) {
   .subtitle {
     font-size: 2rem;
+  }
+}
+
+.fadeIn {
+  -webkit-animation: fade-in 1s both linear;
+          animation: fade-in 1s both linear;
+}
+
+@-webkit-keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
   }
 }
 
@@ -169,6 +182,12 @@ body {
   height: 100%;
 }
 
+button:disabled {
+  cursor: not-allowed !important;
+  -webkit-filter: grayscale(100);
+          filter: grayscale(100);
+}
+
 button {
   font-family: "Roboto", sans-serif;
   -webkit-box-pack: center;
@@ -184,34 +203,47 @@ button {
           user-select: none;
 }
 
+button:focus {
+  border-color: #bbddf7;
+}
+
 input,
 label,
-select {
+select,
+textarea {
   font-family: "Roboto", sans-serif;
 }
 
 input::-webkit-input-placeholder,
 label::-webkit-input-placeholder,
-select::-webkit-input-placeholder {
-  color: #c5c9cf;
+select::-webkit-input-placeholder,
+textarea::-webkit-input-placeholder {
+  color: #acacac;
+  font-weight: 100;
 }
 
 input:-ms-input-placeholder,
 label:-ms-input-placeholder,
-select:-ms-input-placeholder {
-  color: #c5c9cf;
+select:-ms-input-placeholder,
+textarea:-ms-input-placeholder {
+  color: #acacac;
+  font-weight: 100;
 }
 
 input::-ms-input-placeholder,
 label::-ms-input-placeholder,
-select::-ms-input-placeholder {
-  color: #c5c9cf;
+select::-ms-input-placeholder,
+textarea::-ms-input-placeholder {
+  color: #acacac;
+  font-weight: 100;
 }
 
 input::placeholder,
 label::placeholder,
-select::placeholder {
-  color: #c5c9cf;
+select::placeholder,
+textarea::placeholder {
+  color: #acacac;
+  font-weight: 100;
 }
 
 ul {

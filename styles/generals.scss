@@ -26,6 +26,12 @@ body {
 }
 
 //general
+
+button:disabled {
+  cursor: not-allowed !important;
+  filter: grayscale(100);
+}
+
 button {
   font-family: "Roboto", sans-serif;
   justify-content: center;
@@ -34,14 +40,20 @@ button {
   outline: none;
   cursor: pointer;
   user-select: none;
+
+  &:focus {
+    border-color: $primary-light-color;
+  }
 }
 
 input,
 label,
-select {
+select,
+textarea {
   font-family: "Roboto", sans-serif;
   &::placeholder {
     color: $light-gray;
+    font-weight: $font-weight-thin;
   }
 }
 

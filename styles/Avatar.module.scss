@@ -3,6 +3,10 @@
 @import "globals";
 
 .avatar {
+  * {
+    user-select: none;
+  }
+  z-index: 3000;
   position: relative;
   margin-right: 10px;
   //   &::before {
@@ -18,9 +22,10 @@
   div {
     cursor: pointer;
     > span {
-      font-size: $font-size-small;
-      font-weight: $font-weight-medium;
-      margin-right: 5px;
+      font-size: $font-size-xSmall;
+      font-weight: $font-weight-bold;
+      color: $primary-color;
+      margin-right: 8px;
       pointer-events: none;
     }
 
