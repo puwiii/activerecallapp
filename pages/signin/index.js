@@ -1,6 +1,6 @@
 import React from 'react'
 import Head from 'next/head'
-import styles from '/styles/Signin.module.css'
+import styles from '/styles/Signin.module.scss'
 import Login from 'components/Login'
 
 function index() {

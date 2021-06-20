@@ -93,8 +93,9 @@ export const listenForUserDecks = (callback) => {
     .where('user','==',userReference)
     .onSnapshot(({docs})=>{
         const decks = docs.map((doc)=>{
-            return doc.data()
+            return {...doc.data()}
         })
+        console.log(decks)
         callback(decks)
     })
     

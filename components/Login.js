@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import styles from 'styles/Signin.module.css'
+import styles from 'styles/Signin.module.scss'
 import Link from 'next/link'
 import { auth } from 'firebase/client'
 import {useRouter} from 'next/router'

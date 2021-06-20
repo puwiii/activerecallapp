@@ -9,7 +9,7 @@ import { useRouter } from "next/router";
 import { useModal } from "components/hooks/useModal";
 import { useStateValue } from "components/contexts/StateProvider";
 import useUser, { USER_STATES } from "components/hooks/useUser";
-import Decks from "components/Decks";
+import DeckContainer from "components/DeckContainer";
 
 function index() {
   const [isOpenCreateDeck, openCreateDeck, closeCreateDeck] = useModal(false);
@@ -26,6 +26,7 @@ function index() {
 
     if (user) {
       listenForUserDecks(setDecks);
+      console.log(decks)
     }
   }, [user]);
 
@@ -48,7 +49,7 @@ function index() {
         <div className="decks">
           <h2>Mazos</h2>
           {decks.map((deck) => (
-            <h1>{deck.name}</h1>
+            <DeckContainer key={deck.uid} name={deck.name} description={deck.description}/>
           ))}
           <button
             className={styles.roundedButtonSecondary}
