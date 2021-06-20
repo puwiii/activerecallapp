@@ -68,7 +68,7 @@ export const saveUserInFirestore = (user) =>{
     })
 }
 
-export const createDeck = (name, description) => {
+export const createDeck = (name, description="") => {
     
     let user = database.collection('users').doc(auth.currentUser.uid)
 
@@ -92,7 +92,9 @@ export const listenForUserDecks = (callback) => {
     .collection('decks')
     .where('user','==',userReference)
     .onSnapshot(({docs})=>{
-        const decks = docs
+        const decks = docs.map((doc)=>{
+            return doc.data()
+        })
         callback(decks)
     })
     

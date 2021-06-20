@@ -63,7 +63,7 @@ function index() {
                         <button type="submit" className={styles.roundedButtonFilled} onClick={e=>login(e)}>Iniciar sesión <RightArrowIcon/></button>
                         {/* <GmailButton/> */}
                         <Link href={"/signin/createaccount"}>
-                            <a className={styles.roundedButtonSecondary}>¡Soy nuevo! <PushLeftIcon/></a> 
+                            <a className={styles.roundedButtonSecondary}>¡Soy nuevo!<PushLeftIcon/></a> 
                         </Link>
                     </div>
                 </form>
