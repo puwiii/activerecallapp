@@ -26,7 +26,7 @@ function index() {
 
     if (user) {
       listenForUserDecks(setDecks);
-      console.log(decks)
+      console.log(decks);
     }
   }, [user]);
 
@@ -49,7 +49,12 @@ function index() {
         <div className="decks">
           <h2>Mazos</h2>
           {decks.map((deck) => (
-            <DeckContainer key={deck.uid} name={deck.name} description={deck.description}/>
+            <DeckContainer
+              key={deck.id}
+              id={deck.id}
+              name={deck.name}
+              description={deck.description}
+            />
           ))}
           <button
             className={styles.roundedButtonSecondary}
