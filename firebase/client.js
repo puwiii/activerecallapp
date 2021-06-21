@@ -178,7 +178,8 @@ export const listenForDecks = (deck, callback) =>{
     .doc(deckItem.id)
     .get()
     .then((doc)=>{
-      return doc.data()
+      const id = doc.id;
+      return {...doc.data(), id}
     })
     //console.log(deckItem.data)
   })
