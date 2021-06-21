@@ -17,7 +17,7 @@
   outline: none;
   border: none;
   font-size: $font-size-xSmall;
-  font-weight: $font-weight-medium;
+  font-weight: $font-weight-bold;
   padding: 0.9em 1.5em;
   white-space: nowrap;
   border-radius: calc(1.5em + #{$font-size-small});
@@ -46,11 +46,11 @@
 .roundedButtonSecondary {
   backdrop-filter: blur(5px);
   background-color: $primary-light-color;
-  color: $primary-color;
+  color: $text-secondary;
   background: linear-gradient(
     to left,
-    $primary-lighter-color 50%,
-    $primary-light-color 50%
+    rgba($primary-lighter-color,.5) 50%,
+    rgba($primary-light-color,.5) 50%
   );
   background-size: 200% 100%;
   background-position: right bottom;

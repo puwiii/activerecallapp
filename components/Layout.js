@@ -19,6 +19,7 @@ function Layout({children}) {
                     right: 0;
                     display: flex;
                     flex-direction: column;
+                    overflow-x: hidden;
                 }
             `}</style>
         </div>

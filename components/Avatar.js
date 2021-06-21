@@ -30,14 +30,10 @@ function Avatar({ username, avatar, short }) {
             display: flex;
             align-items: center;
           }
-
-          h2 {
-            padding: 10px;
-          }
-
+          
           img {
-            width: 50px;
-            clip-path: circle(25px);
+            width: 40px;
+            clip-path: circle(20px);
           }
 
           button {

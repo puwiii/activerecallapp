@@ -3,6 +3,10 @@
 @import "globals";
 
 .signin {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
   flex: 1;
   background-color: $bg-color;
   height: 100%;
@@ -34,11 +38,12 @@
   }
 
   .form {
-    padding: 80px 60px;
+    padding: 4em;
     background-color: rgba(#fff, 0.05);
-    backdrop-filter: blur(7px);
+    backdrop-filter: blur(2px);
     box-shadow: 5px 5px 20px #00000011;
     width: 100%;
+    max-width: 500px;
     border-radius: 10px;
     text-align: center;
     display: flex;
@@ -60,7 +65,7 @@
 
     @include breakpoint-up(large) {
       width: max-content;
-      min-width: 600px;
+      min-width: 500px;
     }
   }
   //   .container {

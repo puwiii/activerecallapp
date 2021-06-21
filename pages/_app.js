@@ -17,6 +17,8 @@ export default function MyApp({ Component, pageProps }) {
 
             <style jsx>{`
                 div{
+                  position: relative;
+                  overflow-y: hidden;
                   height:100%;
                   display: flex;
                   flex-direction: column-reverse;

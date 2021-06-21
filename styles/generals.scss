@@ -1,12 +1,15 @@
 @import "variables";
 @import "mixins";
 @import "globals";
-
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800;900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap");
 html {
   font-size: 62.5%;
   box-sizing: border-box;
   scroll-behavior: smooth;
   min-height: 100%;
+  
 }
 
 *,
@@ -18,8 +21,14 @@ html {
 }
 
 body {
-  @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap");
-  font-family: "Roboto", sans-serif;
+  //@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap");
+ // @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap");
+
+  font-family: 
+  //"Nunito",
+  //"Open Sans", 
+  "Roboto", 
+  sans-serif;
   color: $text-primary;
   min-height: 100% !important;
   height: 100%;

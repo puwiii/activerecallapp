@@ -1,5 +1,6 @@
 import firebase from "firebase";
 import { delLocale } from "next/dist/next-server/lib/router/router";
+import decks from "pages/api/decks";
 
 // import 'firebase/firestore'
 // import 'firebase/storage'
@@ -64,10 +65,45 @@ export const saveUserInFirestore = (user) => {
   });
 };
 
-export const createDeck = (name, description = "") => {
+export const createDeck = (id, name, description = "") => {
   let user = database.collection("users").doc(auth.currentUser.uid);
 
-  return database
+  if(id){
+    let deckToAdd
+    
+    return database
+    .collection("decks")
+    .add({
+      name: name,
+      description: description,
+      cards: [],
+      decks: [],
+      author: user,
+    })
+    .then((deckObject)=>{
+      deckToAdd = deckObject
+
+      //setting the deckToAdd to their parent deck
+      database
+      .collection("decks")
+      .doc(id)
+      .update({
+        decks:  firebase.firestore.FieldValue.arrayUnion(deckToAdd)
+      })
+      .then(() => {
+        console.log("Document successfully updated!");
+      })
+      .catch(()=>{
+        console.log("An error ocurred while updating deck")
+      })
+    })
+    .catch((e) => {
+      console.log(e.message);
+    });
+  }
+
+  else{
+    return database
     .collection("decks")
     .add({
       name: name,
@@ -75,11 +111,14 @@ export const createDeck = (name, description = "") => {
       cards: [],
       decks: [],
       user: user,
+      author: user,
     })
     .then(console.log("deck created"))
     .catch((e) => {
       console.log(e.message);
     });
+  }
+  
 };
 
 export const listenForUserDecks = (callback) => {
@@ -92,22 +131,59 @@ export const listenForUserDecks = (callback) => {
         const id = doc.id;
         return { ...doc.data(), id };
       });
-      console.log(decks);
       callback(decks);
     });
-
-  // .get()
-  // .then(snapshot => {
-  //     return snapshot.docs.map(doc => {
-  //         const data = doc.data()
-  //         const id = doc.id
-
-  //         return{
-  //             id,
-  //             ...data
-  //         }
-  //     })
-  // })
 };
+
+// export const listenForDeck = (id,callback) => {
+//   return database
+//     .collection("decks")
+//     .doc(id)
+//     .onSnapshot((doc)=>{
+//       console.log(doc.data())
+//       callback(doc.data())
+//     })
+// }
+
+export const listenForDeck = (id, callback) => {
+  console.log("listeForDeck")
+     database
+    .collection("decks")
+    .doc(id)
+    .onSnapshot((data)=>{
+      const deck = data.data()
+      callback(deck)
+    });
+
+    // .onSnapshot((doc)=>{
+    //   console.log(doc.data())
+    // })
+
+    // return database
+    // .collection("decks")
+    // .where("user", "==", userReference)
+    // .onSnapshot(({ docs }) => {
+    //   const decks = docs.map((doc) => {
+    //     const id = doc.id;
+    //     return { ...doc.data(), id };
+    //   });
+    //   console.log(decks);
+    //   callback(decks);
+    // });
+};
+
+export const listenForDecks = (deck, callback) =>{
+  let promise = deck.decks.map(deckItem=>{
+    return database.collection("decks")
+    .doc(deckItem.id)
+    .get()
+    .then((doc)=>{
+      return doc.data()
+    })
+    //console.log(deckItem.data)
+  })
+  
+  Promise.all(promise).then(array=>callback(array))
+}
 
 export { auth, database };

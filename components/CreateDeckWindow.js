@@ -3,9 +3,9 @@ import CloseIcon from "./icons/CloseIcon";
 import Head from "next/head";
 import RightArrowIcon from "./icons/RightArrowIcon";
 import styles from "/styles/Global.module.scss";
-import { createDeck, findUsersDecks } from "firebase/client";
+import { createDeck } from "firebase/client";
 
-function CreateDeckWindow({ isOpen, closeWindow }) {
+function CreateDeckWindow({ isOpen, closeWindow, id }) {
   const [deckName, setDeckName] = useState();
   const [deckDescription, setDeckDescription] = useState();
   const closeForm = (e) => {
@@ -16,8 +16,9 @@ function CreateDeckWindow({ isOpen, closeWindow }) {
   const crearMazo = (e) => {
     form.reset();
     e.preventDefault();
-    createDeck(deckName, deckDescription)
+    createDeck(id, deckName, deckDescription)
       .then(() => {
+        console.log()
         const form = document.getElementById("form");
         setDeckDescription("");
         setDeckName("");
@@ -78,7 +79,7 @@ function CreateDeckWindow({ isOpen, closeWindow }) {
 
       <style jsx>{`
         .modal {
-          z-index: 1000;
+          z-index: 5000;
           background: rgba(0,0,0,.2);
           position: absolute;
           top: 0;
@@ -108,17 +109,22 @@ function CreateDeckWindow({ isOpen, closeWindow }) {
         }
 
         form {
-          box-shadow: 0px 5px 10px rgba(0,0,0,.1);
+          backdrop-filter: blur(5px);
+          box-shadow: 0px 5px 10px rgba(0,0,0,.2);
           position: relative;
           cursor: default;
-          border-radius: 10px;
+          border-radius: 30px;
           background-color: rgba(255, 255, 255, 0.8);
-          padding: 20px;
+          padding: 3em;
           display: flex;
           flex-direction: column;
           min-width: 290px;
           width: 90%;
           max-width: 490px;
+        }
+
+        input, textarea{
+          background: #fff;
         }
 
         h1 {

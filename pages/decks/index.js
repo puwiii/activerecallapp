@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Header from "components/Header";
 import Head from "next/head";
-import Nav from "components/Nav";
 import styles from "styles/Home.module.scss";
 import CreateDeckWindow from "components/CreateDeckWindow";
 import { auth, onAuthStateChanged, listenForUserDecks } from "firebase/client";
@@ -10,10 +8,13 @@ import { useModal } from "components/hooks/useModal";
 import { useStateValue } from "components/contexts/StateProvider";
 import useUser, { USER_STATES } from "components/hooks/useUser";
 import DeckContainer from "components/DeckContainer";
+import NewFolderIcon from "components/icons/NewFolderIcon";
+import SpinnerComponent from "components/SpinnerComponent";
 
 function index() {
   const [isOpenCreateDeck, openCreateDeck, closeCreateDeck] = useModal(false);
-  const [decks, setDecks] = useState([]);
+  const [loading, setLoading] = useState(true)
+  const [decks, setDecks] = useState();
 
   let user = useUser();
 
@@ -26,9 +27,14 @@ function index() {
 
     if (user) {
       listenForUserDecks(setDecks);
-      console.log(decks);
     }
-  }, [user]);
+  }, user);
+
+  useEffect(()=>{
+    if(decks){
+      setLoading(false)
+    }
+  }, [decks])
 
   return (
     <main className={styles.main}>
@@ -36,10 +42,6 @@ function index() {
         <title>Mis mazos - Liza</title>
       </Head>
 
-      {/* {user === USER_STATES.NOT_KNOWN && //debiera ir spinner
-                
-                
-                } */}
       <section>
         <CreateDeckWindow
           isOpen={isOpenCreateDeck}
@@ -47,25 +49,38 @@ function index() {
         />
 
         <div className="decks">
-          <h2>Mazos</h2>
-          {decks.map((deck) => (
-            <DeckContainer
-              key={deck.id}
-              id={deck.id}
-              name={deck.name}
-              description={deck.description}
-            />
-          ))}
+          <h2>mazos</h2>
+          {
+            loading ? 
+              <SpinnerComponent/>
+            :
+            <>
+              {decks.length > 0 ? 
+                
+                <div className="decks__container">
+                  {decks.map((deck) => (
+                    <DeckContainer
+                      key={deck.id}
+                      id={deck.id}
+                      name={deck.name}
+                      description={deck.description}
+                    />
+                  ))}
+                </div>
+                :
+                <h2>No hay mazos que mostrar</h2>
+              }
+            </> 
+          }
+          
           <button
-            className={styles.roundedButtonSecondary}
+            className={styles.roundedButtonTerciary}
             onClick={openCreateDeck}
           >
-            Crear un nuevo mazo
+            Crear un nuevo mazo <NewFolderIcon/>
           </button>
-        </div>
-
-        <div className="cards">
-          <h2>Tarjetas</h2>
+          
+         
         </div>
       </section>
 
@@ -74,12 +89,19 @@ function index() {
           padding: 20px;
           opacity: 0.5;
           font-weight: 600;
-          font-size: 14px;
+          font-size: 12px;
         }
 
         .decks,
         .cards {
           margin-bottom: 40px;
+        }
+
+        .decks__container{
+          display: flex;
+          gap:10px 15px;
+          flex-wrap: wrap;
+          margin-bottom: 20px;
         }
       `}</style>
     </main>
