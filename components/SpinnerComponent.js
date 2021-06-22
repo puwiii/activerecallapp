@@ -3,7 +3,7 @@ import { css } from "@emotion/react";
 import Spinner from "react-spinners/PulseLoader";
 
 const override = css`
-  display: block;
+  display: inline-block;
   margin: 20px;
   border-color: #0e98ee;
 `;

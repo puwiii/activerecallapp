@@ -10,7 +10,7 @@ import { getDeck, listenForDecks, listenForDeck } from "firebase/client";
 
 //hooks
 import { useModal } from "components/hooks/useModal";
-import useUser from "components/hooks/useUser";
+import useUser, {USER_STATES} from "components/hooks/useUser";
 
 //components
 import DeckContainer from "components/DeckContainer";
@@ -20,6 +20,7 @@ import NewFolderIcon from "components/icons/NewFolderIcon";
 import CreateIcon from "components/icons/CreateIcon";
 
 function index() {
+
   const [isOpenCreateDeck, openCreateDeck, closeCreateDeck] = useModal(false);
   const [loading, setLoading] = useState(true)
   const [idDeck, setIdDeck] = useState()
@@ -31,6 +32,12 @@ function index() {
   let user = useUser();
 
   const router = useRouter();
+
+  useEffect(() => {
+    if (user === USER_STATES.NOT_LOGGED) {
+      router.replace("/signin");
+    }
+  }, user);
 
   useEffect(()=>{
     setIdDeck(router.query.id)

@@ -1,3 +1,17 @@
 @import "mixins";
 @import "variables";
 @import "globals";
+
+
+.mainDiv{
+
+    position: relative;
+    overflow-y: hidden;
+    height:100%;
+    display: flex;
+    flex-direction: column-reverse;
+
+    @include breakpoint-up(medium) {
+        flex-direction: row;
+      }
+}

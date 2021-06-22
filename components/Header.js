@@ -27,7 +27,7 @@ function Header() {
             </Link>
           )}
           {user === USER_STATES.NOT_KNOWN && <SpinnerComponent/>}
-          {user && <Avatar username={user.username} avatar={user.avatar} />}
+          {user && <Avatar username={user.username} avatar={user.avatar} email={user.email} />}
         </div>   
       </div>
       <style jsx>

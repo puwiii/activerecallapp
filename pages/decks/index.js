@@ -49,7 +49,7 @@ function index() {
         />
 
         <div className="decks">
-          <h2>mazos</h2>
+          <h2>Mazos</h2>
           {
             loading ? 
               <SpinnerComponent/>

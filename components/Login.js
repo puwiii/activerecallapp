@@ -6,6 +6,7 @@ import {useRouter} from 'next/router'
 import GmailButton from 'components/GmailButton'
 import RightArrowIcon from './icons/RightArrowIcon'
 import PushLeftIcon from './icons/PushLeftIcon'
+import useUser from './hooks/useUser'
 
 function index() {
 
@@ -13,6 +14,11 @@ function index() {
     const [userPassword, setUserPassword] = useState('')
 
     const router = useRouter()
+    let user = useUser()
+
+    useEffect(()=>{
+        if(auth.currentUser?.emailVerified) router.replace('/')
+    }, [user])
 
     const login = e => {
         e.preventDefault();
@@ -31,8 +37,15 @@ function index() {
         
         auth
             .signInWithEmailAndPassword(userEmail, userPassword)
-            .then(()=>{
-                router.back()
+            .then((cred)=>{
+                console.log(cred.user.emailVerified)
+                if(cred.user.emailVerified===true){
+                    router.replace('/')
+                }
+                else{
+                   router.push('/signin/emailverification')
+                }
+                // router.back()
             })
             .catch(error=>{
 
@@ -55,8 +68,22 @@ function index() {
         //         
                 <form className={styles.form}>
                     <h1 className={styles.title}>Inicio de sesión</h1>
-                    <input type="email" placeholder="Ingresa tu email" aria-label="Ingresa tu email" className={styles.inputRounded} onChange={(e) => setUserEmail(e.target.value)} />
-                    <input type="password" placeholder="Ingresa tu contraseña" aria-label="Ingresa tu contraseña" className={styles.inputRounded} onChange={(e) => setUserPassword(e.target.value)} />
+                    <input 
+                        type="email" 
+                        placeholder="Ingresa tu email" 
+                        aria-label="Ingresa tu email" 
+                        //autoComplete="username"
+                        className={styles.inputRounded} 
+                        onChange={(e) => setUserEmail(e.target.value)} 
+                    />
+                    <input 
+                        type="password" 
+                        placeholder="Ingresa tu contraseña" 
+                        aria-label="Ingresa tu contraseña" 
+                        //autoComplete="current-password"
+                        className={styles.inputRounded} 
+                        onChange={(e) => setUserPassword(e.target.value)} 
+                    />
                     <span id="ErrorMsg" className={styles.ErrorMsg}></span>
                     <div className={styles.buttonsBox}>
                         {/* <a href="">¿Has olvidado tu contraseña?</a> */}

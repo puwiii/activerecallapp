@@ -27,7 +27,7 @@ function index() {
                 }).then(() =>{
                     console.log('username created with username')
                     saveUserInFirestore(auth.currentUser)
-                    .then(router.replace('/'))
+                    .then(router.replace('/signin/emailverification'))
                     .catch(error=>{
                         ErrorMsg.innerText= error.message
                         ErrorMsg.style.display="block"
@@ -43,7 +43,7 @@ function index() {
     }
 
     useEffect(() => {
-        const ErrorMsg = document.getElementById('ErrorMsg')
+        // const ErrorMsg = document.getElementById('ErrorMsg')
 
         if(userRepeatedPassword != userPassword){
             ErrorMsg.innerText="Las contraseñas no coinciden"
@@ -63,7 +63,7 @@ function index() {
             </Head>
             <div className={styles.container}>   
                 <form className={styles.form}>
-                <h1 className={styles.title}>¡Vamos a crear tu cuenta!</h1>
+                    <h1 className={styles.title}>¡Vamos a crear tu cuenta!</h1>
                     <input type="text" placeholder="Ingresa un nombre de usuario" aria-label="Ingresa un nombre de usuario" className={styles.inputRounded} onChange={(e) => setUsername(e.target.value)} required />
                     <input type="email" placeholder="Ingresa un Email" aria-label="Ingresa un Email"  className={styles.inputRounded} onChange={(e) => setUserEmail(e.target.value)} required/>
                     <input type="password" placeholder="Ingresa una contraseña" aria-label="Ingresa una contraseña" className={styles.inputRounded} onChange={(e) => setUserPassword(e.target.value)} required/>

@@ -46,7 +46,7 @@ function Nav() {
                     </Link>
                 </li>
                 <li title="Mis mazos" id="DecksLink">
-                    <Link href={`/decks`} >
+                    <Link href={`/decks`}>
                         <div><DecksIcon/><span>Mis mazos</span></div>
                     </Link>
                 </li>

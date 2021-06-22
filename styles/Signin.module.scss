@@ -55,6 +55,11 @@
       color: $text-black;
     }
 
+    p{
+      font-size: $font-size-xSmall;
+      padding: 1em 0;
+    }
+
     .buttonsBox {
       margin-top: 20px;
       display: flex;
@@ -144,7 +149,10 @@
     font-weight: $font-weight-medium;
     margin-left: 1em;
     color: $error;
+    text-align: left;
     align-self: flex-start;
+    padding: .5em .7em;
+    border-radius: .7em;
     // position: absolute;
     // bottom: 70px;
 
