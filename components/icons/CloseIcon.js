@@ -3,9 +3,9 @@ import * as React from "react"
 function CloseIcon(props) {
   return (
     <svg
-      height={21}
+      height={25}
       viewBox="0 0 21 21"
-      width={21}
+      width={25}
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >

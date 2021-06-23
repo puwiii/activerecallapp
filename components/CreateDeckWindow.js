@@ -6,8 +6,9 @@ import styles from "/styles/Global.module.scss";
 import { createDeck } from "firebase/client";
 
 function CreateDeckWindow({ isOpen, closeWindow, id }) {
-  const [deckName, setDeckName] = useState();
-  const [deckDescription, setDeckDescription] = useState();
+  const [deckName, setDeckName] = useState('');
+  const [deckDescription, setDeckDescription] = useState('');
+  
   const closeForm = (e) => {
     e.preventDefault();
     closeWindow();
@@ -16,7 +17,7 @@ function CreateDeckWindow({ isOpen, closeWindow, id }) {
   const crearMazo = (e) => {
     form.reset();
     e.preventDefault();
-    createDeck(id, deckName, deckDescription)
+    createDeck(id, deckName.trim(), deckDescription.trim())
       .then(() => {
         console.log()
         const form = document.getElementById("form");
@@ -27,14 +28,14 @@ function CreateDeckWindow({ isOpen, closeWindow, id }) {
       .catch(alert);
   };
 
-  useEffect(() => {
-    // if(!deckName){
-    //     submitButton.setAttribute('disabled', true)
-    // }
-    // else{
-    //     submitButton.setAttribute('disabled', false)
-    // }
-  }, [deckName]);
+  // useEffect(() => {
+  //   // if(!deckName){
+  //   //     submitButton.setAttribute('disabled', true)
+  //   // }
+  //   // else{
+  //   //     submitButton.setAttribute('disabled', false)
+  //   // }
+  // }, [deckName]);
 
   return (
     <div className={`modal ${isOpen && "is-open"}`}>
@@ -43,12 +44,11 @@ function CreateDeckWindow({ isOpen, closeWindow, id }) {
           <title>Crear nuevo mazo</title>
         </Head>
       )}
-      <div className="bg"></div>
       <form id="form">
         <button className="closeBtn" onClick={(e) => closeForm(e)}>
           <CloseIcon />
         </button>
-        <h1>Creando mazo</h1>
+        <h1 className={styles.subtitle}>Crear mazo</h1>
         <input
           type="text"
           placeholder="Nombre del mazo"
@@ -70,7 +70,7 @@ function CreateDeckWindow({ isOpen, closeWindow, id }) {
         <button
           className={styles.roundedButtonFilled}
           onClick={(e) => crearMazo(e)}
-          disabled={!deckName}
+          disabled={!(deckName.trim().length)}
         >
           Crear mazo
           <RightArrowIcon />
@@ -91,21 +91,18 @@ function CreateDeckWindow({ isOpen, closeWindow, id }) {
           cursor: not-allowed;
         }
 
-        .bg{
-          content="";
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-        }
-
         .is-open {
           display: grid;
         }
 
         .closeBtn {
           position: absolute;
+          background-color: #c43d3d0f;
+          color: #c43d3d;
+          display: grid;
+          place-items: center;
+          border: 1px solid #c43d3d88;
+          border-radius: 50%;
         }
 
         form {
@@ -113,8 +110,8 @@ function CreateDeckWindow({ isOpen, closeWindow, id }) {
           box-shadow: 0px 5px 10px rgba(0,0,0,.2);
           position: relative;
           cursor: default;
-          border-radius: 30px;
-          background-color: rgba(255, 255, 255, 0.8);
+          border-radius: 10px;
+          background-color: rgba(255, 255, 255, 0.6);
           padding: 3em;
           display: flex;
           flex-direction: column;
@@ -129,7 +126,7 @@ function CreateDeckWindow({ isOpen, closeWindow, id }) {
 
         h1 {
           margin-bottom: 20px;
-          font-size: 18px;
+          
         }
 
         input,

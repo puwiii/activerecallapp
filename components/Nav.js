@@ -1,12 +1,17 @@
 import React, {useState, useEffect} from 'react'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
+
+//styles
 import styles from 'styles/Nav.module.scss'
+
+//components
 import ExploreIcon from 'components/icons/ExploreIcon'
 import DecksIcon from 'components/icons/DecksIcon'
 import FriendsIcon from 'components/icons/FriendsIcon'
 import PushLeftIcon from 'components/icons/PushLeftIcon'
 import PushRightIcon from 'components/icons/PushRightIcon'
-import { useRouter } from 'next/router'
+
 
 
 function Nav() {
@@ -16,9 +21,7 @@ function Nav() {
     const router = useRouter()
 
     useEffect(() => {
-
         if(localStorage.getItem('navContracted')) setNavExpanded(localStorage.getItem('navContracted'))
-
     }, [])
 
     useEffect(()=>{
@@ -35,6 +38,7 @@ function Nav() {
         } 
 
     },[navExpanded])
+
 
     
     return (

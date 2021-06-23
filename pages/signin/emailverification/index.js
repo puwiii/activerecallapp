@@ -31,9 +31,6 @@ function index() {
                 router.replace('/')
             }
         }
-        else{
-            router.replace('/signin')
-        }
     },[user])
 
     
@@ -52,6 +49,7 @@ function index() {
         e.preventDefault()
         console.log(auth.currentUser)
         if(auth.currentUser.emailVerified === true){
+            saveUserInFirestore(auth.currentUser)
             router.replace('/')
         }
         else{
@@ -96,9 +94,9 @@ function index() {
                 <form className={styles.form}>
                     <h1 className={styles.title}>Hola {user?.username}!</h1>
                     <h2 className={styles.subtitle}>Primero tenemos que verificar tu email 🚀</h2>
-                    <p>Hemos mandado un correo de verificacion a tu cuenta <strong>{user?.email}</strong></p>
+                    <p>Cuando estes listo presiona "Enviar email de verificación" para que enviemos un email a tu cuenta <strong>{user?.email}</strong></p>
                     <div className={styles.buttonsBox}>
-                        <button className={styles.roundedButtonTerciary} onClick={(e)=>resendEmailVerification(e)}>Reenviar email de verificación <AirplaneIcon/> </button>
+                        <button className={styles.roundedButtonTerciary} onClick={(e)=>resendEmailVerification(e)}>Enviar email de verificación <AirplaneIcon/> </button>
                         <button className={styles.roundedButtonFilled} onClick={(e)=>checkForVerification(e)}>Ya he verificado mi email <RightArrowIcon/> </button>
                     </div>
                     <span id="ErrorMsg" className={styles.ErrorMsg}></span>

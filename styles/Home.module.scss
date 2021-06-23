@@ -5,6 +5,14 @@
 .main {
   flex: 1;
   background-color: $bg-color;
-  padding: 10px 40px;
+  padding: 10px 20px;
   overflow-y: auto;
+
+  @include breakpoint-up(medium){
+    padding: 10px 40px;
+  }
+
+  .title{
+    padding-bottom: .5em;
+  }
 }

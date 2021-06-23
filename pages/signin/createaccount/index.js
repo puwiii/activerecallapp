@@ -24,14 +24,14 @@ function index() {
                 user.updateProfile({
                     displayName: username,
                     photoURL: 'https://cdn4.iconfinder.com/data/icons/instagram-ui-twotone/48/Paul-18-512.png'
-                }).then(() =>{
+                })
+                .then(() =>{
                     console.log('username created with username')
-                    saveUserInFirestore(auth.currentUser)
-                    .then(router.replace('/signin/emailverification'))
-                    .catch(error=>{
-                        ErrorMsg.innerText= error.message
-                        ErrorMsg.style.display="block"
-                    })
+                    router.replace('/signin/emailverification')
+                })
+                .catch(error=>{
+                    ErrorMsg.innerText= error.message
+                    ErrorMsg.style.display="block"
                 })
             })
             .catch(error=>{

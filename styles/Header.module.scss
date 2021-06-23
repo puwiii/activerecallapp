@@ -3,19 +3,18 @@
 @import "globals";
 
 .header {
-  box-shadow: 0px 0px 10px rgba(#000, 0.15);
+  position: relative;
+  z-index: 2000;
   background-color: $primary-lighter-color;
   background-color: $bg-color;
-  @include breakpoint-up(large) {
-    border-bottom: none;
-  }
+  box-shadow: 0 5px 40px $bg-color;
 
   .container {
     padding: 10px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-
+   
     svg {
       margin-left: 10px;
     }

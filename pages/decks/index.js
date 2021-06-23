@@ -26,9 +26,15 @@ function index() {
     }
 
     if (user) {
-      listenForUserDecks(setDecks);
+
+      if(!user.emailVerified){
+        router.replace("/signin/emailverification");
+      }
+      else{
+        listenForUserDecks(setDecks);
+      }
     }
-  }, user);
+  }, [user]);
 
   useEffect(()=>{
     if(decks){
@@ -41,6 +47,8 @@ function index() {
       <Head>
         <title>Mis mazos - Liza</title>
       </Head>
+
+      <h1 className={styles.title}>Mis Mazos</h1>
 
       <section>
         <CreateDeckWindow

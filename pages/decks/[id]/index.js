@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 import styles from "styles/Home.module.scss";
 
 //firebase
-import { getDeck, listenForDecks, listenForDeck } from "firebase/client";
+import { getDeck, listenForDecks, listenForDeck, auxiliar } from "firebase/client";
 
 //hooks
 import { useModal } from "components/hooks/useModal";
@@ -33,32 +33,37 @@ function index() {
 
   const router = useRouter();
 
+  //check for user
   useEffect(() => {
     if (user === USER_STATES.NOT_LOGGED) {
       router.replace("/signin");
     }
-  }, user);
+  }, [user]);
 
+
+  //get the router query id
   useEffect(()=>{
     setIdDeck(router.query.id)
-  },router.query.id)
+  }, [router.query.id])
 
+
+  //the
   useEffect(()=>{
     if(idDeck) {
-      //getDeck(idDeck, setActualDeck)
-      listenForDeck(idDeck, setActualDeck)
+      listenForDeck(idDeck, setActualDeck, setDecks)
     }
-  },idDeck)
+  }, [idDeck])
 
-  useEffect(()=>{
-    if(actualDeck){
-      listenForDecks(actualDeck, setDecks)
-    }
-  }, actualDeck)
+  // useEffect(()=>{
+  //   console.log(actualDeck)
+  //   if(actualDeck){
+  //     auxiliar(actualDeck)
+  //     //listenForDecks(actualDeck, setDecks)
+  //   }
+  // }, actualDeck)
 
   useEffect(()=>{
     if(decks){
-      listenForDecks(actualDeck, setDecks)
       setLoading(false)
     }
   }, [decks])
@@ -68,11 +73,15 @@ function index() {
       <Head>
         <title>{actualDeck ? actualDeck.name : "Mis Mazos/Liza"}</title>
       </Head>
-
+      <h1 className={styles.title}>Mis Mazos</h1>
       {/* {user === USER_STATES.NOT_KNOWN && //debiera ir spinner
                 
                 
                 } */}
+      {actualDeck ? <h1 className={styles.subtitle}>{actualDeck.name}</h1> : <SpinnerComponent/>}
+
+      <hr/>
+      
       <section>
         <CreateDeckWindow
           isOpen={isOpenCreateDeck}
@@ -151,6 +160,11 @@ function index() {
       </section>
 
       <style jsx>{`
+
+        h1{
+          margin-bottom: .4em;
+        }
+
         h2 {
           padding: 20px;
           opacity: 0.5;
@@ -161,6 +175,10 @@ function index() {
         .decks,
         .cards {
           margin-bottom: 40px;
+        }
+
+        hr{
+          border: 1px solid rgba(0,0,0,.1);
         }
 
         .decks__container{

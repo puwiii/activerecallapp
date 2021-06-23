@@ -24,20 +24,15 @@ const auth = firebase.auth();
 const database = firebase.firestore();
 
 const mapUserFromFirebaseAuth = (user) => {
-  const { displayName, email, photoURL, uid } = user;
+  console.log(user)
+  const { displayName, email, photoURL, uid, emailVerified } = user;
 
   return {
     uid: uid,
     username: displayName,
     email: email,
     avatar: photoURL,
-  };
-};
-
-const mapDeckFromFirebase = (deck) => {
-  return {
-    name: deck.name,
-    description: deck.description,
+    emailVerified: emailVerified,
   };
 };
 
@@ -131,45 +126,24 @@ export const listenForUserDecks = (callback) => {
         const id = doc.id;
         return { ...doc.data(), id };
       });
+      console.log(decks)
       callback(decks);
     });
 };
 
-// export const listenForDeck = (id,callback) => {
-//   return database
-//     .collection("decks")
-//     .doc(id)
-//     .onSnapshot((doc)=>{
-//       console.log(doc.data())
-//       callback(doc.data())
-//     })
-// }
 
-export const listenForDeck = (id, callback) => {
+export const listenForDeck = (id, setActualDecks, setDecks) => {
   console.log("listeForDeck")
      database
     .collection("decks")
     .doc(id)
     .onSnapshot((data)=>{
+      // console.log(data.data())
       const deck = data.data()
-      callback(deck)
+      setActualDecks(deck)
+
+      listenForDecks(deck, setDecks)
     });
-
-    // .onSnapshot((doc)=>{
-    //   console.log(doc.data())
-    // })
-
-    // return database
-    // .collection("decks")
-    // .where("user", "==", userReference)
-    // .onSnapshot(({ docs }) => {
-    //   const decks = docs.map((doc) => {
-    //     const id = doc.id;
-    //     return { ...doc.data(), id };
-    //   });
-    //   console.log(decks);
-    //   callback(decks);
-    // });
 };
 
 export const listenForDecks = (deck, callback) =>{
@@ -181,10 +155,12 @@ export const listenForDecks = (deck, callback) =>{
       const id = doc.id;
       return {...doc.data(), id}
     })
-    //console.log(deckItem.data)
   })
   
-  Promise.all(promise).then(array=>callback(array))
+  Promise.all(promise).then(array=>{
+    console.log(array)
+    callback(array)
+  })
 }
 
 export { auth, database };
