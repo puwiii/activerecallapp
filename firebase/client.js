@@ -1,5 +1,5 @@
 import firebase from "firebase";
-import { delLocale } from "next/dist/next-server/lib/router/router";
+
 import decks from "pages/api/decks";
 
 // import 'firebase/firestore'
@@ -24,7 +24,6 @@ const auth = firebase.auth();
 const database = firebase.firestore();
 
 const mapUserFromFirebaseAuth = (user) => {
-  console.log(user)
   const { displayName, email, photoURL, uid, emailVerified } = user;
 
   return {
@@ -126,14 +125,12 @@ export const listenForUserDecks = (callback) => {
         const id = doc.id;
         return { ...doc.data(), id };
       });
-      console.log(decks)
       callback(decks);
     });
 };
 
 
 export const listenForDeck = (id, setActualDecks, setDecks) => {
-  console.log("listeForDeck")
      database
     .collection("decks")
     .doc(id)
@@ -142,7 +139,7 @@ export const listenForDeck = (id, setActualDecks, setDecks) => {
       const deck = data.data()
       setActualDecks(deck)
 
-      listenForDecks(deck, setDecks)
+      if(deck) listenForDecks(deck, setDecks)
     });
 };
 
@@ -158,9 +155,42 @@ export const listenForDecks = (deck, callback) =>{
   })
   
   Promise.all(promise).then(array=>{
-    console.log(array)
     callback(array)
   })
 }
+
+export const removeDeck = (id) => {
+  database.collection("decks")
+  .doc(id)
+  .get()
+  .then((doc)=>{
+    const deck = doc.data()
+    console.log(deck)
+    
+    if(deck.decks.length > 0){
+      console.log("hay decks adentro")
+      deck.decks.forEach((deckItem)=>{
+        console.log(deckItem)
+        removeDeck(deckItem.id)
+      })
+    }
+
+    removeDeckAux(doc)
+    
+  })
+}
+
+const removeDeckAux = (deck) => {
+  database.collection("decks")
+  .doc(deck.id)
+  .delete()
+  .then(()=>{
+    console.log("borrado")
+  })
+  .catch(()=>{
+    console.log("problema")
+  })
+}
+
 
 export { auth, database };

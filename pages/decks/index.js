@@ -1,15 +1,24 @@
 import React, { useEffect, useState } from "react";
 import Head from "next/head";
-import styles from "styles/Home.module.scss";
-import CreateDeckWindow from "components/CreateDeckWindow";
-import { auth, onAuthStateChanged, listenForUserDecks } from "firebase/client";
 import { useRouter } from "next/router";
-import { useModal } from "components/hooks/useModal";
-import { useStateValue } from "components/contexts/StateProvider";
-import useUser, { USER_STATES } from "components/hooks/useUser";
+
+//firebase
+import { listenForUserDecks } from "firebase/client";
+
+//styles
+import styles from "styles/Home.module.scss";
+import decksStyles from "styles/Decks.module.scss"
+
+//components
+import CreateDeckWindow from "components/popups/CreateDeckWindow";
 import DeckContainer from "components/DeckContainer";
 import NewFolderIcon from "components/icons/NewFolderIcon";
 import SpinnerComponent from "components/SpinnerComponent";
+
+//hooks
+import { useModal } from "components/hooks/useModal";
+import useUser, { USER_STATES } from "components/hooks/useUser";
+
 
 function index() {
   const [isOpenCreateDeck, openCreateDeck, closeCreateDeck] = useModal(false);
@@ -56,7 +65,7 @@ function index() {
           closeWindow={closeCreateDeck}
         />
 
-        <div className="decks">
+        <div className={`decks`}>
           <h2>Mazos</h2>
           {
             loading ? 
@@ -65,13 +74,14 @@ function index() {
             <>
               {decks.length > 0 ? 
                 
-                <div className="decks__container">
+                <div className={decksStyles.decks}>
                   {decks.map((deck) => (
                     <DeckContainer
                       key={deck.id}
                       id={deck.id}
                       name={deck.name}
                       description={deck.description}
+                      isPoster={true}
                     />
                   ))}
                 </div>
@@ -105,12 +115,7 @@ function index() {
           margin-bottom: 40px;
         }
 
-        .decks__container{
-          display: flex;
-          gap:10px 15px;
-          flex-wrap: wrap;
-          margin-bottom: 20px;
-        }
+        
       `}</style>
     </main>
   );

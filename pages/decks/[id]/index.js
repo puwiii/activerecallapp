@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 
 //styles
 import styles from "styles/Home.module.scss";
+import decksStyles from "styles/Decks.module.scss";
 
 //firebase
 import { getDeck, listenForDecks, listenForDeck, auxiliar } from "firebase/client";
@@ -14,14 +15,19 @@ import useUser, {USER_STATES} from "components/hooks/useUser";
 
 //components
 import DeckContainer from "components/DeckContainer";
-import CreateDeckWindow from "components/CreateDeckWindow";
+import CreateDeckWindow from "components/popups/CreateDeckWindow";
 import SpinnerComponent from "components/SpinnerComponent";
 import NewFolderIcon from "components/icons/NewFolderIcon";
 import CreateIcon from "components/icons/CreateIcon";
+import TrashIcon from "components/icons/TrashIcon";
+import SettingsIcon from "components/icons/SettingsIcon";
+import RemoveDeckWindow from "components/popups/RemoveDeckWindow";
 
 function index() {
 
   const [isOpenCreateDeck, openCreateDeck, closeCreateDeck] = useModal(false);
+  const [isOpenRemoveDeck, openRemoveDeck, closeRemoveDeck] = useModal(false);
+
   const [loading, setLoading] = useState(true)
   const [idDeck, setIdDeck] = useState()
   const [actualDeck, setActualDeck] = useState()
@@ -47,20 +53,12 @@ function index() {
   }, [router.query.id])
 
 
-  //the
   useEffect(()=>{
     if(idDeck) {
       listenForDeck(idDeck, setActualDeck, setDecks)
     }
   }, [idDeck])
 
-  // useEffect(()=>{
-  //   console.log(actualDeck)
-  //   if(actualDeck){
-  //     auxiliar(actualDeck)
-  //     //listenForDecks(actualDeck, setDecks)
-  //   }
-  // }, actualDeck)
 
   useEffect(()=>{
     if(decks){
@@ -78,7 +76,19 @@ function index() {
                 
                 
                 } */}
-      {actualDeck ? <h1 className={styles.subtitle}>{actualDeck.name}</h1> : <SpinnerComponent/>}
+      {actualDeck ? 
+        <div className={decksStyles.header}>
+          <h1 className={styles.subtitle}>{actualDeck.name}</h1> 
+          <div>
+            <button onClick={openRemoveDeck}><TrashIcon/><span>Eliminar mazo</span></button>
+            <button><SettingsIcon/><span>Editar mazo</span></button>
+          </div>
+        </div>
+          
+        
+        : 
+        <SpinnerComponent/>
+      }
 
       <hr/>
       
@@ -87,6 +97,13 @@ function index() {
           isOpen={isOpenCreateDeck}
           closeWindow={closeCreateDeck}
           id={idDeck}
+        />
+
+        <RemoveDeckWindow
+          isOpen={isOpenRemoveDeck}
+          closeWindow={closeRemoveDeck}
+          id={idDeck}
+          name={actualDeck?.name}
         />
 
         <div className="decks">
@@ -98,7 +115,7 @@ function index() {
             <>
               {decks.length > 0 ? 
                 
-                <div className="decks__container">
+                <div className={decksStyles.decks}>
                   {decks.map((deck) => (
                     <DeckContainer
                       key={deck.id}
@@ -161,15 +178,11 @@ function index() {
 
       <style jsx>{`
 
-        h1{
-          margin-bottom: .4em;
-        }
-
         h2 {
           padding: 20px;
-          opacity: 0.5;
           font-weight: 600;
           font-size: 12px;
+          color: rgba(0,0,0,.5);
         }
 
         .decks,
@@ -178,15 +191,10 @@ function index() {
         }
 
         hr{
-          border: 1px solid rgba(0,0,0,.1);
+          margin-top: 4px;
+          border: 1px solid rgba(0,0,0,.04);
         }
 
-        .decks__container{
-          display: flex;
-          gap: 12px;
-          flex-wrap: wrap;
-          margin-bottom: 20px;
-        }
       `}</style>
     </main>
     );

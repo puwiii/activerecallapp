@@ -34,6 +34,22 @@ body {
   height: 100%;
 }
 
+//scrollbar
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba($primary-color, 0.7);
+  //box-shadow: inset 5px 0px px $background;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: $primary-color;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+
 //general
 
 button:disabled {

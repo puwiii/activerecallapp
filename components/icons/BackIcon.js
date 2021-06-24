@@ -1,6 +1,6 @@
 import * as React from "react"
 
-function RightArrowIcon(props) {
+function BackIcon(props) {
   return (
     <svg
       height={21}
@@ -9,19 +9,15 @@ function RightArrowIcon(props) {
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
-      <g
+      <path
+        d="M8.5 7.5c5.185-.47 8.52 1.53 10 6-2.825-3.14-6.341-3.718-10-2v3l-5-5 5-5z"
         fill="none"
-        fillRule="evenodd"
         stroke="currentColor"
         strokeLinecap="round"
         strokeLinejoin="round"
-        transform="translate(2 2)"
-      >
-        <circle cx={8.5} cy={8.5} r={8} />
-        <path d="M7.5 11.5l3-3-3.068-3" />
-      </g>
+      />
     </svg>
   )
 }
 
-export default RightArrowIcon
+export default BackIcon

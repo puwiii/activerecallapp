@@ -48,7 +48,7 @@ function Avatar({ username, avatar, email }) {
           }
           
           .active{
-            border: 3px solid rgba(6, 123, 194,.08);
+            border: 3px solid rgba(6, 123, 194,.15);
           }
 
           img {

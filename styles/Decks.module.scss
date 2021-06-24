@@ -1,0 +1,75 @@
+@import "mixins";
+@import "variables";
+@import "globals";
+
+.decks{
+    display: grid;
+    //grid-template-columns: repeat(1, 1fr);
+    grid-template-columns: repeat( auto-fill, minmax(200px, 1fr) );
+    gap: 10px;
+    margin-bottom: 20px;
+    // @include breakpoint-up(medium){
+    //     grid-template-columns: repeat(2, 1fr);
+    // }
+
+    // @include breakpoint-up(large){
+    //     grid-template-columns: repeat(4, 1fr);
+    // }
+
+    // @include breakpoint-up(xlarge){
+    //     grid-template-columns: repeat(6, 1fr);
+    // }
+}
+
+.header{
+    background-color: rgba($bg-color,.5);
+    backdrop-filter: blur(5px);
+    position: sticky;
+    top: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    div{
+        display: flex;
+        gap: 10px;
+    }
+
+    button{
+        border-radius: 50px;
+        font-size: $font-size-small;
+        font-weight: $font-weight-medium;
+        padding: .7em;
+        display: flex;
+        gap: 5px;
+        align-items: center;
+        justify-content: center;
+        zoom: 1.2;
+
+        span{
+            display: none;
+        }
+
+        &:nth-child(1){
+            color: $error;
+            &:hover{
+                background-color: rgba($error,.1);
+            }
+        }
+
+        &:nth-child(2){
+            color: $text-secondary;
+            &:hover{
+                background-color: rgba($text-secondary,.1);
+            }
+        }
+
+        @include breakpoint-up(medium){
+            zoom: 1;
+
+            span{
+                display: block;
+            }
+        }
+    }
+}

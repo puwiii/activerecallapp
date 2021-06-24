@@ -1,6 +1,6 @@
 import * as React from "react"
 
-function RightArrowIcon(props) {
+function TrashIcon(props) {
   return (
     <svg
       height={21}
@@ -15,13 +15,11 @@ function RightArrowIcon(props) {
         stroke="currentColor"
         strokeLinecap="round"
         strokeLinejoin="round"
-        transform="translate(2 2)"
       >
-        <circle cx={8.5} cy={8.5} r={8} />
-        <path d="M7.5 11.5l3-3-3.068-3" />
+        <path d="M5.5 4.5h10v12a2 2 0 01-2 2h-6a2 2 0 01-2-2zm5-2a2 2 0 011.995 1.85l.005.15h-4a2 2 0 012-2zM3.5 4.5h14M8.5 7.5v8M12.5 7.5v8" />
       </g>
     </svg>
   )
 }
 
-export default RightArrowIcon
+export default TrashIcon
