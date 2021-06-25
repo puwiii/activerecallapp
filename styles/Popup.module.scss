@@ -59,10 +59,29 @@
     padding: 2em;
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 12px;
 
     input[type=checkbox]{
+       
         zoom: 125%;
+    }
+
+    .checkbox{
+        *{
+            cursor: pointer;
+        }
+        
+        display: flex;
+        align-items: center;
+        
+        >label{
+            user-select: none;
+            padding-left: .5em;
+        }
+    }
+
+    input, textarea{
+        padding: .5em;
     }
 
     label{
@@ -87,6 +106,7 @@
     justify-content: space-around;
 
     button{
+        border-radius: 0;
         display: flex;
         align-items: center;
         gap: 5px;
@@ -103,7 +123,7 @@
         }
 
         &:hover, &:focus{
-            background-color: rgba($primary-color,.15);
+            background-color: rgba($primary-color,.25);
         }
 
         &.primaryButton{

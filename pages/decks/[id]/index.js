@@ -7,7 +7,7 @@ import styles from "styles/Home.module.scss";
 import decksStyles from "styles/Decks.module.scss";
 
 //firebase
-import { getDeck, listenForDecks, listenForDeck, auxiliar } from "firebase/client";
+import { listenForDeck } from "firebase/client";
 
 //hooks
 import { useModal } from "components/hooks/useModal";
@@ -33,7 +33,7 @@ function index() {
   const [actualDeck, setActualDeck] = useState()
   const [decks, setDecks] = useState();
 
-  const[cards, setCards] = useState();
+  const [cards, setCards] = useState();
 
   let user = useUser();
 
@@ -72,24 +72,21 @@ function index() {
         <title>{actualDeck ? actualDeck.name : "Mis Mazos/Liza"}</title>
       </Head>
       <h1 className={styles.title}>Mis Mazos</h1>
-      {/* {user === USER_STATES.NOT_KNOWN && //debiera ir spinner
-                
-                
-                } */}
+      
       {actualDeck ? 
         <div className={decksStyles.header}>
-          <h1 className={styles.subtitle}>{actualDeck.name}</h1> 
+          <h1 className={styles.subtitle}>{actualDeck.name} <h2 className={decksStyles.description}>{actualDeck?.description}</h2></h1> 
           <div>
             <button onClick={openRemoveDeck}><TrashIcon/><span>Eliminar mazo</span></button>
             <button><SettingsIcon/><span>Editar mazo</span></button>
           </div>
         </div>
-          
+        
         
         : 
         <SpinnerComponent/>
       }
-
+     
       <hr/>
       
       <section>
@@ -107,7 +104,7 @@ function index() {
         />
 
         <div className="decks">
-          <h2>Mazos</h2>
+          <h3>Mazos</h3>
           {
             loading ? 
               <SpinnerComponent/>
@@ -126,7 +123,7 @@ function index() {
                   ))}
                 </div>
                 :
-                <h2>No hay mazos que mostrar</h2>
+                <h3>No hay mazos que mostrar</h3>
               }
             </> 
           }
@@ -141,7 +138,7 @@ function index() {
         </div>
 
         <div className="Cards">
-          <h2>Tarjetas</h2>
+          <h3>Tarjetas</h3>
           {/* {
             loading ? 
               <SpinnerComponent/>
@@ -178,8 +175,8 @@ function index() {
 
       <style jsx>{`
 
-        h2 {
-          padding: 20px;
+        h3 {
+          padding: 20px 10px;
           font-weight: 600;
           font-size: 12px;
           color: rgba(0,0,0,.5);
@@ -192,7 +189,7 @@ function index() {
 
         hr{
           margin-top: 4px;
-          border: 1px solid rgba(0,0,0,.04);
+          border: 1px solid rgba(0,0,0,.1);
         }
 
       `}</style>

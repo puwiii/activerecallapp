@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import Head from 'next/head'
 import styles from '../../../styles/Signin.module.scss'
-import { auth, saveUserInFirestore } from '../../../firebase/client'
+import { auth } from '../../../firebase/client'
 import {useRouter} from 'next/router'
 import RightArrowIcon from 'components/icons/RightArrowIcon'
 

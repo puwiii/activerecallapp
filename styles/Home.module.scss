@@ -11,10 +11,11 @@
   
   
   @include breakpoint-up(medium){
-    padding: 10px 40px;
+    padding: 0px 40px;
   }
 
   .title{
+    padding: 0;
     padding-bottom: .5em;
   }
  

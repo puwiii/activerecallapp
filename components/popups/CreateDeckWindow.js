@@ -11,6 +11,7 @@ import styles from "/styles/Global.module.scss";
 //components
 import RightArrowIcon from "components/icons/RightArrowIcon";
 import BackIcon from "components/icons/BackIcon";
+import InfoIcon from "components/icons/InfoIcon";
 
 function CreateDeckWindow({ isOpen, closeWindow, id }) {
   const [deckName, setDeckName] = useState('');
@@ -56,8 +57,7 @@ function CreateDeckWindow({ isOpen, closeWindow, id }) {
       )}
       <div className={popupStyles.window}>
         <h1 className={popupStyles.title}>Crear mazo</h1>
-
-        <form className={popupStyles.form}>
+        <form className={popupStyles.form} id="form">
           <label htmlFor="deckName">Nombre del mazo <span className={popupStyles.required}>*</span></label>
           <input
             type="text"
@@ -75,7 +75,7 @@ function CreateDeckWindow({ isOpen, closeWindow, id }) {
             onChange={(e) => setDeckDescription(e.target.value)}
             name="deckDescription"
           />
-          <div>
+          <div className={popupStyles.checkbox}>
             <input type="checkbox" name="isPublic" id="isPublic" />
             <label htmlFor="isPublic">Mazo público</label>
           </div>

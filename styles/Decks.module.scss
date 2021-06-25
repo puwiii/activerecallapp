@@ -21,6 +21,16 @@
     // }
 }
 
+.description{
+    padding: .5em 0;
+    font-size: $font-size-xSmall;
+    font-weight: $font-weight-medium;
+    opacity: .5;
+    @include breakpoint-up(medium){
+        font-size: $font-size-xSmall;
+    }
+}
+
 .header{
     background-color: rgba($bg-color,.5);
     backdrop-filter: blur(5px);
@@ -28,7 +38,7 @@
     top: 0;
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items:flex-end;
 
     div{
         display: flex;
