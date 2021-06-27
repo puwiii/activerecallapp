@@ -11,7 +11,7 @@ import styles from "/styles/Global.module.scss";
 //components
 import RightArrowIcon from "components/icons/RightArrowIcon";
 import BackIcon from "components/icons/BackIcon";
-import InfoIcon from "components/icons/InfoIcon";
+import ExploreIcon from "components/icons/ExploreIcon";
 
 function CreateDeckWindow({ isOpen, closeWindow, id }) {
   const [deckName, setDeckName] = useState('');
@@ -77,7 +77,7 @@ function CreateDeckWindow({ isOpen, closeWindow, id }) {
           />
           <div className={popupStyles.checkbox}>
             <input type="checkbox" name="isPublic" id="isPublic" />
-            <label htmlFor="isPublic">Mazo público</label>
+            <label htmlFor="isPublic">Mazo público<ExploreIcon/></label>
           </div>
         </form>
 

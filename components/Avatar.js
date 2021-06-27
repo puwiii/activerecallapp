@@ -1,20 +1,29 @@
 import { auth } from "firebase/client";
 import React, {useState} from "react";
+import {useRouter} from 'next/router'
+
+//styles
 import styles from "styles/Avatar.module.scss";
 
 //icons
-import DoorIcon from "./icons/DoorIcon";
-import UserIcon from "./icons/UserIcon";
+import DoorIcon from "components/icons/DoorIcon";
+import UserIcon from "components/icons/UserIcon";
 
 function Avatar({ username, avatar, email }) {
 
+  const router = useRouter()
   const[active, setActive] = useState(false)
 
   const toggleMenu = () => {
-    const menu = document.getElementById("menu");
     menu.classList.toggle("visible");
     setActive(!active)
   };
+
+  const goAccount = () => {
+    router.push('/myaccount')
+    setActive(!active)
+    menu.classList.toggle("visible")
+  }
 
   const logout = () => {
     auth.signOut();
@@ -29,7 +38,7 @@ function Avatar({ username, avatar, email }) {
         <h3 className={styles.subtitle}> Hola, {username}</h3>
         <span>{email}</span>
         <hr/>
-        <li className={styles.roundedButtonTerciary}>Mi cuenta <UserIcon/> </li>
+        <li onClick={goAccount} className={styles.roundedButtonTerciary}>Mi cuenta <UserIcon/> </li>
         <hr/>
         <li onClick={logout} className={styles.roundedButtonTerciary}>Cerrar sesión <DoorIcon/> </li>
         <hr/>

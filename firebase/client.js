@@ -23,6 +23,8 @@ const auth = firebase.auth();
 
 const database = firebase.firestore();
 
+// const storage = firebase.storage();
+
 const mapUserFromFirebaseAuth = (user) => {
   const { displayName, email, photoURL, uid, emailVerified } = user;
 
@@ -135,7 +137,6 @@ export const listenForDeck = (id, setActualDecks, setDecks) => {
     .collection("decks")
     .doc(id)
     .onSnapshot((data)=>{
-      // console.log(data.data())
       const deck = data.data()
       setActualDecks(deck)
 
@@ -165,12 +166,9 @@ export const removeDeck = (id) => {
   .get()
   .then((doc)=>{
     const deck = doc.data()
-    console.log(deck)
     
     if(deck.decks.length > 0){
-      console.log("hay decks adentro")
       deck.decks.forEach((deckItem)=>{
-        console.log(deckItem)
         removeDeck(deckItem.id)
       })
     }
@@ -190,6 +188,13 @@ const removeDeckAux = (deck) => {
   .catch(()=>{
     console.log("problema")
   })
+}
+
+export const uploadAvatarImage = (file, userId) => {
+  const ref = storage.ref(`/avatars/${userId}`)
+  const task = ref.put(file)
+
+  return task
 }
 
 

@@ -7,7 +7,7 @@
 .roundedButtonSecondary,
 .roundedButtonTerciary {
   svg {
-    margin-left: 10px;
+    margin-left: 5px;
 
     @include breakpoint-up(medium){
       zoom: 150%;
@@ -21,8 +21,8 @@
   outline: none;
   border: none;
   font-size: $font-size-xSmall;
-  font-weight: $font-weight-bold;
-  padding: 0.9em 1.5em;
+  font-weight: $font-weight-medium;
+  padding: 0.7em 1.2em;
   white-space: nowrap;
   border-radius: calc(1.5em + #{$font-size-small});
   transition: all 0.26s ease-in-out;

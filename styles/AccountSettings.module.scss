@@ -1,0 +1,93 @@
+@import "mixins";
+@import "variables";
+@import "globals";
+
+.form{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 1em;
+}
+
+.field{
+    *{
+        user-select: none;
+    }
+    cursor: pointer;
+    width: 100%;
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    border-bottom: 1px solid rgba(0,0,0,.05);
+    padding: 3em 2em 2em 2em;
+    transition: background-color 100ms ease-in-out;
+
+    &:hover{
+        background-color: rgba($primary-color,.08);
+    }
+
+    img{
+        background-color: rgba(0,0,0,.05);
+        width: 80px;
+        height: 80px;
+        clip-path: circle(40px);
+
+
+        @include breakpoint-up(medium){
+            width: 120px;
+            height: 120px;
+            clip-path: circle(60px);
+        }
+    }
+
+    >svg{
+        //align-self: center;
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: $primary-color;
+        zoom: 1.5;
+    }
+
+    h3{
+        font-size: $font-size-small;
+        font-weight: $font-weight-medium;
+
+        @include breakpoint-up(medium){
+            font-size: $font-size-medium
+        }
+    }
+
+    span{
+        color: $text-secondary;
+        display: flex;
+        align-items: center;
+        position: absolute;
+        top: 5px;
+        left: 5px;
+        font-size: $font-size-xSmall;
+        font-weight: $font-weight-medium;
+        opacity: .4;
+
+        svg{
+            zoom: 80%;
+            margin-right: 5px;
+        }
+    }
+}
+
+.avatar{
+    cursor: pointer;
+    width: 250px;
+    height: 250px;
+    background-color: rgba(0,0,0,.05);
+    border-radius: 50%;
+    img{
+        width: 100%;
+        border-radius: 50%;
+        //object-fit: contain;
+    }
+}

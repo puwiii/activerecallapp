@@ -75,7 +75,7 @@ function index() {
       
       {actualDeck ? 
         <div className={decksStyles.header}>
-          <h1 className={styles.subtitle}>{actualDeck.name} <h2 className={decksStyles.description}>{actualDeck?.description}</h2></h1> 
+          <h1 className={styles.subtitle}>{actualDeck.name}</h1>
           <div>
             <button onClick={openRemoveDeck}><TrashIcon/><span>Eliminar mazo</span></button>
             <button><SettingsIcon/><span>Editar mazo</span></button>
