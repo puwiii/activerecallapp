@@ -12,30 +12,42 @@ import styles from "/styles/Global.module.scss";
 import RightArrowIcon from "components/icons/RightArrowIcon";
 import BackIcon from "components/icons/BackIcon";
 import ExploreIcon from "components/icons/ExploreIcon";
+import SpinnerComponentCircle from "components/SpinnerComponentCircle";
 
 function CreateDeckWindow({ isOpen, closeWindow, id }) {
   const [deckName, setDeckName] = useState('');
   const [deckDescription, setDeckDescription] = useState('');
-  
-  const closeForm = (e) => {
-    e.preventDefault();
-    //const form = document.getElementById("form");
+  const [loading, setLoading] = useState(false)
+
+  const closeForm = () => {
+    
     form.reset()
+    ErrorMsg.style.display="none"
     setDeckDescription("");
     setDeckName("");
     closeWindow();
   };
 
-  const crearMazo = (e) => {
-    form.reset();
+  const crearMazo = (e) => {  
     e.preventDefault();
-    createDeck(id, deckName.trim(), deckDescription.trim())
+
+    
+    if(!deckName || deckName?.length === 0){
+      ErrorMsg.innerText= "(*) El mazo debe tener un nombre"
+      ErrorMsg.style.display="block"
+      return
+    }else{
+      setLoading(true)
+      form.reset();
+      createDeck(id, deckName.trim(), deckDescription.trim())
       .then(() => {
         setDeckDescription("");
         setDeckName("");
+        setLoading(false)
         closeWindow();
       })
       .catch(alert);
+    }
   };
 
   // useEffect(() => {
@@ -56,34 +68,45 @@ function CreateDeckWindow({ isOpen, closeWindow, id }) {
         </Head>
       )}
       <div className={popupStyles.window}>
+        {
+          loading &&
+            <div className={popupStyles.loader}>
+              <SpinnerComponentCircle/>
+            </div>        
+        }
         <h1 className={popupStyles.title}>Crear mazo</h1>
         <form className={popupStyles.form} id="form">
-          <label htmlFor="deckName">Nombre del mazo <span className={popupStyles.required}>*</span></label>
+          <label>Nombre del mazo <span className={popupStyles.required}>*</span></label>
           <input
             type="text"
             placeholder="Ingrese un nombre"
+            aria-label="Ingresa un nombre" 
             className={styles.inputRounded}
             onChange={(e) => setDeckName(e.target.value)}
-            name="deckName"
           />
-          <label htmlFor="deckDescription">Descripcion del mazo</label>
+          <label>Descripción del mazo</label>
           <textarea
             type="text"
             placeholder="Puedes agregar una pequeña descripción"
+            aria-label="Puedes agregar una pequeña descripción" 
             rows={5}
             className={styles.inputRounded}
             onChange={(e) => setDeckDescription(e.target.value)}
-            name="deckDescription"
           />
           <div className={popupStyles.checkbox}>
-            <input type="checkbox" name="isPublic" id="isPublic" />
+            <input type="checkbox" id="isPublic" name="isPublic"/>
             <label htmlFor="isPublic">Mazo público<ExploreIcon/></label>
           </div>
-        </form>
-
-        <div className={popupStyles.buttons}>
-          <button onClick={closeWindow}><BackIcon/>Cancelar</button>
+          <span id="ErrorMsg" className={popupStyles.ErrorMsg}></span>
           <button
+            type="submit"
+            onClick={(e) => crearMazo(e)}
+          />
+        </form>
+        <div className={popupStyles.buttons}>
+          <button onClick={closeForm}><BackIcon/>Cancelar</button>
+          <button
+            type="submit"
             className={popupStyles.primaryButton}
             onClick={(e) => crearMazo(e)}
             disabled={!(deckName.trim().length)}
@@ -91,6 +114,7 @@ function CreateDeckWindow({ isOpen, closeWindow, id }) {
             Crear mazo<RightArrowIcon />
           </button>
         </div>
+       
 
       </div>
       <style jsx>{`

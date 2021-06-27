@@ -31,6 +31,9 @@ function index() {
                 router.replace('/')
             }
         }
+        else{
+            router.back()
+        }
     },[user])
 
     
@@ -38,9 +41,20 @@ function index() {
     const resendEmailVerification = (e) => {
         e.preventDefault()
         auth.currentUser.sendEmailVerification().then(()=>{
+            ErrorMsg.style.borderColor = "#21a04730"
             ErrorMsg.style.background = "#21a0470f"
             ErrorMsg.style.color = "#21a047"
             ErrorMsg.innerText="Revisa tu bandeja de entrada 📬"
+            ErrorMsg.style.display="block"
+        }).catch((e)=>{
+            const ERROR_MESSAGES = {
+                'auth/too-many-requests': "Ya se ha enviado el email, revisa en tu correo no deseado 👀.",
+                'auth/wrong-password': "La contraseña y/o el email no son validos, verifique los datos ingresados."
+            }
+            ErrorMsg.style.borderColor = "#c43d3d30"
+            ErrorMsg.style.background = "#c43d3d0f"
+            ErrorMsg.style.color = "#c43d3d"
+            ErrorMsg.innerText= ERROR_MESSAGES[e.code] || "Error, por favor intente de nuevo"
             ErrorMsg.style.display="block"
         })
     }
@@ -48,11 +62,13 @@ function index() {
     const checkForVerification = (e) => {
         e.preventDefault()
         console.log(auth.currentUser)
-        if(auth.currentUser.emailVerified === true){
+        
+        if(user.emailVerified === true){
             saveUserInFirestore(auth.currentUser)
             router.replace('/')
         }
         else{
+            ErrorMsg.style.borderColor = "#c43d3d30"
             ErrorMsg.style.background = "#c43d3d0f"
             ErrorMsg.style.color = "#c43d3d"
             ErrorMsg.innerText="El email no se ha verificado aún 📪"
@@ -105,7 +121,6 @@ function index() {
             </div>
             <style jsx>{`
                 #ErrorMsg{
-                    display:block;
                     align-self: center;
                     margin-top: 20px;
                 }

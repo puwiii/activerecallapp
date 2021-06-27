@@ -25,7 +25,7 @@
   padding: 0.7em 1.2em;
   white-space: nowrap;
   border-radius: calc(1.5em + #{$font-size-small});
-  transition: all 0.26s ease-in-out;
+  transition: background-position 0.46s ease-in-out;
 
   @include breakpoint-up(medium){
     font-size: $font-size-small;
@@ -38,12 +38,12 @@
 
   //--
   background: linear-gradient(
-    to left,
+    315deg,
     $primary-color 50%,
     $primary-dark-color 50%
   );
 
-  background-size: 200% 100%;
+  background-size: 250% 100%;
   background-position: right bottom;
 
   &:hover {
@@ -56,11 +56,11 @@
   background-color: $primary-light-color;
   color: $text-secondary;
   background: linear-gradient(
-    to left,
+    315deg,
     rgba($primary-lighter-color,.5) 50%,
     rgba($primary-light-color,.5) 50%
   );
-  background-size: 200% 100%;
+  background-size: 250% 100%;
   background-position: right bottom;
 
   &:hover {
@@ -130,8 +130,7 @@
 
 .subtitle {
   font-size: $font-size-small;
-  font-weight: $font-weight-medium;
-  color: $text-primary;
+  font-weight: $font-weight-bold;
 
   @include breakpoint-up(medium) {
     font-size: $font-size-medium;

@@ -4,9 +4,11 @@ import Link from 'next/link'
 import { auth } from 'firebase/client'
 import {useRouter} from 'next/router'
 import GmailButton from 'components/GmailButton'
-import RightArrowIcon from './icons/RightArrowIcon'
+
 import PushLeftIcon from './icons/PushLeftIcon'
 import useUser from './hooks/useUser'
+import RightArrowIcon from 'components/icons/RightArrowIcon'
+import ChevronRightIcon from './icons/ChevronRightIcon'
 
 function index() {
 
@@ -48,7 +50,6 @@ function index() {
                 // router.back()
             })
             .catch(error=>{
-
                 const ERROR_MESSAGES = {
                     'auth/user-not-found': "No se ha encontrado un usuario registrado con ese Email.",
                     'auth/wrong-password': "La contraseña y/o el email no son validos, verifique los datos ingresados."
@@ -90,7 +91,7 @@ function index() {
                         <button type="submit" className={styles.roundedButtonFilled} onClick={e=>login(e)}>Iniciar sesión <RightArrowIcon/></button>
                         {/* <GmailButton/> */}
                         <Link href={"/signin/createaccount"}>
-                            <a className={styles.roundedButtonSecondary}>¡Soy nuevo!<PushLeftIcon/></a> 
+                            <button className={styles.roundedButtonSecondary}>¡Soy nuevo!<ChevronRightIcon/></button> 
                         </Link>
                     </div>
                 </form>

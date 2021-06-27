@@ -5,12 +5,12 @@
 .decks{
     display: grid;
     //grid-template-columns: repeat(1, 1fr);
-    grid-template-columns: repeat( auto-fill, minmax(200px, 1fr) );
+    grid-template-columns: repeat( auto-fill, minmax(150px, 1fr) );
     gap: 10px;
     margin-bottom: 20px;
-    // @include breakpoint-up(medium){
-    //     grid-template-columns: repeat(2, 1fr);
-    // }
+    @include breakpoint-up(medium){
+        grid-template-columns: repeat( auto-fill, minmax(200px, 1fr) );
+    }
 
     // @include breakpoint-up(large){
     //     grid-template-columns: repeat(4, 1fr);
@@ -49,7 +49,7 @@
         border-radius: 50px;
         font-size: $font-size-small;
         font-weight: $font-weight-medium;
-        padding: .7em;
+        padding: .1em;
         display: flex;
         gap: 5px;
         align-items: center;
@@ -76,7 +76,7 @@
 
         @include breakpoint-up(medium){
             zoom: 1;
-
+            padding: .7em;
             span{
                 display: block;
             }

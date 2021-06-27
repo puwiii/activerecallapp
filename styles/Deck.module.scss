@@ -26,7 +26,7 @@
         align-self: center;
         font-size: $font-size-xSmall;
         color: $text-secondary;
-        font-weight: $font-weight-medium;
+        font-weight: $font-weight-bold;
 
         @include breakpoint-up(medium){
             font-size: $font-size-small;
@@ -41,9 +41,10 @@
         width: 100%;
         //width: fit-content;
         padding: 2em;
+        aspect-ratio: 4 / 5;
 
         >p{
-            font-size: $font-size-xSmall;
+            font-size: $font-size-xxSmall;
             font-weight: $font-weight-regular;
             display: -webkit-box;
             -webkit-line-clamp: 4;
