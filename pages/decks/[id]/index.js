@@ -15,21 +15,26 @@ import useUser, {USER_STATES} from "components/hooks/useUser";
 
 //components
 import DeckContainer from "components/DeckContainer";
-import CreateDeckWindow from "components/popups/CreateDeckWindow";
 import SpinnerComponent from "components/SpinnerComponent";
 import NewFolderIcon from "components/icons/NewFolderIcon";
 import CreateIcon from "components/icons/CreateIcon";
 import TrashIcon from "components/icons/TrashIcon";
 import SettingsIcon from "components/icons/SettingsIcon";
+
+//popups
+import CreateDeckWindow from "components/popups/CreateDeckWindow";
 import RemoveDeckWindow from "components/popups/RemoveDeckWindow";
+import CreateCardWindow from "components/popups/CreateCardWindow";
 
 function index() {
 
   const [isOpenCreateDeck, openCreateDeck, closeCreateDeck] = useModal(false);
   const [isOpenRemoveDeck, openRemoveDeck, closeRemoveDeck] = useModal(false);
+  const [isOpenCreateCard, openCreateCard, closeCreateCard] = useModal(false);
 
   const [loading, setLoading] = useState(true)
   const [idDeck, setIdDeck] = useState()
+  const [idParentDeck, setIdParentDeck] = useState()
   const [actualDeck, setActualDeck] = useState()
   const [decks, setDecks] = useState();
 
@@ -46,12 +51,13 @@ function index() {
     }
   }, [user]);
 
-
-  //get the router query id
   useEffect(()=>{
     setIdDeck(router.query.id)
   }, [router.query.id])
 
+  useEffect(()=>{
+    setIdParentDeck(router.query.from)
+  },[router.query.from])
 
   useEffect(()=>{
     if(idDeck) {
@@ -96,10 +102,17 @@ function index() {
           id={idDeck}
         />
 
+        <CreateCardWindow
+          isOpen={isOpenCreateCard}
+          closeWindow={closeCreateCard}
+          id={idDeck}
+        />
+
         <RemoveDeckWindow
           isOpen={isOpenRemoveDeck}
           closeWindow={closeRemoveDeck}
-          id={idDeck}
+          deckId={idDeck}
+          parentDeckId={idParentDeck}
           name={actualDeck?.name}
         />
 
@@ -116,9 +129,10 @@ function index() {
                   {decks.map((deck) => (
                     <DeckContainer
                       key={deck.id}
-                      id={deck.id}
+                      deckId={deck.id}
                       name={deck.name}
                       description={deck.description}
+                      parentDeckId={idDeck}
                     />
                   ))}
                 </div>
@@ -164,7 +178,7 @@ function index() {
           
           <button
             className={styles.roundedButtonTerciary}
-            onClick={openCreateDeck}
+            onClick={openCreateCard}
           >
             Crear una nueva tarjeta <CreateIcon/>
           </button>

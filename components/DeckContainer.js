@@ -3,9 +3,9 @@ import React from 'react'
 import styles from 'styles/Deck.module.scss'
 import FolderIcon from './icons/FolderIcon'
 
-function DeckContainer({id, name, description, icon, isPoster}) {
+function DeckContainer({deckId, name, description, icon, isPoster, parentDeckId}) {
     return (
-        <Link href={`/decks/${id}`}>
+        <Link href={`/decks/${deckId}?from=${parentDeckId}`}>
             <div className={`${styles.deck} ${isPoster && styles.poster}`} title={name}>
                 <div className={styles.deck__icon}>
                     <FolderIcon/>

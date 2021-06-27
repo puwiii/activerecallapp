@@ -61,6 +61,42 @@ export const saveUserInFirestore = (user) => {
   });
 };
 
+export const createCard = (deckId, front, back) => {
+    
+  let user = database.collection("users").doc(auth.currentUser.uid);
+
+  console.log(deckId)
+
+  return database
+  .collection("cards")
+  .add({
+    front: front,
+    back: back,
+    createdAt: firebase.firestore.Timestamp.fromDate(new Date()),
+    author: user,
+  })
+  .then((cardRef)=>{
+    console.log(cardRef)
+    //setting the deckToAdd to their parent deck
+    database
+    .collection("decks")
+    .doc(deckId)
+    .update({
+      cards:  firebase.firestore.FieldValue.arrayUnion(cardRef)
+    })
+    .then(() => {
+      console.log("Document successfully updated!");
+    })
+    .catch(()=>{
+      console.log("An error ocurred while updating deck")
+    })
+  })
+  .catch((e) => {
+    console.log(e.message);
+  });
+
+}
+
 export const createDeck = (id, name, description = "") => {
   let user = database.collection("users").doc(auth.currentUser.uid);
 
@@ -160,25 +196,62 @@ export const listenForDecks = (deck, callback) =>{
   })
 }
 
-export const removeDeck = (id) => {
-  database.collection("decks")
-  .doc(id)
+export const clearDeckReference = (deckId, parentDeckId) => {
+    console.log("clearDeckReference")
+    console.log(parentDeckId)
+
+    if(parentDeckId){
+      console.log("return true")
+      return true
+    }
+    else{
+      console.log("return false")
+    }
+
+    const parentDeckRef = database.collection("decks")
+    .doc(parentDeckId)
+  
+    parentDeckRef.get()
+    .then((doc)=>{
+      const parentDeck = doc.data()
+  
+      const newDecks = parentDeck.decks.filter( deckItem => {
+        console.log(`deck del parent >> ${deckItem.id}`)
+        console.log(`deck a sacar >> ${deckId}`)
+        return deckItem.id !== deckId
+      })
+  
+      parentDeckRef.update({
+        decks: newDecks
+      })
+
+    })  
+  
+}
+
+export const removeDeck = (deckId) => {
+
+  return database.collection("decks")
+  .doc(deckId)
   .get()
   .then((doc)=>{
     const deck = doc.data()
+    console.log("removeDeck")
     
     if(deck.decks.length > 0){
       deck.decks.forEach((deckItem)=>{
-        removeDeck(deckItem.id)
+        removeDeck(deckItem.deckId).then(()=>{
+          removeDeckFromFirestore(doc)
+        })
       })
     }
-
-    removeDeckAux(doc)
-    
+   
   })
 }
 
-const removeDeckAux = (deck) => {
+const removeDeckFromFirestore = (deck) => {
+  console.log(deck)
+  console.log(`${deck.id} "removeDeckFromFirestore"`)
   database.collection("decks")
   .doc(deck.id)
   .delete()
@@ -188,6 +261,7 @@ const removeDeckAux = (deck) => {
   .catch(()=>{
     console.log("problema")
   })
+
 }
 
 export const uploadAvatarImage = (file, userId) => {

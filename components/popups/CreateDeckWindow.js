@@ -20,9 +20,8 @@ function CreateDeckWindow({ isOpen, closeWindow, id }) {
   const [loading, setLoading] = useState(false)
 
   const closeForm = () => {
-    
-    form.reset()
-    ErrorMsg.style.display="none"
+    createDeckForm.reset()
+    createDeckErrorMsg.style.display="none"
     setDeckDescription("");
     setDeckName("");
     closeWindow();
@@ -33,14 +32,14 @@ function CreateDeckWindow({ isOpen, closeWindow, id }) {
 
     
     if(!deckName || deckName?.length === 0){
-      ErrorMsg.innerText= "(*) El mazo debe tener un nombre"
-      ErrorMsg.style.display="block"
+      createDeckErrorMsg.innerText= "(*) El mazo debe tener un nombre"
+      createDeckErrorMsg.style.display="block"
       return
     }else{
       setLoading(true)
-      form.reset();
       createDeck(id, deckName.trim(), deckDescription.trim())
       .then(() => {
+        createDeckForm.reset();
         setDeckDescription("");
         setDeckName("");
         setLoading(false)
@@ -75,7 +74,7 @@ function CreateDeckWindow({ isOpen, closeWindow, id }) {
             </div>        
         }
         <h1 className={popupStyles.title}>Crear mazo</h1>
-        <form className={popupStyles.form} id="form">
+        <form className={popupStyles.form} id="createDeckForm">
           <label>Nombre del mazo <span className={popupStyles.required}>*</span></label>
           <input
             type="text"
@@ -97,7 +96,7 @@ function CreateDeckWindow({ isOpen, closeWindow, id }) {
             <input type="checkbox" id="isPublic" name="isPublic"/>
             <label htmlFor="isPublic">Mazo público<ExploreIcon/></label>
           </div>
-          <span id="ErrorMsg" className={popupStyles.ErrorMsg}></span>
+          <span id="createDeckErrorMsg" className={popupStyles.ErrorMsg}></span>
           <button
             type="submit"
             onClick={(e) => crearMazo(e)}

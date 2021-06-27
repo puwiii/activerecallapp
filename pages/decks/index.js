@@ -78,7 +78,7 @@ function index() {
                   {decks.map((deck) => (
                     <DeckContainer
                       key={deck.id}
-                      id={deck.id}
+                      deckId={deck.id}
                       name={deck.name}
                       description={deck.description}
                       isPoster={true}
