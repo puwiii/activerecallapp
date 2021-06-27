@@ -197,10 +197,10 @@ export const listenForDecks = (deck, callback) =>{
 }
 
 export const clearDeckReference = (deckId, parentDeckId) => {
-    console.log("clearDeckReference")
-    console.log(parentDeckId)
+    console.log(`clearDeckReference >> ${parentDeckId}`)
 
-    if(parentDeckId){
+    console.log(parentDeckId)
+    if(parentDeckId === "none"){
       console.log("return true")
       return true
     }
@@ -231,29 +231,33 @@ export const clearDeckReference = (deckId, parentDeckId) => {
 
 export const removeDeck = (deckId) => {
 
-  return database.collection("decks")
+  database.collection("decks")
   .doc(deckId)
   .get()
   .then((doc)=>{
     const deck = doc.data()
-    console.log("removeDeck")
+    console.log(`removeDeck >> ${doc.id}`)
     
-    if(deck.decks.length > 0){
+    if(deck?.decks.length > 0){
       deck.decks.forEach((deckItem)=>{
-        removeDeck(deckItem.deckId).then(()=>{
-          removeDeckFromFirestore(doc)
+        database.collection("decks")
+        .doc(deckItem.id)
+        .get()
+        .then((doc)=>{
+          removeDeck(doc.id)
         })
       })
     }
-   
+    removeDeckFromFirestore(doc.id)
+
+
   })
 }
 
-const removeDeckFromFirestore = (deck) => {
-  console.log(deck)
-  console.log(`${deck.id} "removeDeckFromFirestore"`)
+const removeDeckFromFirestore = (deckId) => {
+  console.log(`removeDeckFromFirestore >> ${deckId} `)
   database.collection("decks")
-  .doc(deck.id)
+  .doc(deckId)
   .delete()
   .then(()=>{
     console.log("borrado")

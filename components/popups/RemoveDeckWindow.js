@@ -14,11 +14,11 @@ function RemoveDeckWindow({ isOpen, closeWindow, deckId, name, parentDeckId }) {
     const router = useRouter()
 
     const remove = () => {
-        removeDeck(deckId).then(()=>{
-            clearDeckReference(deckId, parentDeckId)
-        })
+        removeDeck(deckId)
+        clearDeckReference(deckId, parentDeckId)
+     
         closeWindow()
-        //router.back()
+        router.back()
     }
 
     return (
