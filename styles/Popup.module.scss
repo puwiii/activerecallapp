@@ -31,10 +31,13 @@
 }
 
 .title{
+    text-decoration: underline dashed $text-primary;
+    text-underline-offset: 10px;
     font-size: $font-size-large;
     color: $text-primary;
     text-align: center;
-    padding: .5em 0;
+    padding: 1em 0;
+   // margin-bottom: .5em;
 
     @include breakpoint-up(medium){
         font-size: $font-size-xLarge;
@@ -57,10 +60,10 @@
 }
 
 .form{
-    padding: 0 3em;
+    padding: 1em 3em;
     display: flex;
     flex-direction: column;
-    margin-bottom: 1.5em;
+    //margin-bottom: .5em;
     gap: 10px;
 
     // > label{
@@ -117,6 +120,7 @@
 .buttons{
     padding-top: 2em;
     display: flex;
+    flex-direction: row-reverse;
     justify-content: space-around;
 
     button{
@@ -124,36 +128,36 @@
         display: flex;
         align-items: center;
         gap: 5px;
-        padding: 1em 0;
-        background-color: rgba($primary-color,.1);
+        padding: 1.4em 0;
+        background-color: rgba(0,0,0,.0);
         color: $text-secondary;
         flex: 1;
         font-size: $font-size-xSmall;
-        font-weight: $font-weight-bold;
-        transition: background-color .255s linear;
-
+        font-weight: $font-weight-medium;
+        transition: background-color .215s linear;
+        
         @include breakpoint-up(medium){
             font-size: $font-size-small;
         }
-
+        
         &:hover, &:focus{
-            background-color: rgba($primary-color,.25);
+            background-color: rgba(0,0,0,.05);
         }
 
         &.primaryButton{
-            color: $text-white;
-            background-color: rgba($primary-color,.9);
+            color: $succes;
+            background-color: transparent;
             &:hover, &:focus{
-                background-color: rgba($primary-color,.6);
+                background-color: rgba($succes,.2);
             }
         }
 
         &.removeBtn{
-            background-color: rgba($error,.1);
+            background-color: transparent;
             color: $error;
 
             &:hover, &:focus{
-                background-color: rgba($error,.18);
+                background-color: rgba($error,.2);
             }
         }
     }

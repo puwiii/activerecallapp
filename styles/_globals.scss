@@ -10,7 +10,7 @@
     margin-left: 5px;
 
     @include breakpoint-up(medium){
-      zoom: 150%;
+      zoom: 120%;
     }
   }
 
@@ -24,8 +24,9 @@
   font-weight: $font-weight-medium;
   padding: 0.7em 1.2em;
   white-space: nowrap;
-  border-radius: calc(1.5em + #{$font-size-small});
-  transition: background-position 0.46s ease-in-out;
+  border-radius: 4em;
+  //border-radius: calc(1.5em + #{$font-size-small});
+  transition: background-position 0.36s ease-in-out;
 
   @include breakpoint-up(medium){
     font-size: $font-size-small;
@@ -35,6 +36,10 @@
 .roundedButtonFilled {
   background-color: $primary-color;
   color: $text-white;
+
+  //--
+  
+  //--
 
   //--
   background: linear-gradient(
@@ -69,31 +74,38 @@
 }
 
 .roundedButtonTerciary {
-  background-color: rgba($primary-color,.03);
+  //background-color: rgba($primary-color,.03);
   border-color: transparent;
   color: $primary-color;
+  font-weight: $font-weight-bold;
+  //text-shadow: 2px 2px 3px rgba(0,0,0,.1);
 }
 
 //inputs
 .inputRounded {
+  position: relative;
   display: block;
   width: 100%;
   outline: none;
   background-color: transparent;
-  border: 1px solid #ccc;
+  border: 2px solid rgba(0,0,0,.05);
   font-size: $font-size-xSmall;
   font-weight: $font-weight-regular;
   color: $text-black;
-  padding: 1.3em 1em;
-  border-radius: 0.3em; //calc(0.5em + #{$font-size-small});
+  padding: 1em;
+  border-radius: 0.5em;
   transition: border-color 0.21s ease-in-out;
 
   @include breakpoint-up(medium) {
     font-size: $font-size-small;
   }
 
-  &:focus {
+  &:focus{
     border-color: $primary-color;
+  }
+
+  &::placeholder{
+    font-weight: $font-weight-regular;
   }
 }
 

@@ -14,7 +14,7 @@ import BackIcon from "components/icons/BackIcon";
 import ExploreIcon from "components/icons/ExploreIcon";
 import SpinnerComponentCircle from "components/SpinnerComponentCircle";
 
-function CreateDeckWindow({ isOpen, closeWindow, id }) {
+function CreateDeckWindow({ isOpen, closeWindow, deckId }) {
   const [deckName, setDeckName] = useState('');
   const [deckDescription, setDeckDescription] = useState('');
   const [loading, setLoading] = useState(false)
@@ -37,7 +37,7 @@ function CreateDeckWindow({ isOpen, closeWindow, id }) {
       return
     }else{
       setLoading(true)
-      createDeck(id, deckName.trim(), deckDescription.trim())
+      createDeck(deckId, deckName.trim(), deckDescription.trim())
       .then(() => {
         createDeckForm.reset();
         setDeckDescription("");
@@ -98,12 +98,12 @@ function CreateDeckWindow({ isOpen, closeWindow, id }) {
           </div>
           <span id="createDeckErrorMsg" className={popupStyles.ErrorMsg}></span>
           <button
+            tabIndex="-1"
             type="submit"
             onClick={(e) => crearMazo(e)}
           />
         </form>
-        <div className={popupStyles.buttons}>
-          <button onClick={closeForm}><BackIcon/>Cancelar</button>
+        <div className={popupStyles.buttons}>   
           <button
             type="submit"
             className={popupStyles.primaryButton}
@@ -112,6 +112,7 @@ function CreateDeckWindow({ isOpen, closeWindow, id }) {
           >
             Crear mazo<RightArrowIcon />
           </button>
+          <button onClick={closeForm}><BackIcon/>Cancelar</button>
         </div>
        
 

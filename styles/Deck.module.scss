@@ -8,24 +8,25 @@
     align-items: center;
     border-radius: 5px;
     background: linear-gradient(to right bottom, rgba($primary-light-color,.02), rgba($primary-color, .05));
+    background-color: transparent;
     padding: .5em 1.5em;
-    border: 1px solid rgba($primary-color, .21);
+    border: 1px solid rgba(0,0,0, .05);
     box-shadow: 0px 0px 2px rgba(0,0,0,.0);
     flex: 1;
     transition: all 100ms ease-in-out;
 
     &:hover{
-        transform: scale3D(1.05,1.05,1) translate3d(0,0,0);
+        //transform: scale3D(1.05,1.05,1) translate3d(0,0,0);
+        background-color: rgba($primary-color,.08);
     }
 
     span{
         white-space: nowrap;
-        overflow-x: hidden;
+        overflow-x: auto;
         text-align: center;
         padding: .8em 0;
         align-self: center;
         font-size: $font-size-xSmall;
-        color: $text-secondary;
         font-weight: $font-weight-bold;
 
         @include breakpoint-up(medium){
@@ -71,7 +72,7 @@
     align-self: center;
     display: grid;
     place-items: center;
-    color: $primary-color;
+    //color: $primary-color;
 
     @include breakpoint-up(medium){
         zoom: 155%;

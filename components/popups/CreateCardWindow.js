@@ -100,13 +100,13 @@ const addCard = (e) => {
           />
           <span id="createCardErrorMsg" className={popupStyles.ErrorMsg}></span>
           <button
+            tabIndex="-1"
             type="submit"
             onClick={(e) => addCard(e)}
           />
         </form>
 
         <div className={popupStyles.buttons}>
-          <button onClick={closeForm}><BackIcon/>Cancelar</button>
           <button
             type="submit"
             className={popupStyles.primaryButton}
@@ -115,6 +115,7 @@ const addCard = (e) => {
           >
             Crear tarjeta<RightArrowIcon />
           </button>
+          <button onClick={closeForm}><BackIcon/>Cancelar</button>
         </div>
        
 

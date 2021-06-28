@@ -168,7 +168,7 @@ export const listenForUserDecks = (callback) => {
 };
 
 
-export const listenForDeck = (id, setActualDecks, setDecks) => {
+export const listenForDeck = (id, setActualDecks, setDecks, setCards) => {
      database
     .collection("decks")
     .doc(id)
@@ -176,9 +176,28 @@ export const listenForDeck = (id, setActualDecks, setDecks) => {
       const deck = data.data()
       setActualDecks(deck)
 
-      if(deck) listenForDecks(deck, setDecks)
+      if(deck){
+        listenForDecks(deck, setDecks)
+        listenForCards(deck, setCards)
+      } 
     });
 };
+
+export const listenForCards = (deck, setCards) => {
+  let promise = deck.cards.map(cardItem=>{
+    return database.collection("cards")
+    .doc(cardItem.id)
+    .get()
+    .then((doc)=>{
+      const id = doc.id;
+      return {...doc.data(), id}
+    })
+  })
+  
+  Promise.all(promise).then(array=>{
+    setCards(array)
+  })
+}
 
 export const listenForDecks = (deck, callback) =>{
   let promise = deck.decks.map(deckItem=>{
@@ -201,12 +220,10 @@ export const clearDeckReference = (deckId, parentDeckId) => {
 
     console.log(parentDeckId)
     if(parentDeckId === "none"){
-      console.log("return true")
+    //  console.log("return true")
       return true
     }
-    else{
-      console.log("return false")
-    }
+
 
     const parentDeckRef = database.collection("decks")
     .doc(parentDeckId)
@@ -216,8 +233,8 @@ export const clearDeckReference = (deckId, parentDeckId) => {
       const parentDeck = doc.data()
   
       const newDecks = parentDeck.decks.filter( deckItem => {
-        console.log(`deck del parent >> ${deckItem.id}`)
-        console.log(`deck a sacar >> ${deckId}`)
+    //    console.log(`deck del parent >> ${deckItem.id}`)
+   //     console.log(`deck a sacar >> ${deckId}`)
         return deckItem.id !== deckId
       })
   
@@ -236,7 +253,7 @@ export const removeDeck = (deckId) => {
   .get()
   .then((doc)=>{
     const deck = doc.data()
-    console.log(`removeDeck >> ${doc.id}`)
+//    console.log(`removeDeck >> ${doc.id}`)
     
     if(deck?.decks.length > 0){
       deck.decks.forEach((deckItem)=>{
@@ -255,7 +272,7 @@ export const removeDeck = (deckId) => {
 }
 
 const removeDeckFromFirestore = (deckId) => {
-  console.log(`removeDeckFromFirestore >> ${deckId} `)
+//  console.log(`removeDeckFromFirestore >> ${deckId} `)
   database.collection("decks")
   .doc(deckId)
   .delete()

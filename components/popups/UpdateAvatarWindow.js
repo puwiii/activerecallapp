@@ -28,8 +28,8 @@ function UpdateAvatar({ isOpen, closeWindow, userId }) {
                 </form>
 
                 <div className={popupStyles.buttons}>
-                    <button onClick={closeWindow}><BackIcon/>Cancelar</button>
                     <button className={popupStyles.primaryButton} onClick={updateAvatar}><UploadIcon/>Subir foto</button>
+                    <button onClick={closeWindow}><BackIcon/>Cancelar</button>
                 </div>
             </div>
 

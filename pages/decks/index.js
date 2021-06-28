@@ -54,7 +54,7 @@ function index() {
   return (
     <main className={styles.main}>
       <Head>
-        <title>Mis mazos - Liza</title>
+        <title>Mis Mazos - Liza</title>
       </Head>
 
       <h1 className={styles.title}>Mis Mazos</h1>

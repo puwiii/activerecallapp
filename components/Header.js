@@ -20,11 +20,20 @@ function Header() {
         </a>
         <div className={styles.header__user}>
           {user === USER_STATES.NOT_LOGGED && (
-            <Link href={"/signin"}>
-              <button className={styles.roundedButtonFilled}>
-                Iniciar sesión <RightArrowIcon />
+            <>
+            <Link href={"/signin/createaccount"}>
+              <button className={styles.roundedButtonTerciary}>
+                Crear cuenta 
+                {/* <RightArrowIcon /> */}
               </button>
             </Link>
+            <Link href={"/signin"}>
+              <button className={styles.roundedButtonFilled}>
+                Iniciar sesión 
+                {/* <RightArrowIcon /> */}
+              </button>
+            </Link>
+            </>
           )}
           {user === USER_STATES.NOT_KNOWN && <SpinnerComponent/>}
           {user && <Avatar username={user.username} avatar={user.avatar} email={user.email} />}

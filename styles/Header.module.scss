@@ -5,8 +5,8 @@
 .header {
   position: relative;
   z-index: 2000;
-  background-color: $primary-lighter-color;
-  background-color: $bg-color;
+  //background-color: $primary-lighter-color;
+  //background-color: $bg-color;
   //box-shadow: 0 5px 40px $bg-color;
 
   .container {
@@ -19,4 +19,6 @@
 
 .header__user{
   justify-self: flex-end;
+  display: flex;
+  align-items: center;
 }

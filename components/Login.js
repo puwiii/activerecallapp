@@ -70,7 +70,8 @@ function index() {
                 <form className={styles.form}>
                     <h1 className={styles.title}>Inicio de sesión</h1>
                     <input 
-                        type="email" 
+                        type="email"
+                        name="username" 
                         placeholder="Ingresa tu email" 
                         aria-label="Ingresa tu email" 
                         //autoComplete="username"
@@ -90,9 +91,6 @@ function index() {
                         {/* <a href="">¿Has olvidado tu contraseña?</a> */}
                         <button type="submit" className={styles.roundedButtonFilled} onClick={e=>login(e)}>Iniciar sesión <RightArrowIcon/></button>
                         {/* <GmailButton/> */}
-                        <Link href={"/signin/createaccount"}>
-                            <button className={styles.roundedButtonSecondary}>¡Soy nuevo!<ChevronRightIcon/></button> 
-                        </Link>
                     </div>
                 </form>
         //     </div>

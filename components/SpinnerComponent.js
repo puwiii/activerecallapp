@@ -5,12 +5,12 @@ import Spinner from "react-spinners/PulseLoader";
 const override = css`
   display: inline-block;
   margin: 20px;
-  border-color: #0e98ee;
+  border-color: #0876bb;
 `;
 
 function SpinnerComponent() {
     return (
-        <Spinner color={"#0e98ee"} loading={true} css={override} size={6} />
+        <Spinner color={"#0876bb"} loading={true} css={override} size={6} />
     )
 }
 

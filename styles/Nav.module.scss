@@ -8,20 +8,16 @@
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  border-right: 1px solid rgba($primary-color, 0.1);
-  background-color: rgba($primary-color, .99);
+  //border-right: 1px solid rgba($primary-color, 0.1);
+  background-color: $bg-color;
 
-
-  @include breakpoint-up(large){
-    background-color: $bg-color;
-  }
 
   button {
     justify-self: flex-end;
     align-self: center;
     display: none;
     place-items: center;
-    color: $primary-color;
+    color: $primary-dark-color;
     border-radius: 15px;
     padding: 7px;
     margin: 10px;
@@ -31,12 +27,11 @@
     }
 
     &:hover {
-      background-color: rgba($primary-color, 0.2);
+      background-color: rgba(0,0,0, 0.1);
     }
   }
 
   ul {
-    color: $text-white;
     width: 100%;
     display: flex;
     flex-direction: row;
@@ -45,38 +40,66 @@
 
     @include breakpoint-up(large) {
       flex-direction: column;
-      color: $primary-color;
     }
 
     li {
-      padding: 1em;
+      flex: 1;
+      position: relative;
       cursor: pointer;
       font-size: $font-size-xSmall;
       font-weight: $font-weight-medium;
+      opacity: .6;
 
       @include breakpoint-up(large){
         font-size: $font-size-small;
-        padding: 0.4em;
       }
 
       &.selected {
-        background-color: rgba($primary-color, 0.1);
+        color: $primary-color;
+        opacity: 1;
+        //background-color: rgba($primary-color, 0.1);
+        
+        &::after{
+          content: "";
+          display: block;
+          position: absolute;
+          top: 0;
+          left: 0;
+          height: 3px;
+          width: 100%;
+          background-color: $primary-color;
+        }
+
+        @include breakpoint-up(large){
+          background-color: rgba($primary-color, 0.1);
+          &::after{
+            height: 100%;
+            width: 3px;
+            left: auto;
+            right: 0;
+          }
+        }
       }
 
       & > div {
-        padding: 7px;
+        width: 100%;
+        height: 100%;
         display: flex;
         align-items: center;
+        justify-content: center;
+        padding: 1em;
         gap: 10px;
         transition: padding 0.4s cubic-bezier(0.215, 0.61, 0.355, 1);
 
         @include breakpoint-up(large) {
-          padding: 15px;
+          justify-content: flex-start;
+          padding: .8em 1.5em;
         }
       }
 
       span {
         display: none;
+        font-size: $font-size-small;
       }
 
       &:hover {

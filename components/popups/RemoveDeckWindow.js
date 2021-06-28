@@ -28,8 +28,8 @@ function RemoveDeckWindow({ isOpen, closeWindow, deckId, name, parentDeckId }) {
                 <p className={popupStyles.description}>Si eliminas el mazo <strong>"{name}"</strong>, todo su contenido tambien se eliminará. Asegurate de que eso es lo que quieres</p>
 
                 <div className={popupStyles.buttons}>
-                    <button onClick={closeWindow}><BackIcon/>Cancelar</button>
                     <button className={popupStyles.removeBtn} onClick={remove}><TrashIcon/>Eliminar</button>
+                    <button onClick={closeWindow}><BackIcon/>Cancelar</button>
                 </div>
             </div>
 

@@ -14,6 +14,7 @@ import { useModal } from "components/hooks/useModal";
 import useUser, {USER_STATES} from "components/hooks/useUser";
 
 //components
+import CardContainer from "components/CardContainer";
 import DeckContainer from "components/DeckContainer";
 import SpinnerComponent from "components/SpinnerComponent";
 import NewFolderIcon from "components/icons/NewFolderIcon";
@@ -37,7 +38,6 @@ function index() {
   const [idParentDeck, setIdParentDeck] = useState()
   const [actualDeck, setActualDeck] = useState()
   const [decks, setDecks] = useState();
-
   const [cards, setCards] = useState();
 
   let user = useUser();
@@ -61,7 +61,7 @@ function index() {
 
   useEffect(()=>{
     if(idDeck) {
-      listenForDeck(idDeck, setActualDeck, setDecks)
+      listenForDeck(idDeck, setActualDeck, setDecks, setCards)
     }
   }, [idDeck])
 
@@ -75,7 +75,7 @@ function index() {
   return (
     <main className={styles.main}>
       <Head>
-        <title>{actualDeck ? actualDeck.name : "Mis Mazos/Liza"}</title>
+        <title>{actualDeck ? `Mis Mazos - ${actualDeck.name}` : "Mis Mazos - Liza"}</title>
       </Head>
       <h1 className={styles.title}>Mis Mazos</h1>
       
@@ -99,13 +99,13 @@ function index() {
         <CreateDeckWindow
           isOpen={isOpenCreateDeck}
           closeWindow={closeCreateDeck}
-          id={idDeck}
+          deckId={idDeck}
         />
 
         <CreateCardWindow
           isOpen={isOpenCreateCard}
           closeWindow={closeCreateCard}
-          id={idDeck}
+          deckId={idDeck}
         />
 
         <RemoveDeckWindow
@@ -123,7 +123,7 @@ function index() {
               <SpinnerComponent/>
             :
             <>
-              {decks.length > 0 ? 
+              {decks?.length > 0 ? 
                 
                 <div className={decksStyles.decks}>
                   {decks.map((deck) => (
@@ -153,28 +153,29 @@ function index() {
 
         <div className="Cards">
           <h3>Tarjetas</h3>
-          {/* {
+          {
             loading ? 
               <SpinnerComponent/>
             :
             <>
-              {decks.length > 0 ? 
+              {cards?.length > 0 ? 
                 
-                <div className="decks__container">
-                  {decks.map((deck) => (
-                    <DeckContainer
-                      key={deck.id}
-                      id={deck.id}
-                      name={deck.name}
-                      description={deck.description}
+                <div className={decksStyles.decks}>
+                  {cards.map((card) => (
+                    <CardContainer
+                      key={card.id}
+                      cardId={card.id}
+                      front={card.front}
+                      back={card.back}
+                      createdAt={card.createdAt}
                     />
                   ))}
                 </div>
                 :
-                <h2>Aún no tienes tarjetas en este mazo</h2>
+                <h3>Aún no tienes tarjetas en este mazo</h3>
               }
             </> 
-          } */}
+          }
           
           <button
             className={styles.roundedButtonTerciary}

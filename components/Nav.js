@@ -16,28 +16,56 @@ import PushRightIcon from 'components/icons/PushRightIcon'
 
 function Nav() {
 
-    const[navExpanded, setNavExpanded] = useState()
-
+    const[navContracted, setNavContracted] = useState()
+    
     const router = useRouter()
 
     useEffect(() => {
-        if(localStorage.getItem('navContracted')) setNavExpanded(localStorage.getItem('navContracted'))
+        
+        console.log("primer useEffect: renderiza cuando Nav.js es llamado")
+        console.log(`el estado de navContracted es >>> ${navContracted}`)
+
+        if(localStorage.getItem('navContracted')) setNavContracted(JSON.parse(localStorage.getItem('navContracted')))
+        else{
+            setNavContracted(false)
+            localStorage.setItem('navContracted', navContracted)
+        } 
+
     }, [])
 
     useEffect(()=>{
 
-        localStorage.setItem('navContracted', navExpanded)
-
-        if(localStorage.getItem('navContracted') === "true"){
-
-            document.getElementById('nav').classList.add(styles.expanded)
-        } 
+        if(router.pathname.includes('decks')){
+            DecksLink.classList.add(styles.selected)
+            if(ExploreLink.classList.contains(styles.selected)) ExploreLink.classList.remove(styles.selected)
+            return
+        }
         else{
+            ExploreLink.classList.add(styles.selected)
+            if(DecksLink.classList.contains(styles.selected)) DecksLink.classList.remove(styles.selected)
+        }
 
+    
+    },[router.pathname])
+
+    useEffect(()=>{
+
+        console.log("segundo useEffect: renderiza cuando navContracted cambia")
+        console.log(`el estado de navContracted es >>> ${navContracted}`)
+        console.log(navContracted)
+
+        localStorage.setItem('navContracted', navContracted)
+
+        if(navContracted === true){
+            console.log("se remueve el estilo expandido")
             document.getElementById('nav').classList.remove(styles.expanded)
         } 
+        else{
+            console.log("se agrega el estilo expandido")
+            document.getElementById('nav').classList.add(styles.expanded)   
+        } 
 
-    },[navExpanded])
+    },[navContracted])
 
 
     
@@ -59,7 +87,10 @@ function Nav() {
                 </li>
             </ul>
             {
-            navExpanded===false ? <button onClick={e=>setNavExpanded(true)} title="Expandir"><PushRightIcon/></button> : <button onClick={e=>setNavExpanded(false)} title="Contraer"><PushLeftIcon/></button>
+            navContracted===false ? 
+                <button onClick={e=>setNavContracted(true)} title="Contraer"><PushLeftIcon/></button> 
+            : 
+                <button onClick={e=>setNavContracted(false)} title="Expandir"><PushRightIcon/></button>
             }
       </nav>
     )

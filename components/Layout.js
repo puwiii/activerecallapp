@@ -1,9 +1,9 @@
 import React from 'react'
-import styles from '../styles/Home.module.scss'
+import styles from '../styles/Global.module.scss'
 
 function Layout({children}) {
     return (
-        <div className="layout">
+        <div className={styles.layout}>
             {
                 children
             }
