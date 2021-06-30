@@ -126,19 +126,19 @@
 
 //texts
 
-.title {
-  font-size: $font-size-large;
-  font-weight: $font-weight-black;
-  color: $primary-color;
+// .title {
+//   font-size: $font-size-large;
+//   font-weight: $font-weight-black;
+//   color: $primary-color;
 
-  @include breakpoint-up(medium) {
-    font-size: $font-size-xLarge;
-  }
+//   @include breakpoint-up(medium) {
+//     font-size: $font-size-xLarge;
+//   }
 
-  @include breakpoint-up(large) {
-    font-size: $font-size-xxLarge;
-  }
-}
+//   @include breakpoint-up(large) {
+//     font-size: $font-size-xxLarge;
+//   }
+// }
 
 .subtitle {
   font-size: $font-size-small;

@@ -19,7 +19,15 @@ function index() {
     let user = useUser()
 
     useEffect(()=>{
-        if(auth.currentUser?.emailVerified) router.replace('/')
+        if(user){
+            if(auth.currentUser.emailVerified===false){
+                router.push("/signin/emailverification")
+            }
+            else{
+                router.back()
+            }
+        }
+
     }, [user])
 
     const login = e => {
@@ -66,33 +74,38 @@ function index() {
     return (
         // <div className={styles.signin}>
         //     <div className={styles.container}>
-        //         
-                <form className={styles.form}>
-                    <h1 className={styles.title}>Inicio de sesión</h1>
-                    <input 
-                        type="email"
-                        name="username" 
-                        placeholder="Ingresa tu email" 
-                        aria-label="Ingresa tu email" 
-                        //autoComplete="username"
-                        className={styles.inputRounded} 
-                        onChange={(e) => setUserEmail(e.target.value)} 
-                    />
-                    <input 
-                        type="password" 
-                        placeholder="Ingresa tu contraseña" 
-                        aria-label="Ingresa tu contraseña" 
-                        //autoComplete="current-password"
-                        className={styles.inputRounded} 
-                        onChange={(e) => setUserPassword(e.target.value)} 
-                    />
-                    <span id="ErrorMsg" className={styles.ErrorMsg}></span>
-                    <div className={styles.buttonsBox}>
-                        {/* <a href="">¿Has olvidado tu contraseña?</a> */}
-                        <button type="submit" className={styles.roundedButtonFilled} onClick={e=>login(e)}>Iniciar sesión <RightArrowIcon/></button>
-                        {/* <GmailButton/> */}
-                    </div>
-                </form>
+        //     
+        <div className={styles.formContainer}>
+            <div className={styles.text}>
+                <h1 className={styles.subtitle}>¡Hola, otra vez tú!</h1>
+                <h2 className={styles.subtitle}>Esperamos que Liza te este ayudando 😊</h2>
+            </div>
+            <form className={styles.form}>
+                <input 
+                    type="email"
+                    name="username" 
+                    placeholder="Ingresa tu email" 
+                    aria-label="Ingresa tu email" 
+                    //autoComplete="username"
+                    className={styles.inputRounded} 
+                    onChange={(e) => setUserEmail(e.target.value)} 
+                />
+                <input 
+                    type="password" 
+                    placeholder="Ingresa tu contraseña" 
+                    aria-label="Ingresa tu contraseña" 
+                    //autoComplete="current-password"
+                    className={styles.inputRounded} 
+                    onChange={(e) => setUserPassword(e.target.value)} 
+                />
+                <span id="ErrorMsg" className={styles.ErrorMsg}></span>
+                <div className={styles.buttonsBox}>
+                    {/* <a href="">¿Has olvidado tu contraseña?</a> */}
+                    <button type="submit" className={styles.roundedButtonFilled} onClick={e=>login(e)}>Iniciar sesión <RightArrowIcon/></button>
+                    {/* <GmailButton/> */}
+                </div>
+            </form>
+        </div>    
         //     </div>
         // </div>
     )

@@ -15,7 +15,7 @@ import AirplaneIcon from 'components/icons/AirplaneIcon'
 import RightArrowIcon from 'components/icons/RightArrowIcon'
 
 //hooks
-import useUser from 'components/hooks/useUser'
+import useUser, {USER_STATES} from 'components/hooks/useUser'
 
 function index() {
 
@@ -25,15 +25,22 @@ function index() {
 
     useEffect(()=>{
         if(user){
-            setLoading(false)
-
             if(auth.currentUser.emailVerified===true){
+                saveUserInFirestore(auth.currentUser)
                 router.replace('/')
             }
+            else{
+                ErrorMsg.style.borderColor = "#c43d3d30"
+                ErrorMsg.style.background = "#c43d3d0f"
+                ErrorMsg.style.color = "#c43d3d"
+                ErrorMsg.innerText="El email no se ha verificado aún 📪"
+                ErrorMsg.style.display="block"
+            }
+            
         }
-        else{
-            router.back()
-        }
+    
+        if(user === USER_STATES.NOT_LOGGED) router.back()
+        
     },[user])
 
     
@@ -61,19 +68,7 @@ function index() {
 
     const checkForVerification = (e) => {
         e.preventDefault()
-        console.log(auth.currentUser)
-        
-        if(user.emailVerified === true){
-            saveUserInFirestore(auth.currentUser)
-            router.replace('/')
-        }
-        else{
-            ErrorMsg.style.borderColor = "#c43d3d30"
-            ErrorMsg.style.background = "#c43d3d0f"
-            ErrorMsg.style.color = "#c43d3d"
-            ErrorMsg.innerText="El email no se ha verificado aún 📪"
-            ErrorMsg.style.display="block"
-        }
+        router.reload(window.location.pathname)
     }
 
     // auth.currentUser.sendEmailVerification().then(()=>{
@@ -103,20 +98,24 @@ function index() {
              <Head>
                 <title>Verificacion de email / Liza</title>
             </Head>
-            <div className={styles.container}> 
+            <div className={styles.formContainer}> 
             {
-                loading ? <SpinnerComponent/>
-                :
-                <form className={styles.form}>
-                    <h1 className={styles.title}>Hola {user?.username}!</h1>
-                    <h2 className={styles.subtitle}>Primero tenemos que verificar tu email 🚀</h2>
-                    <p>Cuando estes listo presiona "Enviar email de verificación" para que enviemos un email a tu cuenta <strong>{user?.email}</strong></p>
-                    <div className={styles.buttonsBox}>
-                        <button className={styles.roundedButtonTerciary} onClick={(e)=>resendEmailVerification(e)}>Enviar email de verificación <AirplaneIcon/> </button>
-                        <button className={styles.roundedButtonFilled} onClick={(e)=>checkForVerification(e)}>Ya he verificado mi email <RightArrowIcon/> </button>
+                // loading ? 
+                // :
+                <>
+                    <div className={styles.text}>
+                        <h1 className={styles.subtitle}>Hola {user?.username ? user.username : <SpinnerComponent/>}, primero tenemos que verificar tu email 🚀</h1>
+                        <h2>Cuando estes listo presiona "Enviar email de verificación" para que enviemos un email a tu cuenta <strong>{user?.email ? user.email : <SpinnerComponent/>}</strong></h2>
                     </div>
-                    <span id="ErrorMsg" className={styles.ErrorMsg}></span>
-                </form>
+                    
+                    <form className={styles.form}>
+                        <div className={styles.buttonsBox}>
+                            <button className={styles.roundedButtonTerciary} onClick={(e)=>resendEmailVerification(e)}>Enviar email de verificación <AirplaneIcon/> </button>
+                            <button className={styles.roundedButtonFilled} onClick={(e)=>checkForVerification(e)}>Ya he verificado mi email <RightArrowIcon/> </button>
+                        </div>
+                        <span id="ErrorMsg" className={styles.ErrorMsg}></span>
+                    </form>
+                </>
             }  
             </div>
             <style jsx>{`

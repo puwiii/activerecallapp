@@ -4,7 +4,7 @@ import Spinner from "react-spinners/PuffLoader";
 
 const override = css`
   display: inline-block;
-  margin: 20px;
+  margin: 0px;
   border-color: #0876bb;
 `;
 

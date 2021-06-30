@@ -26,12 +26,15 @@ import SettingsIcon from "components/icons/SettingsIcon";
 import CreateDeckWindow from "components/popups/CreateDeckWindow";
 import RemoveDeckWindow from "components/popups/RemoveDeckWindow";
 import CreateCardWindow from "components/popups/CreateCardWindow";
+import MenuHeaderDeck from "components/menus/MenuHeaderDeck";
 
 function index() {
 
   const [isOpenCreateDeck, openCreateDeck, closeCreateDeck] = useModal(false);
   const [isOpenRemoveDeck, openRemoveDeck, closeRemoveDeck] = useModal(false);
   const [isOpenCreateCard, openCreateCard, closeCreateCard] = useModal(false);
+  const [isOpenMenuHeaderDeck, openMenuHeaderDeck, closeMenuHeaderDeck] = useModal(false);
+  
 
   const [loading, setLoading] = useState(true)
   const [idDeck, setIdDeck] = useState()
@@ -43,6 +46,17 @@ function index() {
   let user = useUser();
 
   const router = useRouter();
+
+  const handleMenuHeaderDeck = (e) => {
+    e.preventDefault()
+
+    if(isOpenMenuHeaderDeck){
+      closeMenuHeaderDeck()
+    }
+    else{
+      openMenuHeaderDeck()
+    }
+  }
 
   //check for user
   useEffect(() => {
@@ -65,7 +79,6 @@ function index() {
     }
   }, [idDeck])
 
-
   useEffect(()=>{
     if(decks){
       setLoading(false)
@@ -77,14 +90,21 @@ function index() {
       <Head>
         <title>{actualDeck ? `Mis Mazos - ${actualDeck.name}` : "Mis Mazos - Liza"}</title>
       </Head>
-      <h1 className={styles.title}>Mis Mazos</h1>
+      {/* <h1 className={styles.title}>Mis Mazos</h1> */}
       
       {actualDeck ? 
         <div className={decksStyles.header}>
           <h1 className={styles.subtitle}>{actualDeck.name}</h1>
           <div>
             <button onClick={openRemoveDeck}><TrashIcon/><span>Eliminar mazo</span></button>
-            <button><SettingsIcon/><span>Editar mazo</span></button>
+            <button onClick={e=>handleMenuHeaderDeck(e)}><SettingsIcon/><span>Editar mazo</span></button>
+            {isOpenMenuHeaderDeck &&
+              <MenuHeaderDeck 
+                deckId={idDeck} 
+                isOpen={isOpenMenuHeaderDeck} 
+                closeWindow={closeMenuHeaderDeck}
+              />
+            }
           </div>
         </div>
         
@@ -96,25 +116,37 @@ function index() {
       <hr/>
       
       <section>
-        <CreateDeckWindow
-          isOpen={isOpenCreateDeck}
-          closeWindow={closeCreateDeck}
-          deckId={idDeck}
-        />
 
-        <CreateCardWindow
-          isOpen={isOpenCreateCard}
-          closeWindow={closeCreateCard}
-          deckId={idDeck}
-        />
+        {/* popups */}
 
-        <RemoveDeckWindow
-          isOpen={isOpenRemoveDeck}
-          closeWindow={closeRemoveDeck}
-          deckId={idDeck}
-          parentDeckId={idParentDeck}
-          name={actualDeck?.name}
-        />
+        {
+          isOpenCreateDeck && 
+          <CreateDeckWindow
+            isOpen={isOpenCreateDeck}
+            closeWindow={closeCreateDeck}
+            deckId={idDeck}
+          />
+        }
+        
+        {
+          isOpenCreateCard &&
+          <CreateCardWindow
+            isOpen={isOpenCreateCard}
+            closeWindow={closeCreateCard}
+            deckId={idDeck}
+          />
+        }
+
+        {
+          isOpenRemoveDeck && 
+          <RemoveDeckWindow
+            isOpen={isOpenRemoveDeck}
+            closeWindow={closeRemoveDeck}
+            deckId={idDeck}
+            parentDeckId={idParentDeck}
+            name={actualDeck?.name}
+          />          
+        }
 
         <div className="decks">
           <h3>Mazos</h3>
@@ -195,6 +227,7 @@ function index() {
           font-weight: 600;
           font-size: 12px;
           color: rgba(0,0,0,.5);
+          user-select: none;
         }
 
         .decks,
@@ -204,7 +237,7 @@ function index() {
 
         hr{
           margin-top: 4px;
-          border: 1px solid rgba(0,0,0,.1);
+          border: 1px solid rgba(0,0,0,.02);
         }
 
       `}</style>

@@ -36,8 +36,8 @@
     font-size: $font-size-large;
     color: $text-primary;
     text-align: center;
-    padding: 1em 0;
-   // margin-bottom: .5em;
+    padding: .8em 0;
+   margin-bottom: .2em;
 
     @include breakpoint-up(medium){
         font-size: $font-size-xLarge;
@@ -157,7 +157,7 @@
             color: $error;
 
             &:hover, &:focus{
-                background-color: rgba($error,.2);
+                background-color: rgba($error,.08);
             }
         }
     }
@@ -167,12 +167,12 @@
 .ErrorMsg {
     display: none;
     font-size: $font-size-xSmall;
-    font-weight: $font-weight-medium;
+    font-weight: $font-weight-regular;
     color: $error;
     text-align: left;
     align-self: flex-start;
     border: 2px dashed rgba($error,.2);
-    background-color: rgba($error,.1);
+    background-color: rgba($error,.08);
     padding: .5em .7em;
     border-radius: .7em;
     // position: absolute;

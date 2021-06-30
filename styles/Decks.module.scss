@@ -21,32 +21,43 @@
     // }
 }
 
+.floatButton{
+    position: sticky;
+    bottom: 0px;
+    backdrop-filter: blur(5px);
+    box-shadow: 2px 2px 10px rgba(0,0,0,.15);
+}
+
 .description{
     padding: .5em 0;
     font-size: $font-size-xSmall;
     font-weight: $font-weight-medium;
     opacity: .5;
+
     @include breakpoint-up(medium){
         font-size: $font-size-xSmall;
     }
 }
 
 .header{
-    background-color: rgba($bg-color,.5);
-    backdrop-filter: blur(5px);
     position: sticky;
     top: 0;
     display: flex;
     justify-content: space-between;
     align-items:flex-end;
 
-    div{
+    h1{
+        padding: .5em;
+        text-shadow: 5px 5px 3px rgba(0,0,0,.05);
+    }
+
+    >div{
         display: flex;
         gap: 10px;
     }
 
     button{
-        border-radius: 50px;
+        border-radius: 7px;
         font-size: $font-size-small;
         font-weight: $font-weight-medium;
         padding: .1em;
@@ -63,7 +74,7 @@
         &:nth-child(1){
             color: $error;
             &:hover{
-                background-color: rgba($error,.1);
+                background-color: rgba($error,.05);
             }
         }
 
@@ -76,7 +87,7 @@
 
         @include breakpoint-up(medium){
             zoom: 1;
-            padding: .7em;
+            padding: 1em;
             span{
                 display: block;
             }

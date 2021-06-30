@@ -9,16 +9,17 @@ import popupStyles from 'styles/Popup.module.scss'
 import TrashIcon from 'components/icons/TrashIcon'
 import BackIcon from 'components/icons/BackIcon'
 
-function RemoveDeckWindow({ isOpen, closeWindow, deckId, name, parentDeckId }) {
+function RemoveDeckWindow({ isOpen, closeWindow, deckId, name, parentDeckId, stay=false }) {
 
     const router = useRouter()
 
     const remove = () => {
         removeDeck(deckId)
         clearDeckReference(deckId, parentDeckId)
-     
         closeWindow()
-        router.back()
+        if(!stay){
+            router.back()
+        }
     }
 
     return (
@@ -26,7 +27,6 @@ function RemoveDeckWindow({ isOpen, closeWindow, deckId, name, parentDeckId }) {
             <div className={popupStyles.window}>
                 <h1 className={popupStyles.title}>¡Cuidado!</h1>
                 <p className={popupStyles.description}>Si eliminas el mazo <strong>"{name}"</strong>, todo su contenido tambien se eliminará. Asegurate de que eso es lo que quieres</p>
-
                 <div className={popupStyles.buttons}>
                     <button className={popupStyles.removeBtn} onClick={remove}><TrashIcon/>Eliminar</button>
                     <button onClick={closeWindow}><BackIcon/>Cancelar</button>

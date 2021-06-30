@@ -37,11 +37,8 @@ function Avatar({ username, avatar, email }) {
       <ul id="menu">
         <h3 className={styles.subtitle}> Hola, {username}</h3>
         <span>{email}</span>
-        <hr/>
         <li onClick={goAccount} className={styles.roundedButtonTerciary}>Mi cuenta <UserIcon/> </li>
-        <hr/>
         <li onClick={logout} className={styles.roundedButtonTerciary}>Cerrar sesión <DoorIcon/> </li>
-        <hr/>
       </ul>
 
       <style jsx>
@@ -61,7 +58,7 @@ function Avatar({ username, avatar, email }) {
           }
 
           img {
-            width: 40px;
+            width: 35px;
             
           }
 

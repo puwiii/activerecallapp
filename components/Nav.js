@@ -21,9 +21,6 @@ function Nav() {
     const router = useRouter()
 
     useEffect(() => {
-        
-        console.log("primer useEffect: renderiza cuando Nav.js es llamado")
-        console.log(`el estado de navContracted es >>> ${navContracted}`)
 
         if(localStorage.getItem('navContracted')) setNavContracted(JSON.parse(localStorage.getItem('navContracted')))
         else{
@@ -50,18 +47,12 @@ function Nav() {
 
     useEffect(()=>{
 
-        console.log("segundo useEffect: renderiza cuando navContracted cambia")
-        console.log(`el estado de navContracted es >>> ${navContracted}`)
-        console.log(navContracted)
-
         localStorage.setItem('navContracted', navContracted)
 
         if(navContracted === true){
-            console.log("se remueve el estilo expandido")
             document.getElementById('nav').classList.remove(styles.expanded)
         } 
         else{
-            console.log("se agrega el estilo expandido")
             document.getElementById('nav').classList.add(styles.expanded)   
         } 
 

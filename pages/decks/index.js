@@ -13,7 +13,7 @@ import decksStyles from "styles/Decks.module.scss"
 import CreateDeckWindow from "components/popups/CreateDeckWindow";
 import DeckContainer from "components/DeckContainer";
 import NewFolderIcon from "components/icons/NewFolderIcon";
-import SpinnerComponent from "components/SpinnerComponent";
+import ScreenLoadingComponent from "components/ScreenLoadingComponent";
 
 //hooks
 import { useModal } from "components/hooks/useModal";
@@ -57,19 +57,24 @@ function index() {
         <title>Mis Mazos - Liza</title>
       </Head>
 
-      <h1 className={styles.title}>Mis Mazos</h1>
+      {/* <h1 className={styles.title}>Mis Mazos</h1> */}
 
       <section>
-        <CreateDeckWindow
-          isOpen={isOpenCreateDeck}
-          closeWindow={closeCreateDeck}
-        />
+
+        {
+          isOpenCreateDeck===true &&
+          <CreateDeckWindow
+            isOpen={isOpenCreateDeck}
+            closeWindow={closeCreateDeck}
+          />
+        }
+        
 
         <div className={`decks`}>
           {/* <h2>Mazos</h2> */}
           {
             loading ? 
-              <SpinnerComponent/>
+              <ScreenLoadingComponent/>
             :
             <>
               {decks.length > 0 ? 
@@ -88,15 +93,15 @@ function index() {
                 :
                 <h2>No hay mazos que mostrar</h2>
               }
+              <button
+                className={`${styles.roundedButtonTerciary} ${decksStyles.floatButton}`}
+                onClick={openCreateDeck}
+              >
+                Crear un nuevo mazo <NewFolderIcon/>
+              </button>
             </> 
+            
           }
-          
-          <button
-            className={styles.roundedButtonTerciary}
-            onClick={openCreateDeck}
-          >
-            Crear un nuevo mazo <NewFolderIcon/>
-          </button>
           
          
         </div>

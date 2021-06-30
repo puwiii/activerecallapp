@@ -7,8 +7,8 @@
     display: flex;
     align-items: center;
     border-radius: 5px;
-    background: linear-gradient(to right bottom, rgba($primary-light-color,.02), rgba($primary-color, .05));
-    background-color: transparent;
+    //background: linear-gradient(to right bottom, rgba($primary-light-color,.02), rgba($primary-color, .05));
+    background-color: $bg-color;
     padding: .5em 1.5em;
     border: 1px solid rgba(0,0,0, .05);
     box-shadow: 0px 0px 2px rgba(0,0,0,.0);
@@ -17,10 +17,12 @@
 
     &:hover{
         //transform: scale3D(1.05,1.05,1) translate3d(0,0,0);
-        background-color: rgba($primary-color,.08);
+        //background-color: rgba($primary-color,.05);
+        //background-color: rgba($primary-color,.05);
     }
 
     span{
+        user-select: none;
         white-space: nowrap;
         overflow-x: auto;
         text-align: center;
@@ -30,6 +32,7 @@
         font-weight: $font-weight-bold;
 
         @include breakpoint-up(medium){
+            user-select: text;
             font-size: $font-size-small;
         }
     }
@@ -60,7 +63,7 @@
 
         >div{
             padding: 1em;
-            background-color: rgba($primary-color, .05);
+            background-color: rgba(0,0,0,.03);
             border-radius: 50%;
         }
     }

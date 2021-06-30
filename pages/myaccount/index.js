@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import { useRouter } from 'next/router';
+import Head from "next/head";
 
 //styles
 import styles from "styles/Home.module.scss";
@@ -10,8 +11,12 @@ import ChevronRightIcon from 'components/icons/ChevronRightIcon';
 import LockIcon from 'components/icons/LockIcon';
 import UserIcon from 'components/icons/UserIcon';
 import PhotoIcon from 'components/icons/PhotoIcon';
-import UpdateAvatar from 'components/popups/UpdateAvatarWindow';
 import SpinnerComponent from 'components/SpinnerComponent';
+import ScreenLoadingComponent from 'components/ScreenLoadingComponent';
+
+//popups
+import UpdateAvatarWindow from 'components/popups/UpdateAvatarWindow';
+import UpdateUsernameWindow from 'components/popups/UpdateUsernameWindow';
 
 //hooks
 import { useModal } from "components/hooks/useModal";
@@ -34,34 +39,40 @@ function index() {
     
     let router = useRouter()
 
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(true)
 
     const [isOpenUpdateAvatar, openAvatarUpdate, closeAvatarUpdate] = useModal(false);
+    const [isOpenUpdateUsername, openUpdateUsername, closeUpdateUsername] = useModal(false)
 
     useEffect(()=>{
 
-        setLoading(false)
 
         if(USER_STATES.NOT_LOGGED){
             router.replace("/signin")
         }
 
-       if(USER_STATES.NOT_KNOWN){
-           setLoading(true)
-       }
+       if(user) setLoading(false)
 
     },[user])
 
     return (
         <div className={styles.main}>
-            <h1 className={styles.title}>Mi cuenta</h1>
-            <UpdateAvatar
+            <Head>
+                <title>Mi cuenta - Liza</title>
+            </Head>
+            {/* <h1 className={styles.title}>Mi cuenta</h1> */}
+            <UpdateAvatarWindow
                 isOpen={isOpenUpdateAvatar}
                 closeWindow={closeAvatarUpdate}
-                userId={user?.id}
             />
+
+            <UpdateUsernameWindow
+                isOpen={isOpenUpdateUsername}
+                closeWindow={closeUpdateUsername}
+            />
+
             {loading ? 
-                <SpinnerComponent/>
+                <ScreenLoadingComponent/>
             :
                 
                 <div className={accountPage.form}>
@@ -72,7 +83,7 @@ function index() {
                         <ChevronRightIcon/>
                     </div>
                     
-                    <div className={accountPage.field}>
+                    <div className={accountPage.field} onClick={openUpdateUsername}>
                         <span><UserIcon/>nombre de usuario</span>
                         <h3>{user?.username}</h3>
                         <ChevronRightIcon/>

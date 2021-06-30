@@ -8,14 +8,11 @@ import popupStyles from 'styles/Popup.module.scss'
 import UploadIcon from 'components/icons/UploadIcon'
 import BackIcon from 'components/icons/BackIcon'
 
-function UpdateAvatar({ isOpen, closeWindow, userId }) {
+function UpdateAvatarWindow({ isOpen, closeWindow }) {
 
 
-    const updateAvatar = (id = userId) =>{
+    const updateAvatar = () =>{
 
-        if(id){
-            console.log(id)
-        }
     }
 
     return (
@@ -42,4 +39,4 @@ function UpdateAvatar({ isOpen, closeWindow, userId }) {
     )
 }
 
-export default UpdateAvatar
+export default UpdateAvatarWindow

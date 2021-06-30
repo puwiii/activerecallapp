@@ -7,10 +7,12 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 1em;
+    gap: 10px;
 }
 
 .field{
+    background-color: $bg-color;
+    border-radius: 5px;
     *{
         user-select: none;
     }

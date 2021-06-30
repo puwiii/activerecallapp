@@ -14,7 +14,7 @@ import BackIcon from "components/icons/BackIcon";
 import ExploreIcon from "components/icons/ExploreIcon";
 import SpinnerComponentCircle from "components/SpinnerComponentCircle";
 
-function CreateDeckWindow({ isOpen, closeWindow, deckId }) {
+function UpdateDeckWindow({ isOpen, closeWindow, deckId }) {
   const [deckName, setDeckName] = useState('');
   const [deckDescription, setDeckDescription] = useState('');
   const [loading, setLoading] = useState(false)
@@ -27,34 +27,13 @@ function CreateDeckWindow({ isOpen, closeWindow, deckId }) {
     closeWindow();
   };
 
-  const crearMazo = (e) => {  
-    e.preventDefault();
-
-    
-    if(!deckName || deckName?.length === 0){
-      createDeckErrorMsg.innerText= "(*) El mazo debe tener un nombre"
-      createDeckErrorMsg.style.display="block"
-      return
-    }else{
-      setLoading(true)
-      createDeck(deckId, deckName.trim(), deckDescription.trim())
-      .then(() => {
-        createDeckForm.reset();
-        setDeckDescription("");
-        setDeckName("");
-        setLoading(false)
-        closeWindow();
-      })
-      .catch(alert);
-    }
-  };
 
   return (
 
     <div className={popupStyles.windowBg + " " + (isOpen && "is-open")}>
       {isOpen && (
         <Head>
-          <title>Crear nuevo mazo</title>
+          <title>Editar mazo</title>
         </Head>
       )}
       <div className={popupStyles.window}>
@@ -64,7 +43,7 @@ function CreateDeckWindow({ isOpen, closeWindow, deckId }) {
               <SpinnerComponentCircle/>
             </div>        
         }
-        <h1 className={popupStyles.title}>Crear mazo</h1>
+        <h1 className={popupStyles.title}>Editar mazo</h1>
         <form className={popupStyles.form} id="createDeckForm">
           <label>Nombre del mazo <span className={popupStyles.required}>*</span></label>
           <input
@@ -117,4 +96,4 @@ function CreateDeckWindow({ isOpen, closeWindow, deckId }) {
   );
 }
 
-export default CreateDeckWindow;
+export default UpdateDeckWindow;

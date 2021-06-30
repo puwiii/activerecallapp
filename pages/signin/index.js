@@ -1,9 +1,14 @@
 import React from 'react'
 import Head from 'next/head'
+
+//styles
 import styles from '/styles/Signin.module.scss'
+
+//components
 import Login from 'components/Login'
 
 function index() {
+
     return (
         <div className={styles.signin}>
             <div className={styles.container}>

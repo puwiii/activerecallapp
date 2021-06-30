@@ -25,6 +25,8 @@ const database = firebase.firestore();
 
 // const storage = firebase.storage();
 
+// USER FUNCTIONS - START
+
 const mapUserFromFirebaseAuth = (user) => {
   const { displayName, email, photoURL, uid, emailVerified } = user;
 
@@ -61,11 +63,40 @@ export const saveUserInFirestore = (user) => {
   });
 };
 
+export const isUsernameAvalaible = (username) => {
+  return database.collection("users")
+  .where(`username`, "==", username)
+  .limit(1)
+  .get()
+  .then((doc)=>{
+    return (!(doc.docs.length > 0))
+  })
+}
+
+export const updateUsernameFromFirebase = (username) => {
+
+  auth.currentUser.updateProfile({
+    displayName: username
+  })
+
+  return database.collection("users")
+  .doc(auth.currentUser.uid)
+  .update({
+    username: username
+  })
+  .then(
+    console.log("updated succesfully")
+  )
+  .catch(
+    console.log("update unsuccesfully")
+  )
+}
+//USER FUNCTIONS - END
+
+
 export const createCard = (deckId, front, back) => {
     
   let user = database.collection("users").doc(auth.currentUser.uid);
-
-  console.log(deckId)
 
   return database
   .collection("cards")
@@ -108,6 +139,7 @@ export const createDeck = (id, name, description = "") => {
     .add({
       name: name,
       description: description,
+      createdAt: firebase.firestore.Timestamp.fromDate(new Date()),
       cards: [],
       decks: [],
       author: user,
@@ -140,12 +172,13 @@ export const createDeck = (id, name, description = "") => {
     .add({
       name: name,
       description: description,
+      createdAt: firebase.firestore.Timestamp.fromDate(new Date()),
       cards: [],
       decks: [],
       user: user,
       author: user,
     })
-    .then(console.log("deck created"))
+    .then(console.info("deck created"))
     .catch((e) => {
       console.log(e.message);
     });
@@ -233,8 +266,6 @@ export const clearDeckReference = (deckId, parentDeckId) => {
       const parentDeck = doc.data()
   
       const newDecks = parentDeck.decks.filter( deckItem => {
-    //    console.log(`deck del parent >> ${deckItem.id}`)
-   //     console.log(`deck a sacar >> ${deckId}`)
         return deckItem.id !== deckId
       })
   
@@ -253,8 +284,7 @@ export const removeDeck = (deckId) => {
   .get()
   .then((doc)=>{
     const deck = doc.data()
-//    console.log(`removeDeck >> ${doc.id}`)
-    
+
     if(deck?.decks.length > 0){
       deck.decks.forEach((deckItem)=>{
         database.collection("decks")
@@ -272,15 +302,14 @@ export const removeDeck = (deckId) => {
 }
 
 const removeDeckFromFirestore = (deckId) => {
-//  console.log(`removeDeckFromFirestore >> ${deckId} `)
   database.collection("decks")
   .doc(deckId)
   .delete()
   .then(()=>{
-    console.log("borrado")
+
   })
-  .catch(()=>{
-    console.log("problema")
+  .catch((error)=>{
+    console.error(error)
   })
 
 }
