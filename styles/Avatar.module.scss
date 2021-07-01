@@ -2,33 +2,13 @@
 @import "mixins";
 @import "globals";
 
-.avatar {
+.avatarContainer {
   * {
     user-select: none;
   }
 
   z-index: 3000;
   position: relative;
-
-  div {
-    cursor: pointer;
-    
-    &:hover, &:focus{
-      border: 3px solid rgba(6, 123, 194,.08);
-    }
-
-    > span {
-      font-size: $font-size-xSmall;
-      font-weight: $font-weight-bold;
-      color: $primary-color;
-      margin-right: 5px;
-      pointer-events: none;
-    }
-
-    img {
-      pointer-events: none;
-    }
-  }
 
   ul {
     padding: 5px;
@@ -90,4 +70,32 @@
     //   }
     // }
   }
+}
+
+.avatar{
+ 
+  position: relative;
+  cursor: pointer;
+  
+  width: 50px;
+  height: 50px;
+
+  clip-path: circle();
+
+  // &:hover, &:focus{
+  //   border: 3px solid rgba(6, 123, 194,.08);
+  // }
+
+  > span {
+    font-size: $font-size-xSmall;
+    font-weight: $font-weight-bold;
+    color: $primary-color;
+    margin-right: 5px;
+    pointer-events: none;
+  }
+
+  img {
+    pointer-events: none;
+  }
+  
 }

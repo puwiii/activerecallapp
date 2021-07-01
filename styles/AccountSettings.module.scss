@@ -30,8 +30,9 @@
         background-color: rgba($primary-color,.08);
     }
 
-    img{
-        background-color: rgba(0,0,0,.05);
+    .avatar{
+        position: relative;
+        background-color: rgba(224, 157, 157, 0.05);
         width: 80px;
         height: 80px;
         clip-path: circle(38px);

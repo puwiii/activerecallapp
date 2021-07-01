@@ -108,6 +108,10 @@
         @include breakpoint-up(medium){
             font-size: $font-size-small;
         }
+
+        svg{
+            pointer-events: none;
+        }
     }
 
 }

@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import { useRouter } from 'next/router';
 import Head from "next/head";
+import Image from 'next/image'
 
 //styles
 import styles from "styles/Home.module.scss";
@@ -22,22 +23,11 @@ import UpdateUsernameWindow from 'components/popups/UpdateUsernameWindow';
 import { useModal } from "components/hooks/useModal";
 import useUser, { USER_STATES } from "components/hooks/useUser";
 
-
-
-const COMPOSE_STATES = {
-    ERROR: -1,
-    NONE: 0,
-    DRAG_OVER: 1,
-    UPLOADING: 2,
-    COMPLETE: 3,
-}
-
-
 function index() {
 
     let user = useUser()
     
-    let router = useRouter()
+    const router = useRouter()
 
     const [loading, setLoading] = useState(true)
 
@@ -46,8 +36,7 @@ function index() {
 
     useEffect(()=>{
 
-
-        if(USER_STATES.NOT_LOGGED){
+        if(user === USER_STATES.NOT_LOGGED){
             router.replace("/signin")
         }
 
@@ -79,7 +68,13 @@ function index() {
                     
                     <div className={accountPage.field} onClick={openAvatarUpdate}>
                         <span><PhotoIcon/>Foto de perfil</span>
-                        <img src={user?.avatar}/>
+                        <div className={accountPage.avatar}>
+                            <Image
+                                src={user?.avatar}
+                                layout="fill"
+                                objectFit="cover"
+                            />
+                        </div>
                         <ChevronRightIcon/>
                     </div>
                     

@@ -23,8 +23,6 @@ const auth = firebase.auth();
 
 const database = firebase.firestore();
 
-// const storage = firebase.storage();
-
 // USER FUNCTIONS - START
 
 const mapUserFromFirebaseAuth = (user) => {
@@ -94,6 +92,33 @@ export const updateUsernameFromFirebase = (username) => {
     console.log("update unsuccesfully")
   )
 }
+
+export const updateUserAvatar = (imageURL) => {
+  auth.currentUser.updateProfile({
+    photoURL: imageURL
+  })
+  .then(()=>console.log("auth succesfully updated"))
+  .catch((e)=>console.log(e))
+
+  return database.collection("users")
+  .doc(auth.currentUser.uid)
+  .update({
+    avatar: imageURL
+  })
+  .then(
+    console.log("updated succesfully")
+  )
+  .catch(
+    console.log("update unsuccesfully")
+  )
+}
+
+export const uploadAvatarImage = (file) => {
+  const ref = firebase.storage().ref(`/avatars/${auth.currentUser.uid}`)
+  const task = ref.put(file)
+  return task
+}
+
 //USER FUNCTIONS - END
 
 export const updateDeckName = (deckId, newName) => {
@@ -344,12 +369,6 @@ const removeDeckFromFirestore = (deckId) => {
 
 }
 
-export const uploadAvatarImage = (file, userId) => {
-  const ref = storage.ref(`/avatars/${userId}`)
-  const task = ref.put(file)
-
-  return task
-}
 
 
 export { auth, database };
