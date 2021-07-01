@@ -114,7 +114,11 @@
         font-weight: $font-weight-bold;
 
         @include breakpoint-up(large){
-          //font-size: $font-size-xSmall;
+          font-size: $font-size-xSmall;
+        }
+
+        @include breakpoint-up(xlarge){
+          font-size: $font-size-small;
         }
       }
 
@@ -130,10 +134,6 @@
       > ul li div {
         flex-direction: row;
         padding: .8em 2em;
-      }
-
-      > ul li span {
-        font-size: $font-size-xSmall;
       }
 
       button {

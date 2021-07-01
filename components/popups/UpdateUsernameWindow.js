@@ -1,4 +1,5 @@
 import React, {useState} from 'react'
+import { useRouter } from 'next/router'
 
 //styles
 import popupStyles from 'styles/Popup.module.scss'
@@ -12,6 +13,8 @@ import BackIcon from 'components/icons/BackIcon'
 import { isUsernameAvalaible, updateUsernameFromFirebase } from 'firebase/client'
 
 function UpdateUsernameWindow({ isOpen, closeWindow }) {
+
+    const router = useRouter()
 
     const [newUsername, setNewUsername] = useState('')
     const [loading, setLoading] = useState(false)
@@ -31,9 +34,8 @@ function UpdateUsernameWindow({ isOpen, closeWindow }) {
         isUsernameAvalaible(newUsername).then((res)=>{
             if(res){
                 updateUsernameFromFirebase(newUsername).then(()=>{
-                    updateUsernameForm.reset()
-                    updateUsernameErrorMsg.style.display="none"
-                    closeWindow()
+                    router.reload()
+                    closeForm()
                 })
             }
             else{
@@ -69,7 +71,7 @@ function UpdateUsernameWindow({ isOpen, closeWindow }) {
                         placeholder="Ingresa un nombre de usuario"
                         aria-label="Ingresa un nombre de usuario" 
                         className={popupStyles.inputRounded}
-                        onChange={(e) => setNewUsername(e.target.value)}
+                        onChange={(e) => setNewUsername(e.target.value.trim())}
                         id="updateUsernameInput"
                     />
                     <span id="updateUsernameErrorMsg" className={popupStyles.ErrorMsg}></span>
@@ -81,7 +83,7 @@ function UpdateUsernameWindow({ isOpen, closeWindow }) {
                 </form>
 
                 <div className={popupStyles.buttons}>
-                    <button className={popupStyles.primaryButton} onClick={e=>updateUsername(e)} disabled={!(newUsername.trim())}>Actualizar<RightArrowIcon/></button>
+                    <button className={popupStyles.primaryButton} onClick={e=>updateUsername(e)} disabled={!newUsername}>Actualizar<RightArrowIcon/></button>
                     <button onClick={closeForm}><BackIcon/>Cancelar</button>
                 </div>
             </div>

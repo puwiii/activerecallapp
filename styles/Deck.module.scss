@@ -2,7 +2,13 @@
 @import "mixins";
 @import "globals";
 
+
+.deckContainer{
+
+}
+
 .deck{
+    z-index: 0;
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -21,11 +27,15 @@
         //background-color: rgba($primary-color,.05);
     }
 
+    .deckMenuButton{
+        display: none;
+    }
+
     span{
         user-select: none;
-        white-space: nowrap;
+        //white-space: nowrap;
         overflow-x: auto;
-        text-align: center;
+        text-align: left;
         padding: .8em 0;
         align-self: center;
         font-size: $font-size-xSmall;
@@ -38,6 +48,7 @@
     }
 
     &.poster{
+        position: relative;
         flex: 0;
         align-items: center;
         flex-direction: column;
@@ -46,6 +57,16 @@
         //width: fit-content;
         padding: 2em;
         //aspect-ratio: 5 / 5;
+
+        &:hover{
+            .deckMenuButton{
+                visibility: visible;
+            }
+        }
+
+        >span{
+            white-space: pre-wrap;
+        }
 
         >p{
             font-size: $font-size-xxSmall;
@@ -61,10 +82,29 @@
             }
         }
 
-        >div{
+        > div{
             padding: 1em;
             background-color: rgba(0,0,0,.03);
             border-radius: 50%;
+        }
+
+        .deckMenuButton{
+            display: block;
+            margin: .5em;
+            padding: .5em;
+            visibility: hidden;
+            background-color: transparent;
+            position: absolute;
+            top: 0;
+            right: 0;
+
+            svg{
+                pointer-events: none;
+            }
+
+            &:hover{
+                background-color: rgba(0,0,0, .02);
+            }
         }
     }
 }

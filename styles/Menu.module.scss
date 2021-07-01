@@ -5,6 +5,7 @@
 
 .menuContainer{
     position: absolute;
+    z-index: 2000;
     top: 0;
     left: 0;
     width: 100%;
@@ -13,11 +14,13 @@
 }
 
 .menu{
+    max-width: 250px;
     position: absolute;
     background-color: $bg-color;
     border-radius: 5px;
     box-shadow: 0 0 5px rgba(0,0,0,.1);
     overflow: hidden;
+    animation: Fade-In 125ms linear forwards;
 }
 
 .title{
@@ -36,13 +39,13 @@
     }
 
     @include breakpoint-up(medium){
-        padding: 1em;
+        padding: 1em 1em .5em 1em;
     }
 }
 
 .options{
    padding: 5px;
-   
+   z-index: 1000000;
     li{
         display: flex;
         align-items: center;

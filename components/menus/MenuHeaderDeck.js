@@ -5,43 +5,54 @@ import styles from 'styles/Menu.module.scss'
 
 //components
 import WriteIcon from 'components/icons/WriteIcon'
-
-//popups
+import UpdateDeckNameWindow from 'components/popups/UpdateDeckNameWindow';
+import UpdateDeckDescriptionWindow from 'components/popups/UpdateDeckDescriptionWindow';
 
 //hooks
 import { useModal } from 'components/hooks/useModal';
 
-function MenuHeaderDeck({deckId, closeWindow, isOpen}) {
+function MenuHeaderDeck({xCoord, yCoord, deckId, closeWindow, isOpen}) {
+
+    const [isOpenUpdateNameDeck, openUpdateNameDeck, closeUpdateNameDeck] = useModal(false);
+    const [isOpenUpdateDescriptionDeck, openUpdateDescriptionDeck, closeUpdateDescriptionDeck] = useModal(false);
 
     return (
 
+        <>
             <div className={styles.menu}>
                 <ul className={styles.options}>
-                    <li><WriteIcon/>Cambiar nombre</li>
-                    <li><WriteIcon/>Cambiar descripción</li>
+                    <li onClick={openUpdateNameDeck}><WriteIcon/>Cambiar nombre</li>
+                    <li onClick={openUpdateDescriptionDeck}><WriteIcon/>Cambiar descripción</li>
                 </ul>
-                {/* {
-            isOpenRemoveDeck && 
-            <RemoveDeckWindow
-                isOpen={isOpenRemoveDeck}
-                closeWindow={closeRemoveDeck}
-                deckId={deckId}
-                parentDeckId={parentDeckId}
-                name={name}
-                stay={true}
-            />          
-            } */}
+                
+            </div>
+            {
+                isOpenUpdateNameDeck &&
+                <UpdateDeckNameWindow
+                    isOpen={isOpenUpdateNameDeck}
+                    closeWindow={closeUpdateNameDeck}
+                    deckId={deckId}
+                />
+            }
+            
+            {
+                isOpenUpdateDescriptionDeck &&
+                <UpdateDeckDescriptionWindow
+                    isOpen={isOpenUpdateDescriptionDeck}
+                    closeWindow={closeUpdateDescriptionDeck}
+                    deckId={deckId}
+                />
+            }
 
             <style jsx>{`
 
                 div{
-                    top: calc(100% + 5px);
-                    right: 0px;
+                    top: ${yCoord + 10}px;
+                    right: ${window.innerWidth - xCoord}px;
                 }
 
               `}</style>
-            </div>
-
+        </>
             
 
     )

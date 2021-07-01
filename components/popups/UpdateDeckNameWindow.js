@@ -9,36 +9,35 @@ import RightArrowIcon from 'components/icons/RightArrowIcon'
 import BackIcon from 'components/icons/BackIcon'
 
 //firebase
-import { isUsernameAvalaible, updateUsernameFromFirebase } from 'firebase/client'
+import { updateDeckName } from 'firebase/client'
 
 function UpdateDeckNameWindow({ isOpen, closeWindow, deckId }) {
 
-    const [newName, setNewName] = useState()
+    const [newName, setNewName] = useState('')
     const [loading, setLoading] = useState(false)
 
     const updateName = (e) =>{
         e.preventDefault()
-        // console.log(newUsername)
-        // setLoading(true)
-        // isUsernameAvalaible(newUsername).then((res)=>{
-        //     if(res){
-        //         updateUsernameFromFirebase(newUsername).then(()=>{
-        //             updateUsernameForm.reset()
-        //             updateUsernameErrorMsg.style.display="none"
-        //             closeWindow()
-        //         })
-        //     }
-        //     else{
-        //         updateUsernameErrorMsg.innerText= "Ups... este nombre de usuario ya esta en uso"
-        //         updateUsernameErrorMsg.style.display="block"
-        //         setLoading(false)
-        //     }
-        // })
+        if(!newName.trim()){
+            updateDeckNameErrorMsg.innerText= "(*) Ups... no puedes dejar el nombre vacio"
+            updateDeckNameErrorMsg.style.display="block"
+        }
+        else{
+            setLoading(true)
+            updateDeckName(deckId, newName)
+            .then(()=>{
+                closeForm()
+            })
+            .catch((error)=>{
+                updateDeckNameErrorMsg.innerText= error
+                updateDeckNameErrorMsg.style.display="block"
+            })
+        }
     }
 
     const closeForm = () =>{
-        updateUsernameForm.reset()
-        updateUsernameErrorMsg.style.display="none"
+        updateDeckNameForm.reset()
+        updateDeckNameErrorMsg.style.display="none"
         closeWindow()
     }
 
@@ -54,24 +53,24 @@ function UpdateDeckNameWindow({ isOpen, closeWindow, deckId }) {
                 <h1 className={popupStyles.title}>Cambiar nombre</h1>
 
                 <form className={popupStyles.form} id="updateDeckNameForm">
-                    <label contentEditable="true">Nuevo nombre del mazo <span className={popupStyles.required}>*</span></label>
+                    <label>Nuevo nombre del mazo <span className={popupStyles.required}>*</span></label>
                     <input
                         type="text"
                         placeholder="Ingresa un nombre"
                         aria-label="Ingresa un nombre" 
                         className={popupStyles.inputRounded}
-                        onChange={(e) => setNewUsername(e.target.value)}
+                        onChange={(e) => setNewName(e.target.value)}
                     />
-                    <span id="updateUsernameErrorMsg" className={popupStyles.ErrorMsg}></span>
+                    <span id="updateDeckNameErrorMsg" className={popupStyles.ErrorMsg}></span>
                     <button
                         tabIndex="-1"
                         type="submit"
-                        onClick={(e) => updateUsername(e)}
+                        onClick={(e) => updateName(e)}
                     />
                 </form>
 
                 <div className={popupStyles.buttons}>
-                    <button className={popupStyles.primaryButton} onClick={e=>updateName(e)}>Cambiar nombre<RightArrowIcon/></button>
+                    <button disabled={!newName.trim()} className={popupStyles.primaryButton} onClick={e=>updateName(e)}>Cambiar nombre<RightArrowIcon/></button>
                     <button onClick={closeForm}><BackIcon/>Cancelar</button>
                 </div>
             </div>

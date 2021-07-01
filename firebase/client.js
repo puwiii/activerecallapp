@@ -55,9 +55,12 @@ export const loginWithGmail = () => {
 export const saveUserInFirestore = (user) => {
   const { uid, displayName, photoURL, email } = user;
 
+  const usernameLC = displayName.toLowerCase()
+
   return database.collection("users").doc(uid).set({
     uid: uid,
     username: displayName,
+    usernameLC: usernameLC,
     photoURL: photoURL,
     email: email,
   });
@@ -65,7 +68,7 @@ export const saveUserInFirestore = (user) => {
 
 export const isUsernameAvalaible = (username) => {
   return database.collection("users")
-  .where(`username`, "==", username)
+  .where(`usernameLC`, "==", username.toLowerCase())
   .limit(1)
   .get()
   .then((doc)=>{
@@ -93,6 +96,33 @@ export const updateUsernameFromFirebase = (username) => {
 }
 //USER FUNCTIONS - END
 
+export const updateDeckName = (deckId, newName) => {
+  return database.collection("decks")
+  .doc(deckId)
+  .update({
+    name: newName
+  })
+  .then(() => {
+    console.log("Document successfully updated!");
+  })
+  .catch(()=>{
+    console.log("An error ocurred while updating deck")
+  })
+}
+
+export const updateDeckDescription = (deckId, newDescription) => {
+  return database.collection("decks")
+  .doc(deckId)
+  .update({
+    description: newDescription
+  })
+  .then(() => {
+    console.log("Document successfully updated!");
+  })
+  .catch(()=>{
+    console.log("An error ocurred while updating deck")
+  })
+}
 
 export const createCard = (deckId, front, back) => {
     

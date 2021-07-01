@@ -8,6 +8,8 @@ import styles from 'styles/Menu.module.scss'
 import TrashIcon from 'components/icons/TrashIcon'
 import WriteIcon from 'components/icons/WriteIcon'
 import RemoveDeckWindow from 'components/popups/RemoveDeckWindow';
+import UpdateDeckNameWindow from 'components/popups/UpdateDeckNameWindow';
+import UpdateDeckDescriptionWindow from 'components/popups/UpdateDeckDescriptionWindow';
 
 //hooks
 import { useModal } from 'components/hooks/useModal';
@@ -21,16 +23,14 @@ function MenuDeck({xCoord, yCoord, deckId, closeWindow, isOpen, name}) {
     const [newXCoord, setNewXCoord] = useState()
     const [newYCoord, setNewYCoord] = useState()
     const [parentDeckId, setParentDeckId] = useState()
+    const [loading, setLoading] = useState()
 
     const [isOpenRemoveDeck, openRemoveDeck, closeRemoveDeck] = useModal(false);
+    const [isOpenUpdateNameDeck, openUpdateNameDeck, closeUpdateNameDeck] = useModal(false);
+    const [isOpenUpdateDescriptionDeck, openUpdateDescriptionDeck, closeUpdateDescriptionDeck] = useModal(false);
 
     useEffect(()=>{
-
-        document.querySelector(".menuDeck").addEventListener('mouseup',(e)=>{
-            //closeWindow()
-        
-            if(e.target.classList.contains("menuDeck")) closeWindow()
-        })
+        setLoading(true)
 
         if(xCoord > window.innerWidth/2){
             setToLeft(true)
@@ -42,6 +42,7 @@ function MenuDeck({xCoord, yCoord, deckId, closeWindow, isOpen, name}) {
             setNewYCoord(window.innerHeight - yCoord)
         }
 
+        setLoading(false)
     },[])
 
     useEffect(()=>{
@@ -53,17 +54,25 @@ function MenuDeck({xCoord, yCoord, deckId, closeWindow, isOpen, name}) {
         }
     },[router.query.id])
 
+    const handleClick = (e) => {
+        if(e.target.classList.contains("menuDeck")) closeWindow()
+    }
+
     return (
-        <div className={`${styles.menuContainer} menuDeck`}>
+        
+        <div className={`${styles.menuContainer} menuDeck`} onMouseUp={e=>handleClick(e)}>
+            {
+            !loading &&
             <div className={styles.menu} id="asd">
                 <span className={styles.title}>{name}</span>
                 <ul className={styles.options}>
-                    <li><WriteIcon/>Cambiar nombre</li>
-                    <li><WriteIcon/>Cambiar descripción</li>
+                    <li onClick={openUpdateNameDeck}><WriteIcon/>Cambiar nombre</li>
+                    <li onClick={openUpdateDescriptionDeck}><WriteIcon/>Cambiar descripción</li>
                     <hr/>
-                    <li className={styles.redOption} onClick={e=>openRemoveDeck(e)}><TrashIcon/>Eliminar mazo</li>
+                    <li className={styles.redOption} onClick={e=>(openRemoveDeck(e))}><TrashIcon/>Eliminar mazo</li>
                 </ul>
             </div>
+            }
 
             {
             isOpenRemoveDeck && 
@@ -75,6 +84,24 @@ function MenuDeck({xCoord, yCoord, deckId, closeWindow, isOpen, name}) {
                 name={name}
                 stay={true}
             />          
+            }
+
+            {
+                isOpenUpdateNameDeck &&
+                <UpdateDeckNameWindow
+                    isOpen={isOpenUpdateNameDeck}
+                    closeWindow={closeUpdateNameDeck}
+                    deckId={deckId}
+                />
+            }
+
+            {
+                isOpenUpdateDescriptionDeck &&
+                <UpdateDeckDescriptionWindow
+                    isOpen={isOpenUpdateDescriptionDeck}
+                    closeWindow={closeUpdateDescriptionDeck}
+                    deckId={deckId}
+                />
             }
 
             <style jsx>{`

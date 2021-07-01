@@ -30,6 +30,7 @@ function index() {
   const router = useRouter();
 
   useEffect(() => {
+
     if (user === USER_STATES.NOT_LOGGED) {
       router.replace("/signin");
     }
@@ -43,6 +44,7 @@ function index() {
         listenForUserDecks(setDecks);
       }
     }
+
   }, [user]);
 
   useEffect(()=>{
@@ -94,7 +96,7 @@ function index() {
                 <h2>No hay mazos que mostrar</h2>
               }
               <button
-                className={`${styles.roundedButtonTerciary} ${decksStyles.floatButton}`}
+                className={`${styles.roundedButtonTerciary}`}
                 onClick={openCreateDeck}
               >
                 Crear un nuevo mazo <NewFolderIcon/>

@@ -6,7 +6,7 @@ import {useRouter} from 'next/router'
 import styles from 'styles/Signin.module.scss'
 
 //firebase
-import { auth } from 'firebase/client'
+import { auth, isUsernameAvalaible } from 'firebase/client'
 
 //components
 import RightArrowIcon from 'components/icons/RightArrowIcon'
@@ -27,45 +27,62 @@ function index() {
     const register = e => {
         e.preventDefault();
         
-        auth
-            .createUserWithEmailAndPassword(userEmail, userPassword)
-            .then(()=>{
-                let user = auth.currentUser
-                user.updateProfile({
-                    displayName: username,
-                    photoURL: 'https://cdn4.iconfinder.com/data/icons/instagram-ui-twotone/48/Paul-18-512.png'
-                })
-                .then(() =>{
-                    console.log('username created with username')
-                    router.replace('/signin/emailverification')
+        isUsernameAvalaible(username).then((res)=>{
+            if (res) {
+                auth
+                .createUserWithEmailAndPassword(userEmail, userPassword)
+                .then(()=>{
+                    let user = auth.currentUser
+                    user.updateProfile({
+                        displayName: username,
+                        photoURL: 'https://cdn4.iconfinder.com/data/icons/instagram-ui-twotone/48/Paul-18-512.png'
+                    })
+                    .then(() =>{
+                        console.log('username created with username')
+                        router.replace('/signin/emailverification')
+                    })
+                    .catch(error=>{
+                        ErrorMsg.innerText= error.message
+                        ErrorMsg.style.display="block"
+                    })
                 })
                 .catch(error=>{
-                    ErrorMsg.innerText= error.message
+                    const ERROR_MESSAGES = {
+                        'auth/invalid-email': "Hmm... revisa el correo ingresado, algo parece estar mal con eso.",
+                        'auth/weak-password': "La contraseña es muy debil, haz que al menos tenga seis caracteres.",
+                        'auth/email-already-in-use': "Parece que este correo ya esta en uso, ¿olvidaste tu contraseña?"
+                    }
+    
+                    console.log(error)
+                    const DEFAULT_ERROR_MESSAGE = 'Aparentemente hay un error, ponte en contacto con bla bla bla...'
+            
+    
+                    ErrorMsg.innerText= ERROR_MESSAGES[error.code] || DEFAULT_ERROR_MESSAGE
                     ErrorMsg.style.display="block"
+    
                 })
-            })
-            .catch(error=>{
-
-                ErrorMsg.innerText= error.message
+            }
+            else{
+                ErrorMsg.innerText="Ups... este nombre de usuario ya esta en uso. Intenta con otro"
                 ErrorMsg.style.display="block"
-
-            })
+            }
+        })
     }
+       
+
+    
 
     useEffect(()=>{
         if(user){
             router.back()
         }
-
     }, [user])
 
     useEffect(() => {
         // const ErrorMsg = document.getElementById('ErrorMsg')
-
         if(userRepeatedPassword != userPassword){
             ErrorMsg.innerText="Las contraseñas no coinciden"
             ErrorMsg.style.display="block"
-           
         }
         else{
             ErrorMsg.style.display="none"
@@ -90,7 +107,7 @@ function index() {
                     <input type="password" placeholder="Repetir contraseña" aria-label="Repetir contraseña" className={styles.inputRounded} onChange={(e) => setUserRepeatedPassword(e.target.value)} required/>
                     <span id="ErrorMsg" className={styles.ErrorMsg}></span>
                     <div className={styles.buttonsBox}>
-                        <button type="submit" className={styles.roundedButtonFilled} id="submitButton" onClick={e=>register(e)} disabled={userPassword!==userRepeatedPassword}>Crear cuenta<RightArrowIcon/></button>
+                        <button type="submit" className={styles.roundedButtonFilled} id="submitButton" onClick={e=>register(e)} disabled={(userPassword!==userRepeatedPassword) || (!username || !userEmail)}>Crear cuenta<RightArrowIcon/></button>
                     </div>
                 </form>
             </div>

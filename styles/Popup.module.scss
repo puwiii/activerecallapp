@@ -31,16 +31,16 @@
 }
 
 .title{
-    text-decoration: underline dashed $text-primary;
-    text-underline-offset: 10px;
-    font-size: $font-size-large;
+    // text-decoration: underline dashed $text-primary;
+    // text-underline-offset: 10px;
+    font-size: $font-size-medium;
     color: $text-primary;
     text-align: center;
     padding: .8em 0;
-   margin-bottom: .2em;
+    margin-bottom: .2em;
 
     @include breakpoint-up(medium){
-        font-size: $font-size-xLarge;
+        font-size: $font-size-large;
     }
 }
 

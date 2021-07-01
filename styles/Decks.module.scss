@@ -4,12 +4,13 @@
 
 .decks{
     display: grid;
-    //grid-template-columns: repeat(1, 1fr);
     grid-template-columns: repeat( auto-fill, minmax(150px, 1fr) );
     gap: 10px;
     margin-bottom: 20px;
+
+    
     @include breakpoint-up(medium){
-        grid-template-columns: repeat( auto-fill, minmax(200px, 1fr) );
+        grid-template-columns: repeat( auto-fill, minmax( 220px, 1fr) );
     }
 
     // @include breakpoint-up(large){
@@ -40,8 +41,7 @@
 }
 
 .header{
-    position: sticky;
-    top: 0;
+    
     display: flex;
     justify-content: space-between;
     align-items:flex-end;
@@ -51,12 +51,12 @@
         text-shadow: 5px 5px 3px rgba(0,0,0,.05);
     }
 
-    >div{
+    > div{
         display: flex;
         gap: 10px;
     }
 
-    button{
+    > div > button{
         border-radius: 7px;
         font-size: $font-size-small;
         font-weight: $font-weight-medium;
@@ -65,10 +65,14 @@
         gap: 5px;
         align-items: center;
         justify-content: center;
-        zoom: 1.2;
 
         span{
             display: none;
+            pointer-events: none;
+        }
+
+        svg{
+            pointer-events: none;
         }
 
         &:nth-child(1){

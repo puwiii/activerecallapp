@@ -86,14 +86,16 @@ function index() {
                     name="username" 
                     placeholder="Ingresa tu email" 
                     aria-label="Ingresa tu email" 
-                    //autoComplete="username"
+                    autoComplete="username"
                     className={styles.inputRounded} 
                     onChange={(e) => setUserEmail(e.target.value)} 
                 />
                 <input 
                     type="password" 
+                    name="password"
                     placeholder="Ingresa tu contraseña" 
                     aria-label="Ingresa tu contraseña" 
+                    autoComplete="current-password"
                     //autoComplete="current-password"
                     className={styles.inputRounded} 
                     onChange={(e) => setUserPassword(e.target.value)} 

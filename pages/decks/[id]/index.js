@@ -43,12 +43,21 @@ function index() {
   const [decks, setDecks] = useState();
   const [cards, setCards] = useState();
 
+  const[xCoord, setXCoord] = useState()
+  const[yCoord, setYCoord] = useState()
+
   let user = useUser();
 
   const router = useRouter();
 
   const handleMenuHeaderDeck = (e) => {
     e.preventDefault()
+
+    let newXCoord = e.target.offsetLeft + e.target.offsetWidth
+    let newYCoord = e.target.offsetTop + e.target.offsetHeight
+
+    setXCoord(newXCoord)
+    setYCoord(newYCoord)
 
     if(isOpenMenuHeaderDeck){
       closeMenuHeaderDeck()
@@ -100,6 +109,8 @@ function index() {
             <button onClick={e=>handleMenuHeaderDeck(e)}><SettingsIcon/><span>Editar mazo</span></button>
             {isOpenMenuHeaderDeck &&
               <MenuHeaderDeck 
+                xCoord={xCoord}
+                yCoord={yCoord}
                 deckId={idDeck} 
                 isOpen={isOpenMenuHeaderDeck} 
                 closeWindow={closeMenuHeaderDeck}
