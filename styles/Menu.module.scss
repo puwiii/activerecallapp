@@ -67,14 +67,14 @@
         }
 
         &:hover, &:focus{
-            background-color: rgba($primary-color,.1);
+            background: rgba($primary-color,.1);
         }
 
         svg{
             margin-right: 10px;
 
             @include breakpoint-up(medium){
-                zoom: 125%;
+                zoom: 100%;
             }
         }
     }

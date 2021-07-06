@@ -31,7 +31,7 @@ function Avatar({ username, avatar, email }) {
 
   return (
     <div className={styles.avatarContainer}>
-      <div onClick={toggleMenu} className={`${styles.avatar} avatar`}>
+      <div onClick={toggleMenu} className={styles.avatar}>
           <div className={styles.avatar__image}>           
             <Image
               src={avatar}
@@ -43,17 +43,14 @@ function Avatar({ username, avatar, email }) {
       </div>
      
       <ul className="menu">
-        <h3 className={styles.subtitle}> Hola, {username}</h3>
+        <h3 className={styles.subtitle}> Hola, {username} 👋</h3>
         <span>{email}</span>
-        <li onClick={goAccount} className={styles.roundedButtonTerciary}>Mi cuenta <UserIcon/> </li>
-        <li onClick={logout} className={styles.roundedButtonTerciary}>Cerrar sesión <DoorIcon/> </li>
+        <li onClick={goAccount} className={styles.roundedButtonTerciary}><UserIcon/>Mi cuenta </li>
+        <li onClick={logout} className={styles.roundedButtonTerciary}><DoorIcon/>Cerrar sesión  </li>
       </ul>
 
       <style jsx>
         {`
-          .avatar {
-            //border: ${active ? "3px solid rgba(6, 123, 194,.15)" : "3px solid transparent"};
-          }
 
           button {
             font-size: 8px !important;

@@ -23,7 +23,8 @@
 
     &:hover{
         //transform: scale(120%)
-        background-color: rgba($secondary-color,.1);
+        //background-color: rgba($secondary-color,.1);
+        background-color: rgba($secondary-color, .08);
     }
 
     .deckMenuButton{
@@ -92,7 +93,7 @@
 
         > div{
             padding: 1em;
-            background-color: rgba($primary-color,.03);
+            background-color: rgba($secondary-color,.08);
             border-radius: 50%;
         }
 
@@ -103,9 +104,9 @@
         .deckMenuButton{
             display: grid;
             place-items: center;
-            margin: 0em;
+            margin: .2em;
             padding: .3em;
-            border-radius: 0;
+            border-radius: 3px;
             visibility: hidden;
             background-color: transparent;
             position: absolute;
