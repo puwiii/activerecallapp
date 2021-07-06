@@ -15,20 +15,20 @@
     border-radius: 5px;
     //background: linear-gradient(to right bottom, rgba($primary-light-color,.02), rgba($primary-color, .05));
     background-color: $bg-color;
-    padding: .5em 1.5em;
+    padding: 1.5em;
     border: 1px solid rgba(0,0,0, .05);
     box-shadow: 0px 0px 2px rgba(0,0,0,.0);
     flex: 1;
-    transition: all 100ms ease-in-out;
+    transition: background-color 100ms ease-in-out;
 
     &:hover{
-        //transform: scale3D(1.05,1.05,1) translate3d(0,0,0);
-        //background-color: rgba($primary-color,.05);
-        //background-color: rgba($primary-color,.05);
+        //transform: scale(120%)
+        background-color: rgba($secondary-color,.1);
     }
 
     .deckMenuButton{
         display: none;
+        zoom: 125%;
     }
 
     span{
@@ -36,10 +36,14 @@
         //white-space: nowrap;
         overflow-x: auto;
         text-align: left;
-        padding: .8em 0;
         align-self: center;
         font-size: $font-size-xSmall;
         font-weight: $font-weight-bold;
+
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;  
+        overflow: hidden;
 
         @include breakpoint-up(medium){
             user-select: text;
@@ -48,6 +52,7 @@
     }
 
     &.poster{
+        text-align: center;
         position: relative;
         flex: 0;
         align-items: center;
@@ -65,12 +70,15 @@
         }
 
         >span{
+            padding-top: 1em;
+            text-align: center;
             white-space: pre-wrap;
         }
 
         >p{
+            padding-top: 1em;
             font-size: $font-size-xxSmall;
-            font-weight: $font-weight-regular;
+            font-weight: $font-weight-medium;
             display: -webkit-box;
             -webkit-line-clamp: 4;
             -webkit-box-orient: vertical;  
@@ -84,14 +92,20 @@
 
         > div{
             padding: 1em;
-            background-color: rgba(0,0,0,.03);
+            background-color: rgba($primary-color,.03);
             border-radius: 50%;
         }
 
+        >.deck__icon{
+            margin-right: 0;
+        }
+
         .deckMenuButton{
-            display: block;
-            margin: .5em;
-            padding: .5em;
+            display: grid;
+            place-items: center;
+            margin: 0em;
+            padding: .3em;
+            border-radius: 0;
             visibility: hidden;
             background-color: transparent;
             position: absolute;
@@ -103,21 +117,32 @@
             }
 
             &:hover{
-                background-color: rgba(0,0,0, .02);
+                background-color: rgba(#000,.1);
             }
         }
     }
 }
 
 .deck__icon{
+    padding: .2em;
+    border-radius: 50px;
     margin-right: .5em;
     justify-self: center;
     align-self: center;
     display: grid;
     place-items: center;
     //color: $primary-color;
+    //filter: drop-shadow(2px -2px 0px rgba($secondary-color, .33));// drop-shadow(2px -2px 0px rgba($secondary-color, .43));
 
     @include breakpoint-up(medium){
         zoom: 155%;
+    }
+
+    svg{
+        color: rgba($secondary-color, .5);
+
+        g{
+            fill: rgba($secondary-color,.3);
+        }
     }
 }

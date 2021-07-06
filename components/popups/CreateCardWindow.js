@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Head from "next/head";
 
 //firebase
-import { createCard } from "firebase/client";
+import { createCard, createCardV2 } from "firebase/client";
 
 //styles
 import popupStyles from 'styles/Popup.module.scss'
@@ -27,32 +27,35 @@ function CreateCardWindow({ isOpen, closeWindow, deckId }) {
     closeWindow();
   };
 
-const validateForm = () =>{
-    console.log(front.length)
-    console.log(back.length)
-   if (front.length && back.length) return true
-   else return false
-}
+  const validateForm = () =>{
+    if (front.length && back.length) return true
+    else return false
+  }
 
-const addCard = (e) => {  
-    e.preventDefault();
-    setLoading(true)
-    if(validateForm()){
-        createCard(deckId, front, back)
-        .then(() => {
-            createCardForm.reset();
-            setFront("");
-            setBack("");
-            setLoading(false)
-            closeWindow();
-        })
-        .catch(alert);
-    }else{
-        createCardErrorMsg.innerText= "(*) Completa todos los campos de la tarjeta"
-        createCardErrorMsg.style.display="block"
-        return
-    }
-};
+  const addCard = (e) => {  
+      e.preventDefault();
+      setLoading(true)
+      if(validateForm()){
+          createCardV2(deckId, front, back)
+          .then(() => {
+              createCardForm.reset();
+              setFront("");
+              setBack("");
+              setLoading(false)
+              closeWindow();
+          })
+          .catch(alert);
+      }else{
+          createCardErrorMsg.innerText= "(*) Completa todos los campos de la tarjeta"
+          createCardErrorMsg.style.display="block"
+          return
+      }
+  };
+
+  useEffect(()=>{
+    createCardInput.focus()
+  },[])
+
 
   // useEffect(() => {
   //   // if(!deckName){
@@ -88,6 +91,7 @@ const addCard = (e) => {
             rows={5}
             className={styles.inputRounded}
             onChange={(e) => setFront((e.target.value).trim())}
+            id="createCardInput"
           />
           <label>Reverso de la tarjeta <span className={popupStyles.required}>*</span></label>
           <textarea

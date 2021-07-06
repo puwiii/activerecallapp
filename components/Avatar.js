@@ -9,6 +9,7 @@ import styles from "styles/Avatar.module.scss";
 //icons
 import DoorIcon from "components/icons/DoorIcon";
 import UserIcon from "components/icons/UserIcon";
+import DownArrowIcon from "components/icons/DownArrowIcon";
 
 function Avatar({ username, avatar, email }) {
 
@@ -22,7 +23,6 @@ function Avatar({ username, avatar, email }) {
   const goAccount = () => {
     router.push('/myaccount')
     setActive(!active)
-    menu.classList.toggle("visible")
   }
 
   const logout = () => {
@@ -32,12 +32,16 @@ function Avatar({ username, avatar, email }) {
   return (
     <div className={styles.avatarContainer}>
       <div onClick={toggleMenu} className={`${styles.avatar} avatar`}>
-          <Image
-            src={avatar}
-            layout="fill"
-            objectFit="cover"
-          />
+          <div className={styles.avatar__image}>           
+            <Image
+              src={avatar}
+              layout="fill"
+              objectFit="cover"
+            />
+          </div>
+          <DownArrowIcon onClick={toggleMenu}/>
       </div>
+     
       <ul className="menu">
         <h3 className={styles.subtitle}> Hola, {username}</h3>
         <span>{email}</span>

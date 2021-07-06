@@ -5,12 +5,12 @@ import styles from 'styles/Card.module.scss'
 
 function CardContainer({cardId, front, back, createdAt}) {
     return (
-        <div className={styles.card}>
-            {front}
-            <br/>
-            <br/>
-            {back}
-            
+        <div className={styles.cardContainer} title={front}>
+            <div className={styles.card}>
+                <div className={styles.front}>
+                        <p>{front}</p>
+                </div>
+            </div>
         </div>
     )
 }

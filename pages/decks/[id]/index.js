@@ -5,9 +5,10 @@ import { useRouter } from "next/router";
 //styles
 import styles from "styles/Home.module.scss";
 import decksStyles from "styles/Decks.module.scss";
+import cardsStyles from "styles/Cards.module.scss";
 
 //firebase
-import { listenForDeck } from "firebase/client";
+import { listenForCardsV2, listenForDeck, listenForDecksV2, listenForDeckV2 } from "firebase/client";
 
 //hooks
 import { useModal } from "components/hooks/useModal";
@@ -38,7 +39,7 @@ function index() {
 
   const [loading, setLoading] = useState(true)
   const [idDeck, setIdDeck] = useState()
-  const [idParentDeck, setIdParentDeck] = useState()
+  // const [idParentDeck, setIdParentDeck] = useState()
   const [actualDeck, setActualDeck] = useState()
   const [decks, setDecks] = useState();
   const [cards, setCards] = useState();
@@ -69,24 +70,29 @@ function index() {
 
   //check for user
   useEffect(() => {
+
     if (user === USER_STATES.NOT_LOGGED) {
       router.replace("/signin");
     }
+
   }, [user]);
 
   useEffect(()=>{
     setIdDeck(router.query.id)
   }, [router.query.id])
 
-  useEffect(()=>{
-    setIdParentDeck(router.query.from)
-  },[router.query.from])
+  // useEffect(()=>{
+  //   setIdParentDeck(router.query.from)
+  // },[router.query.from])
 
   useEffect(()=>{
-    if(idDeck) {
-      listenForDeck(idDeck, setActualDeck, setDecks, setCards)
+    if(idDeck && user) {
+      listenForDecksV2(idDeck, setDecks)
+      listenForDeckV2(idDeck, setActualDeck)
+      listenForCardsV2(idDeck, setCards)
+      // listenForDecks(idDeck, setActualDeck, setDecks, setCards)
     }
-  }, [idDeck])
+  }, [idDeck, user])
 
   useEffect(()=>{
     if(decks){
@@ -114,6 +120,8 @@ function index() {
                 deckId={idDeck} 
                 isOpen={isOpenMenuHeaderDeck} 
                 closeWindow={closeMenuHeaderDeck}
+                deckName={actualDeck.name}
+                deckDescription={actualDeck.description}
               />
             }
           </div>
@@ -154,7 +162,6 @@ function index() {
             isOpen={isOpenRemoveDeck}
             closeWindow={closeRemoveDeck}
             deckId={idDeck}
-            parentDeckId={idParentDeck}
             name={actualDeck?.name}
           />          
         }
@@ -203,7 +210,7 @@ function index() {
             <>
               {cards?.length > 0 ? 
                 
-                <div className={decksStyles.decks}>
+                <div className={cardsStyles.cards}>
                   {cards.map((card) => (
                     <CardContainer
                       key={card.id}

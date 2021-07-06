@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 
 //styles
 import popupStyles from 'styles/Popup.module.scss'
@@ -11,9 +11,9 @@ import BackIcon from 'components/icons/BackIcon'
 //firebase
 import { updateDeckDescription } from 'firebase/client'
 
-function UpdateDeckDescriptionWindow({ isOpen, closeWindow, deckId }) {
+function UpdateDeckDescriptionWindow({ isOpen, closeWindow, deckId, description }) {
 
-    const [newDescription, setNewDescription] = useState('')
+    const [newDescription, setNewDescription] = useState(description)
     const [loading, setLoading] = useState(false)
 
     const updateDescription = (e) =>{
@@ -35,6 +35,10 @@ function UpdateDeckDescriptionWindow({ isOpen, closeWindow, deckId }) {
         closeWindow()
     }
 
+    useEffect(()=>{
+        updateDeckDescriptionInput.focus()
+    },[])
+
     return (
         <div className={popupStyles.windowBg + " " + (isOpen && "is-open")}> 
             <div className={popupStyles.window}>
@@ -48,12 +52,15 @@ function UpdateDeckDescriptionWindow({ isOpen, closeWindow, deckId }) {
 
                 <form className={popupStyles.form} id="updateDeckDescriptionForm">
                     <label>Nueva descripción del mazo <span className={popupStyles.required}>*</span></label>
-                    <input
+                    <textarea
+                        defaultValue={description}
+                        rows={4}
                         type="text"
                         placeholder="Ingresa una descripción"
                         aria-label="Ingresa una descripción" 
                         className={popupStyles.inputRounded}
                         onChange={(e) => setNewDescription(e.target.value.trim())}
+                        id="updateDeckDescriptionInput"
                     />
                     <span id="updateDeckDescriptionErrorMsg" className={popupStyles.ErrorMsg}></span>
                     <button

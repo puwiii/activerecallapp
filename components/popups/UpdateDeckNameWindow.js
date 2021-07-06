@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 
 //styles
 import popupStyles from 'styles/Popup.module.scss'
@@ -11,9 +11,9 @@ import BackIcon from 'components/icons/BackIcon'
 //firebase
 import { updateDeckName } from 'firebase/client'
 
-function UpdateDeckNameWindow({ isOpen, closeWindow, deckId }) {
+function UpdateDeckNameWindow({ isOpen, closeWindow, deckId, deckName }) {
 
-    const [newName, setNewName] = useState('')
+    const [newName, setNewName] = useState(deckName)
     const [loading, setLoading] = useState(false)
 
     const updateName = (e) =>{
@@ -29,8 +29,7 @@ function UpdateDeckNameWindow({ isOpen, closeWindow, deckId }) {
                 closeForm()
             })
             .catch((error)=>{
-                updateDeckNameErrorMsg.innerText= error
-                updateDeckNameErrorMsg.style.display="block"
+                console.log(error)
             })
         }
     }
@@ -40,6 +39,11 @@ function UpdateDeckNameWindow({ isOpen, closeWindow, deckId }) {
         updateDeckNameErrorMsg.style.display="none"
         closeWindow()
     }
+
+    useEffect(()=>{
+        updateDeckNameInput.focus()
+        updateDeckNameInput.select()
+      },[])    
 
     return (
         <div className={popupStyles.windowBg + " " + (isOpen && "is-open")}> 
@@ -57,9 +61,11 @@ function UpdateDeckNameWindow({ isOpen, closeWindow, deckId }) {
                     <input
                         type="text"
                         placeholder="Ingresa un nombre"
+                        defaultValue={deckName}
                         aria-label="Ingresa un nombre" 
                         className={popupStyles.inputRounded}
-                        onChange={(e) => setNewName(e.target.value)}
+                        onChange={(e) => {setNewName(e.target.value)}}
+                        id="updateDeckNameInput"
                     />
                     <span id="updateDeckNameErrorMsg" className={popupStyles.ErrorMsg}></span>
                     <button

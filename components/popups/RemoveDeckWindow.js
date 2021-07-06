@@ -1,4 +1,4 @@
-import { clearDeckReference, removeDeck } from 'firebase/client'
+import { clearDeckReference, removeDeck, removeDecksV2 } from 'firebase/client'
 import React from 'react'
 import { useRouter } from "next/router";
 
@@ -9,13 +9,12 @@ import popupStyles from 'styles/Popup.module.scss'
 import TrashIcon from 'components/icons/TrashIcon'
 import BackIcon from 'components/icons/BackIcon'
 
-function RemoveDeckWindow({ isOpen, closeWindow, deckId, name, parentDeckId, stay=false }) {
+function RemoveDeckWindow({ isOpen, closeWindow, deckId, name, stay=false }) {
 
     const router = useRouter()
 
     const remove = () => {
-        removeDeck(deckId)
-        clearDeckReference(deckId, parentDeckId)
+        removeDecksV2(deckId)
         closeWindow()
         if(!stay){
             router.back()

@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
+import { useRouter } from "next/router";
 import Head from "next/head";
 
 //firebase
-import { createDeck } from "firebase/client";
+import { createDeck, createDeckV2 } from "firebase/client";
 
 //styles
 import popupStyles from 'styles/Popup.module.scss'
@@ -19,6 +20,8 @@ function CreateDeckWindow({ isOpen, closeWindow, deckId }) {
   const [deckDescription, setDeckDescription] = useState('');
   const [loading, setLoading] = useState(false)
 
+  const router = useRouter()
+
   const closeForm = () => {
     createDeckForm.reset()
     createDeckErrorMsg.style.display="none"
@@ -29,7 +32,7 @@ function CreateDeckWindow({ isOpen, closeWindow, deckId }) {
 
   const crearMazo = (e) => {  
     e.preventDefault();
-
+  
     
     if(!deckName || deckName?.length === 0){
       createDeckErrorMsg.innerText= "(*) El mazo debe tener un nombre"
@@ -37,17 +40,37 @@ function CreateDeckWindow({ isOpen, closeWindow, deckId }) {
       return
     }else{
       setLoading(true)
-      createDeck(deckId, deckName.trim(), deckDescription.trim())
-      .then(() => {
-        createDeckForm.reset();
-        setDeckDescription("");
-        setDeckName("");
-        setLoading(false)
-        closeWindow();
+
+      createDeckV2(router.query.id ? router.query.id : null,deckName,deckDescription)
+      .then(()=>{
+        console.log("created succesfully")
+        closeForm()
       })
-      .catch(alert);
+      .catch((error)=>{
+        setLoading(false)
+        console.log(error)
+      })
+      
+      
+
+
+      //PRUEBAS 
+      //setLoading(true)
+      // createDeck(deckId, deckName.trim(), deckDescription.trim())
+      // .then(() => {
+      //   createDeckForm.reset();
+      //   setDeckDescription("");
+      //   setDeckName("");
+      //   setLoading(false)
+      //   closeWindow();
+      // })
+      // .catch(alert);
     }
   };
+
+  useEffect(()=>{
+    createDeckInput.focus()
+  },[])
 
   return (
 
@@ -68,6 +91,7 @@ function CreateDeckWindow({ isOpen, closeWindow, deckId }) {
         <form className={popupStyles.form} id="createDeckForm">
           <label>Nombre del mazo <span className={popupStyles.required}>*</span></label>
           <input
+            id="createDeckInput"
             type="text"
             placeholder="Ingrese un nombre"
             aria-label="Ingresa un nombre" 

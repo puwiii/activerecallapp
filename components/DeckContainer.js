@@ -43,7 +43,7 @@ function DeckContainer({deckId, name, description, icon, isPoster, parentDeckId 
 
     return (
         <div className={styles.deckContainer}>
-            <Link href={`/decks/${deckId}?from=${parentDeckId}`}>
+            <Link href={`/decks/${deckId}`}>
                 <div className={`${styles.deck} ${isPoster && styles.poster}`} title={name} id={deckId} onContextMenu={e=>handleContextMenu(e)}>
                     <div className={styles.deck__icon}>
                         <FolderIcon/>
@@ -65,6 +65,7 @@ function DeckContainer({deckId, name, description, icon, isPoster, parentDeckId 
                     closeWindow={closeMenuDeck}
                     deckId={deckId}
                     name={name}
+                    description={description}
                 />
             }
         </div>

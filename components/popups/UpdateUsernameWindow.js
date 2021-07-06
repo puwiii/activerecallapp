@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import { useRouter } from 'next/router'
 
 //styles
@@ -52,6 +52,10 @@ function UpdateUsernameWindow({ isOpen, closeWindow }) {
         updateUsernameErrorMsg.style.display="none"
         closeWindow()
     }
+
+    useEffect(()=>{
+        updateUsernameInput.focus()
+    },[])   
 
     return (
         <div className={popupStyles.windowBg + " " + (isOpen && "is-open")}> 

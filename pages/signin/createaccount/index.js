@@ -69,7 +69,9 @@ function index() {
         })
     }
        
-
+    useEffect(()=>{
+        createAccountInput.focus()
+    },[])
     
 
     useEffect(()=>{
@@ -101,7 +103,7 @@ function index() {
                     <h2 className={styles.subtitle}>Presentate con Liza, ella estará muy feliz de conocerte 😁</h2>
                 </div>  
                 <form className={styles.form}>       
-                    <input type="text" placeholder="Ingresa un nombre de usuario" aria-label="Ingresa un nombre de usuario" className={styles.inputRounded} onChange={(e) => setUsername(e.target.value)} required />
+                    <input type="text" placeholder="Ingresa un nombre de usuario" aria-label="Ingresa un nombre de usuario" className={styles.inputRounded} onChange={(e) => setUsername(e.target.value)} required  id="createAccountInput"/>
                     <input type="email" placeholder="Ingresa un Email" aria-label="Ingresa un Email"  className={styles.inputRounded} onChange={(e) => setUserEmail(e.target.value)} required/>
                     <input type="password" placeholder="Ingresa una contraseña" aria-label="Ingresa una contraseña" className={styles.inputRounded} onChange={(e) => setUserPassword(e.target.value)} required/>
                     <input type="password" placeholder="Repetir contraseña" aria-label="Repetir contraseña" className={styles.inputRounded} onChange={(e) => setUserRepeatedPassword(e.target.value)} required/>

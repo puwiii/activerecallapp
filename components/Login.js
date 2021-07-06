@@ -1,20 +1,22 @@
 import React, {useState, useEffect} from 'react'
 import styles from 'styles/Signin.module.scss'
-import Link from 'next/link'
+
 import { auth } from 'firebase/client'
 import {useRouter} from 'next/router'
+
 import GmailButton from 'components/GmailButton'
 
-import PushLeftIcon from './icons/PushLeftIcon'
 import useUser from './hooks/useUser'
 import RightArrowIcon from 'components/icons/RightArrowIcon'
-import ChevronRightIcon from './icons/ChevronRightIcon'
+
+import SpinnerComponentCircle from './SpinnerComponentCircle'
+
 
 function index() {
 
     const [userEmail, setUserEmail] = useState('')
     const [userPassword, setUserPassword] = useState('')
-
+    const [loading, setLoading] = useState(false)
     const router = useRouter()
     let user = useUser()
 
@@ -27,11 +29,15 @@ function index() {
                 router.back()
             }
         }
-
     }, [user])
+
+    useEffect(()=>{
+        loginInput.focus()
+    },[])
 
     const login = e => {
         e.preventDefault();
+        
 
         if(!userEmail){
             ErrorMsg.innerText="El email no puede estar vacio"
@@ -45,10 +51,12 @@ function index() {
             return
         }
         
+        setLoading(true)
+
         auth
             .signInWithEmailAndPassword(userEmail, userPassword)
             .then((cred)=>{
-                console.log(cred.user.emailVerified)
+                
                 if(cred.user.emailVerified===true){
                     router.replace('/')
                 }
@@ -58,6 +66,7 @@ function index() {
                 // router.back()
             })
             .catch(error=>{
+                setLoading(false)
                 const ERROR_MESSAGES = {
                     'auth/user-not-found': "No se ha encontrado un usuario registrado con ese Email.",
                     'auth/wrong-password': "La contraseña y/o el email no son validos, verifique los datos ingresados."
@@ -81,7 +90,7 @@ function index() {
                 <h2 className={styles.subtitle}>Esperamos que Liza te este ayudando 😊</h2>
             </div>
             <form className={styles.form}>
-                <input 
+                <input                    
                     type="email"
                     name="username" 
                     placeholder="Ingresa tu email" 
@@ -89,6 +98,7 @@ function index() {
                     autoComplete="username"
                     className={styles.inputRounded} 
                     onChange={(e) => setUserEmail(e.target.value)} 
+                    id="loginInput"
                 />
                 <input 
                     type="password" 
@@ -102,8 +112,11 @@ function index() {
                 />
                 <span id="ErrorMsg" className={styles.ErrorMsg}></span>
                 <div className={styles.buttonsBox}>
+                    {
+                        loading ? <SpinnerComponentCircle/> :
+                        <button type="submit" className={styles.roundedButtonFilled} onClick={e=>login(e)}>Iniciar sesión <RightArrowIcon/></button>
+                    }
                     {/* <a href="">¿Has olvidado tu contraseña?</a> */}
-                    <button type="submit" className={styles.roundedButtonFilled} onClick={e=>login(e)}>Iniciar sesión <RightArrowIcon/></button>
                     {/* <GmailButton/> */}
                 </div>
             </form>

@@ -9,27 +9,30 @@ import RightArrowIcon from "./icons/RightArrowIcon";
 import useUser, { USER_STATES } from "./hooks/useUser";
 import SpinnerComponent from "components/SpinnerComponent";
 
+import SvgComponent from "components/logos/SimbaLogo";
+
 function Header() {
   let user = useUser();
 
   return (
     <header className={styles.header}>
       <div className={styles.container}>
-        <a href="/" title="Página principal de Liza">
-          <Logo />
+        <a href="/" title="Página principal de Liza" className={styles.logo}>
+          <img src="/images/liza_v2.svg"/>
+          {/* <Logo/> */}
         </a>
         <div className={styles.header__user}>
           {user === USER_STATES.NOT_LOGGED && (
             <>
-            <Link href={"/signin/createaccount"}>
-              <button className={styles.roundedButtonTerciary}>
-                Crear cuenta 
+            <Link href={"/signin"}>
+              <button className={styles.roundedButtonSecondary}>
+                Iniciar sesión 
                 {/* <RightArrowIcon /> */}
               </button>
             </Link>
-            <Link href={"/signin"}>
+            <Link href={"/signin/createaccount"}>
               <button className={styles.roundedButtonFilled}>
-                Iniciar sesión 
+                Crear cuenta 
                 {/* <RightArrowIcon /> */}
               </button>
             </Link>

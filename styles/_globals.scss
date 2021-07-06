@@ -17,6 +17,7 @@
   display: flex;
   align-items: center;
   max-width: max-content;
+  width: 100%;
   cursor: pointer;
   outline: none;
   border: none;
@@ -24,7 +25,7 @@
   font-weight: $font-weight-medium;
   padding: 0.7em 1.2em;
   white-space: nowrap;
-  border-radius: 4em;
+  border-radius: .4em;
   //border-radius: calc(1.5em + #{$font-size-small});
   transition: background-position 0.36s ease-in-out;
 
@@ -43,7 +44,7 @@
 
   //--
   background: linear-gradient(
-    315deg,
+    270deg,
     $primary-color 50%,
     $primary-dark-color 50%
   );
@@ -59,9 +60,10 @@
 .roundedButtonSecondary {
   backdrop-filter: blur(5px);
   background-color: $primary-light-color;
-  color: $text-secondary;
+  color: $primary-color;
+  text-shadow: 0px 0px 1px rgba(0,0,0,.25);
   background: linear-gradient(
-    315deg,
+    270deg,
     rgba($primary-lighter-color,.5) 50%,
     rgba($primary-light-color,.5) 50%
   );
@@ -154,16 +156,6 @@
   animation: fade-in 1s both linear;
 }
 
-@keyframes fade-in {
-  0% {
-    opacity: 0;
-  }
-
-  100% {
-    opacity: 1;
-  }
-}
-
 
 //animations
 
@@ -175,4 +167,15 @@
   100%{
     opacity: 1;
   }
+}
+
+@keyframes Zoom-In {
+  0%{
+    transform: scale(0);
+  }
+
+  100%{
+    transform: scale(1);
+  }
+  
 }

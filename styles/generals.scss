@@ -40,7 +40,8 @@ body {
   height: 4px;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba($primary-color, 0.7);
+  border-radius: 50px;
+  background: rgba($primary-color, 0.5);
   //box-shadow: inset 5px 0px px $background;
 }
 ::-webkit-scrollbar-thumb:hover {

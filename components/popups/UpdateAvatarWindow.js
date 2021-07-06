@@ -10,6 +10,7 @@ import popupStyles from 'styles/Popup.module.scss'
 import UploadIcon from 'components/icons/UploadIcon'
 import BackIcon from 'components/icons/BackIcon'
 import PictureIcon from 'components/icons/PictureIcon'
+import SpinnerComponentCircle from 'components/SpinnerComponentCircle'
 
 // const INPUT_STATES = {
 //     ERROR: -1,
@@ -31,6 +32,8 @@ function UpdateAvatarWindow({ isOpen, closeWindow }) {
 
     const router = useRouter()
 
+    const [loading, setLoading] = useState(false)
+    const [loadingImage, setLoadingImage] = useState(false)
     const [drag, setDrag] = useState(DRAG_IMAGE_STATES.NONE)
     const [task, setTask] = useState(null)
     const [imgURL, setImgURL] = useState(null)
@@ -58,16 +61,24 @@ function UpdateAvatarWindow({ isOpen, closeWindow }) {
     }
 
     const handleDrop = (e) => {
+        console.log(e)
         e.preventDefault()
         setDrag(DRAG_IMAGE_STATES.NONE)
-        if(e.dataTransfer.files[0].type==="image/png" || e.dataTransfer.files[0].type==="image/jpg" || e.dataTransfer.files[0].type==="image/jpeg"){
-            updateAvatarErrorMsg.style.display="none"
-            const file = e.dataTransfer.files[0]
-            const task = uploadAvatarImage(file)
-            setTask(task)
+
+        if(e.dataTransfer.files.length > 0){
+            if(e.dataTransfer.files[0].type==="image/png" || e.dataTransfer.files[0].type==="image/jpg" || e.dataTransfer.files[0].type==="image/jpeg"){
+                updateAvatarErrorMsg.style.display="none"
+                const file = e.dataTransfer.files[0]
+                const task = uploadAvatarImage(file)
+                setTask(task)
+            }
+            else{
+                updateAvatarErrorMsg.innerText= "Ups... Puede ser que no estes subiendo una imagen, asegúrate de que el arhivo sea PNG, JPEG o JPG"
+                updateAvatarErrorMsg.style.display="block"
+            }
         }
         else{
-            updateAvatarErrorMsg.innerText= "Ups... ¿Puede ser que no estes subiendo una imagen? asegúrate de que el arhivo sea PNG, JPEG o JPG"
+            updateAvatarErrorMsg.innerText= "Mmm... Ni siquiera se que intentaste arrastrar."
             updateAvatarErrorMsg.style.display="block"
         }
     }
@@ -76,7 +87,8 @@ function UpdateAvatarWindow({ isOpen, closeWindow }) {
         console.log(e)
         e.preventDefault()
         setDrag(DRAG_IMAGE_STATES.NONE)
-        if(e.target.files){
+
+        if(e.target.files.length > 0){
             if(e.target.files[0].type==="image/png" || e.target.files[0].type==="image/jpg" || e.target.files[0].type==="image/jpeg"){
                 updateAvatarErrorMsg.style.display="none"
                 const file = e.target.files[0]
@@ -91,12 +103,15 @@ function UpdateAvatarWindow({ isOpen, closeWindow }) {
     }
 
     const updateAvatar = () =>{
+        setLoading(true)
         updateUserAvatar(imgURL)
         .then(()=>{
+            setLoading(false)
             router.reload()
             closeForm()
         })
         .catch((e)=>{
+            setLoading(false)
             console.log(e)
         })
 
@@ -105,11 +120,18 @@ function UpdateAvatarWindow({ isOpen, closeWindow }) {
     useEffect(()=>{
         if(task){
             
-            let onProgress = () => {}
-            let onError = () => {}
+            let onProgress = () => {
+                setLoadingImage(true)
+            }
+            let onError = () => {
+                setLoadingImage(false)
+            }
             let onComplete = () => {
                 task.snapshot.ref.getDownloadURL()
-                .then(setImgURL)
+                .then((url)=>{
+                    setImgURL(url)
+                    setLoadingImage(false)
+                })
             }
 
             task.on('state_changed',
@@ -124,6 +146,12 @@ function UpdateAvatarWindow({ isOpen, closeWindow }) {
     return (
         <div className={popupStyles.windowBg + " " + (isOpen && "is-open")}> 
             <div className={popupStyles.window}>
+                {
+                    loading &&
+                        <div className={popupStyles.loader}>
+                            <SpinnerComponentCircle/>
+                        </div>        
+                }
                 <h1 className={popupStyles.title}>Cambiar foto</h1>
 
                 <form className={popupStyles.form} id="updateAvatarForm">
@@ -135,15 +163,24 @@ function UpdateAvatarWindow({ isOpen, closeWindow }) {
                         onDragOver={handleDragOver}
                         onDrop={handleDrop} 
                     >
-                        <PictureIcon height={50} width={50}/>
-                        Arrastra una imagen o presiona para subir desde tu dispositivo
-                        {imgURL &&
-                            <Image
-                                src={imgURL}
-                                quality={100}
-                                layout="fill"
-                                objectFit="cover"
-                            />
+                        {loadingImage ? 
+                            <SpinnerComponentCircle/> 
+                        :
+                            <>
+                            {imgURL ?
+                                <Image
+                                    src={imgURL}
+                                    quality={100}
+                                    layout="fill"
+                                    objectFit="cover"
+                                />
+                                :
+                                <>
+                                <PictureIcon height={50} width={50}/>
+                                Arrastra una imagen o presiona para subir desde tu dispositivo
+                                </>
+                            }
+                            </>
                         }
                     </label>
                     <input 
@@ -170,6 +207,9 @@ function UpdateAvatarWindow({ isOpen, closeWindow }) {
                 }
 
                 .dragAndDrop{
+                    overflow: hidden;
+                    opacity: ${drag === DRAG_IMAGE_STATES.DRAG_OVER ? ".8" : ".4"};
+                    background-color: ${drag === DRAG_IMAGE_STATES.DRAG_OVER ? "rgba(0,0,0,.04)" : "transparent"};
                     position: relative;
                     cursor: pointer;
                     aspect-ratio: 1 / 1;
@@ -179,8 +219,15 @@ function UpdateAvatarWindow({ isOpen, closeWindow }) {
                     align-items: center;
                     justify-content: center;
                     padding: 2em;
-                    border-radius: 7px;
-                    border: ${ drag === DRAG_IMAGE_STATES.DRAG_OVER ? "2px dashed rgba(0,0,0,.5)" : "2px solid rgba(0,0,0,.05)"};
+                    transition: opacity 100ms ease-in-out, background-color 100ms ease-in-out;
+                    border-radius: ${imgURL ? "50%" : "21px"};
+                    border: ${ drag === DRAG_IMAGE_STATES.DRAG_OVER ? "2px dashed rgba(0,0,0,.2)" : "2px solid rgba(0,0,0,.05)"};
+                    ${imgURL && "opacity: 1;"}
+                }
+
+                .dragAndDrop:hover{
+                    background-color: rgba(0,0,0,.04);
+                    opacity:.8;
                 }
             `}</style>
         </div>

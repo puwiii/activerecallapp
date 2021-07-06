@@ -11,6 +11,7 @@
 }
 
 .field{
+    border: 1px solid rgba(0,0,0,.05);
     background-color: $bg-color;
     border-radius: 5px;
     *{
@@ -22,12 +23,12 @@
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
-    border-bottom: 1px solid rgba(0,0,0,.05);
-    padding: 3em 2em 2em 2em;
-    transition: background-color 100ms ease-in-out;
+    padding: 3.5em 2em 2.5em 2em;
+    transition: transform 100ms ease-in-out;
+    border-radius: 10px;
 
-    &:hover{
-        background-color: rgba($primary-color,.08);
+    &:hover, &:focus{
+        transform: scale(1.008);
     }
 
     .avatar{
@@ -69,8 +70,8 @@
         display: flex;
         align-items: center;
         position: absolute;
-        top: 5px;
-        left: 5px;
+        top: 10px;
+        left: 10px;
         font-size: $font-size-xSmall;
         font-weight: $font-weight-medium;
         opacity: .4;

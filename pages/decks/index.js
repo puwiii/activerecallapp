@@ -3,7 +3,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 
 //firebase
-import { listenForUserDecks } from "firebase/client";
+import { listenForDecksV2, listenForUserDecks } from "firebase/client";
 
 //styles
 import styles from "styles/Home.module.scss";
@@ -41,7 +41,7 @@ function index() {
         router.replace("/signin/emailverification");
       }
       else{
-        listenForUserDecks(setDecks);
+        listenForDecksV2(null ,setDecks);
       }
     }
 

@@ -11,7 +11,7 @@ import UpdateDeckDescriptionWindow from 'components/popups/UpdateDeckDescription
 //hooks
 import { useModal } from 'components/hooks/useModal';
 
-function MenuHeaderDeck({xCoord, yCoord, deckId, closeWindow, isOpen}) {
+function MenuHeaderDeck({xCoord, yCoord, deckId, closeWindow, isOpen, deckName, deckDescription}) {
 
     const [isOpenUpdateNameDeck, openUpdateNameDeck, closeUpdateNameDeck] = useModal(false);
     const [isOpenUpdateDescriptionDeck, openUpdateDescriptionDeck, closeUpdateDescriptionDeck] = useModal(false);
@@ -32,6 +32,7 @@ function MenuHeaderDeck({xCoord, yCoord, deckId, closeWindow, isOpen}) {
                     isOpen={isOpenUpdateNameDeck}
                     closeWindow={closeUpdateNameDeck}
                     deckId={deckId}
+                    deckName={deckName}
                 />
             }
             
@@ -41,6 +42,7 @@ function MenuHeaderDeck({xCoord, yCoord, deckId, closeWindow, isOpen}) {
                     isOpen={isOpenUpdateDescriptionDeck}
                     closeWindow={closeUpdateDescriptionDeck}
                     deckId={deckId}
+                    description={deckDescription}
                 />
             }
 

@@ -28,6 +28,7 @@
    overflow: hidden;
    cursor: default;
    margin: 0 20px;
+   animation: Fade-In 225ms linear forwards, Zoom-In 125ms cubic-bezier(0.39, 0.575, 0.565, 1) forwards;
 }
 
 .title{
@@ -171,7 +172,7 @@
 .ErrorMsg {
     display: none;
     font-size: $font-size-xSmall;
-    font-weight: $font-weight-regular;
+    font-weight: $font-weight-medium;
     color: $error;
     text-align: left;
     align-self: flex-start;

@@ -51,7 +51,9 @@ export const loginWithGmail = () => {
 };
 
 export const saveUserInFirestore = (user) => {
-  const { uid, displayName, photoURL, email } = user;
+  const { uid, displayName, email } = user;
+
+  const photoURL = "https://firebasestorage.googleapis.com/v0/b/activerecallapp.appspot.com/o/avatars%2Fdefault%2F2983183.png?alt=media&token=2411ee04-2c60-423e-b7f4-b93081ac3fb0"
 
   const usernameLC = displayName.toLowerCase()
 
@@ -372,3 +374,143 @@ const removeDeckFromFirestore = (deckId) => {
 
 
 export { auth, database };
+
+
+// V2 client
+
+
+export const createCardV2 = (deckId, front, back) => {
+
+  const user = database.collection("users").doc(auth.currentUser.uid);
+
+  return database.collection("cards")
+  .add({
+    front: front,
+    back: back,
+    createdAt: firebase.firestore.Timestamp.fromDate(new Date()),
+    fromDeck: deckId,
+    author: user,
+  })
+  .then(()=>{
+    console.log("card created v2")
+  })
+  .catch((error)=>{
+    console.error(error)
+  })
+}
+
+
+export const createDeckV2 = (idDeckParent = null, name, description = "") => {
+  
+  const user = database.collection("users").doc(auth.currentUser.uid);
+
+  return database
+  .collection("decks")
+  .add({
+    name: name,
+    description: description,
+    createdAt: firebase.firestore.Timestamp.fromDate(new Date()),
+    parentDeckId: idDeckParent,
+    author: user,
+  })
+  .then(console.info("deck created v2"))
+  .catch((e) => {
+    console.log(e.message);
+  });
+}
+
+export const listenForDeckV2 = (id, callback) => {
+
+  return database.collection("decks")
+  .doc(id)
+  .onSnapshot((doc)=>{
+    const id = doc.id;
+    callback({...doc.data(), id})
+  })
+
+}
+
+export const listenForDecksV2 = (parentDeckId = null, callback) => {
+
+  let user = database.collection("users").doc(auth.currentUser.uid);
+
+  return database.collection("decks")
+  .where("parentDeckId","==", parentDeckId).where("author","==", user)
+  .onSnapshot((doc)=>{
+    var decks = [];
+    doc.docs.forEach(doc=>{
+      const id = doc.id
+      decks.push({...doc.data(), id})
+    })
+    callback(decks)
+  })
+
+}
+
+export const listenForCardsV2 = (deckId, callback) => {
+  return database.collection("cards")
+  .where("fromDeck","==",deckId)
+  .onSnapshot((doc)=>{
+    var cards = [];
+    doc.docs.forEach(doc=>{
+      const id = doc.id
+      cards.push({...doc.data(), id})
+    })
+    callback(cards)
+  })
+}
+
+export const removeDecksV2 = (id) => {
+
+  database.collection("decks")
+  .where("parentDeckId","==",id)
+  .get()
+  .then((doc)=>{
+
+    doc.docs.forEach(doc=>{
+      removeDecksV2(doc.id)
+
+    })
+    removeDeckV2(doc.id)
+  
+  }).then(()=>{
+    removeCardsV2(id)
+    removeDeckV2(id)
+  })
+}
+
+const removeCardsV2 = (deckId) => {
+  database.collection("cards")
+  .where("fromDeck","==",deckId)
+  .get()
+  .then((doc)=>{
+    doc.docs.forEach(doc=>{
+      removeCardV2(doc.id)
+    })
+  })
+}
+
+const removeCardV2 = (id) => {
+  database.collection("cards")
+  .doc(id)
+  .delete()
+  .then(()=>{
+    console.log("card deleted")
+  })
+  .catch((error)=>{
+    console.error(error)
+  })
+}
+
+export const removeDeckV2 = (id) => {
+  return database.collection("decks")
+  .doc(id)
+  .delete()
+  .then(()=>{
+
+  })
+  .catch((error)=>{
+    console.error(error)
+  })
+
+}
