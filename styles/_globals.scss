@@ -6,6 +6,7 @@
 .roundedButtonFilled,
 .roundedButtonSecondary,
 .roundedButtonTerciary {
+
   svg {
     margin-left: 5px;
 
@@ -27,7 +28,7 @@
   white-space: nowrap;
   border-radius: .4em;
   //border-radius: calc(1.5em + #{$font-size-small});
-  transition: background-position 0.36s ease-in-out;
+  transition: background-position 0.36s ease-in-out, background-color 200ms ease-in-out, border 200ms ease-in-out;
 
   @include breakpoint-up(medium){
     font-size: $font-size-small;
@@ -49,7 +50,7 @@
     $primary-dark-color 50%
   );
 
-  background-size: 250% 100%;
+  background-size: 200% 100%;
   background-position: right bottom;
 
   &:hover {
@@ -76,11 +77,17 @@
 }
 
 .roundedButtonTerciary {
-  //background-color: rgba($primary-color,.03);
+  border: 1px solid transparent;
+  background-color: rgba($primary-color,.04);
   border-color: transparent;
-  color: $primary-color;
+  color: $text-secondary;
   font-weight: $font-weight-medium;
   //text-shadow: 2px 2px 3px rgba(0,0,0,.1);
+
+  &:hover{
+    border: 1px solid rgba($primary-color,.2);
+    background-color: rgba($primary-color,.1);
+  }
 }
 
 //inputs
@@ -107,7 +114,7 @@
   }
 
   &::placeholder{
-    font-weight: $font-weight-regular;
+    font-weight: $font-weight-medium;
   }
 }
 
@@ -142,13 +149,15 @@
 //   }
 // }
 
-.subtitle {
-  font-size: $font-size-small;
+.subtitle{
+
   font-weight: $font-weight-bold;
+  letter-spacing: 0px;
 
   @include breakpoint-up(medium) {
     font-size: $font-size-medium;
   }
+
 }
 
 //animations

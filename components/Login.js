@@ -63,7 +63,6 @@ function index() {
                 else{
                    router.push('/signin/emailverification')
                 }
-                // router.back()
             })
             .catch(error=>{
                 setLoading(false)

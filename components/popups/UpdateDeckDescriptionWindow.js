@@ -36,7 +36,7 @@ function UpdateDeckDescriptionWindow({ isOpen, closeWindow, deckId, description 
     }
 
     useEffect(()=>{
-        updateDeckDescriptionInput.focus()
+        updateDeckDescriptionInput.select()
     },[])
 
     return (

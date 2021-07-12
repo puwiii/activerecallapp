@@ -12,6 +12,7 @@ import styles from "/styles/Global.module.scss";
 import RightArrowIcon from "components/icons/RightArrowIcon";
 import BackIcon from "components/icons/BackIcon";
 import SpinnerComponentCircle from "components/SpinnerComponentCircle";
+import TextEditor from "components/TextEditor";
 
 function CreateCardWindow({ isOpen, closeWindow, deckId }) {
   const [front, setFront] = useState('');
@@ -19,7 +20,6 @@ function CreateCardWindow({ isOpen, closeWindow, deckId }) {
   const [loading, setLoading] = useState(false)
 
   const closeForm = () => {
-    
     createCardForm.reset()
     createCardErrorMsg.style.display="none"
     setFront("");
@@ -52,9 +52,9 @@ function CreateCardWindow({ isOpen, closeWindow, deckId }) {
       }
   };
 
-  useEffect(()=>{
-    createCardInput.focus()
-  },[])
+  // useEffect(()=>{
+  //   createCardInput.focus()
+  // },[])
 
 
   // useEffect(() => {
@@ -82,7 +82,7 @@ function CreateCardWindow({ isOpen, closeWindow, deckId }) {
             </div>        
         }
         <h1 className={popupStyles.title}>Crear tarjeta</h1>
-        <form className={popupStyles.form} id="createCardForm">
+        {/* <form className={popupStyles.form} id="createCardForm">
           <label>Frente de la tarjeta <span className={popupStyles.required}>*</span></label>
           <textarea
             type="text"
@@ -91,6 +91,7 @@ function CreateCardWindow({ isOpen, closeWindow, deckId }) {
             rows={5}
             className={styles.inputRounded}
             onChange={(e) => setFront((e.target.value).trim())}
+
             id="createCardInput"
           />
           <label>Reverso de la tarjeta <span className={popupStyles.required}>*</span></label>
@@ -108,8 +109,13 @@ function CreateCardWindow({ isOpen, closeWindow, deckId }) {
             type="submit"
             onClick={(e) => addCard(e)}
           />
+        </form> */}
+        <form className={popupStyles.form} id="createCardForm">
+        <label>Frente de la tarjeta <span className={popupStyles.required}>*</span></label><br/>
+        <TextEditor
+          wrapperClassName={styles.inputRounded}
+        />
         </form>
-
         <div className={popupStyles.buttons}>
           <button
             type="submit"

@@ -22,7 +22,7 @@ function Nav() {
 
     useEffect(() => {
 
-        if(localStorage.getItem('navContracted')) setNavContracted(JSON.parse(localStorage.getItem('navContracted')))
+        if(localStorage.getItem('navContracted')!=="undefined") setNavContracted(JSON.parse(localStorage.getItem('navContracted')))
         else{
             setNavContracted(false)
             localStorage.setItem('navContracted', navContracted)
@@ -30,6 +30,19 @@ function Nav() {
 
     }, [])
 
+    useEffect(()=>{
+
+        localStorage.setItem('navContracted', navContracted)
+
+        if(navContracted === true){
+            document.getElementById('nav').classList.remove(styles.expanded)
+        } 
+        else{
+            document.getElementById('nav').classList.add(styles.expanded)   
+        } 
+
+    },[navContracted])
+    
     useEffect(()=>{
 
         if(router.pathname.includes('decks')){
@@ -45,18 +58,6 @@ function Nav() {
     
     },[router.pathname])
 
-    useEffect(()=>{
-
-        localStorage.setItem('navContracted', navContracted)
-
-        if(navContracted === true){
-            document.getElementById('nav').classList.remove(styles.expanded)
-        } 
-        else{
-            document.getElementById('nav').classList.add(styles.expanded)   
-        } 
-
-    },[navContracted])
 
 
     

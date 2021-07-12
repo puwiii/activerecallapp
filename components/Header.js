@@ -25,7 +25,7 @@ function Header() {
           {user === USER_STATES.NOT_LOGGED && (
             <>
             <Link href={"/signin"}>
-              <button className={styles.roundedButtonSecondary}>
+              <button className={styles.roundedButtonTerciary}>
                 Iniciar sesión 
                 {/* <RightArrowIcon /> */}
               </button>

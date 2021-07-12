@@ -36,6 +36,10 @@ function RemoveDeckWindow({ isOpen, closeWindow, deckId, name, stay=false }) {
                 .is-open {
                     display: grid !important;
                 }
+
+                h1{
+                    text-align: center;
+                }
             `}</style>
         </div>
     )

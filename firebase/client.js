@@ -388,6 +388,7 @@ export const createCardV2 = (deckId, front, back) => {
     front: front,
     back: back,
     createdAt: firebase.firestore.Timestamp.fromDate(new Date()),
+    timestamp: firebase.firestore.FieldValue.serverTimestamp(),
     fromDeck: deckId,
     author: user,
   })

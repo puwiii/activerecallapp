@@ -50,15 +50,23 @@ function index() {
                 <title>Mi cuenta - Liza</title>
             </Head>
             {/* <h1 className={styles.title}>Mi cuenta</h1> */}
-            <UpdateAvatarWindow
-                isOpen={isOpenUpdateAvatar}
-                closeWindow={closeAvatarUpdate}
-            />
 
-            <UpdateUsernameWindow
-                isOpen={isOpenUpdateUsername}
-                closeWindow={closeUpdateUsername}
-            />
+            {
+                isOpenUpdateAvatar &&
+                <UpdateAvatarWindow
+                    isOpen={isOpenUpdateAvatar}
+                    closeWindow={closeAvatarUpdate}
+                    actualImgURL={user.avatar}
+                />
+            }
+
+            {
+                isOpenUpdateUsername &&
+                <UpdateUsernameWindow
+                    isOpen={isOpenUpdateUsername}
+                    closeWindow={closeUpdateUsername}
+                />
+            }
 
             {loading ? 
                 <ScreenLoadingComponent/>

@@ -28,7 +28,7 @@ const DRAG_IMAGE_STATES = {
     COMPLETE: 3,
 }
 
-function UpdateAvatarWindow({ isOpen, closeWindow }) {
+function UpdateAvatarWindow({ isOpen, closeWindow, actualImgURL }) {
 
     const router = useRouter()
 
@@ -61,6 +61,7 @@ function UpdateAvatarWindow({ isOpen, closeWindow }) {
     }
 
     const handleDrop = (e) => {
+        console.log(e.dataTransfer.files[0])
         console.log(e)
         e.preventDefault()
         setDrag(DRAG_IMAGE_STATES.NONE)

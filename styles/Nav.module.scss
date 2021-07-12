@@ -3,7 +3,6 @@
 @import "globals";
 
 .nav {
-  background-color: $bg-color;
   background-color: $bg-color-dark;
   display: flex;
   flex-direction: column;
@@ -12,6 +11,9 @@
   //border-right: 1px solid rgba($primary-color, 0.1);
   //background-color: $bg-color;
 
+  @include breakpoint-up(large){
+    background-color: $bg-color;
+  }
 
   button {
     justify-self: flex-end;
@@ -53,7 +55,7 @@
       cursor: pointer;
       font-size: $font-size-xSmall;
       font-weight: $font-weight-medium;
-      opacity: .6;
+      color: $text-gray;
 
       @include breakpoint-up(large){
         font-size: $font-size-small;
@@ -96,7 +98,7 @@
         gap: 5px;
         padding: .5em;
         //transition: padding 0.4s cubic-bezier(0.215, 0.61, 0.355, 1);
-        border-top: 1px solid rgba(0,0,0,.1);
+        //border-top: 1px solid rgba(0,0,0,.1);
 
         @include breakpoint-up(large) {
           gap: 10px;
