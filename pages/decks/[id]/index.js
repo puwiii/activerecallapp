@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Head from 'next/head'
+import Head from "next/head";
 import { useRouter } from "next/router";
 
 //styles
@@ -8,11 +8,15 @@ import decksStyles from "styles/Decks.module.scss";
 import cardsStyles from "styles/Cards.module.scss";
 
 //firebase
-import { listenForCardsV2, listenForDeck, listenForDecksV2, listenForDeckV2 } from "firebase/client";
+import {
+  listenForCardsV2,
+  listenForDecksV2,
+  listenForDeckV2,
+} from "firebase/client";
 
 //hooks
 import { useModal } from "components/hooks/useModal";
-import useUser, {USER_STATES} from "components/hooks/useUser";
+import useUser, { USER_STATES } from "components/hooks/useUser";
 
 //components
 import CardContainer from "components/CardContainer";
@@ -28,153 +32,160 @@ import CreateDeckWindow from "components/popups/CreateDeckWindow";
 import RemoveDeckWindow from "components/popups/RemoveDeckWindow";
 import CreateCardWindow from "components/popups/CreateCardWindow";
 import MenuHeaderDeck from "components/menus/MenuHeaderDeck";
+import ChevronRightIcon from "components/icons/ChevronRightIcon";
 
 function index() {
-
   const [isOpenCreateDeck, openCreateDeck, closeCreateDeck] = useModal(false);
   const [isOpenRemoveDeck, openRemoveDeck, closeRemoveDeck] = useModal(false);
   const [isOpenCreateCard, openCreateCard, closeCreateCard] = useModal(false);
-  const [isOpenMenuHeaderDeck, openMenuHeaderDeck, closeMenuHeaderDeck] = useModal(false);
-  
+  const [isOpenMenuHeaderDeck, openMenuHeaderDeck, closeMenuHeaderDeck] =
+    useModal(false);
 
-  const [loading, setLoading] = useState(true)
-  const [idDeck, setIdDeck] = useState()
+  const [loading, setLoading] = useState(true);
+  const [idDeck, setIdDeck] = useState();
   // const [idParentDeck, setIdParentDeck] = useState()
-  const [actualDeck, setActualDeck] = useState()
+  const [actualDeck, setActualDeck] = useState();
   const [decks, setDecks] = useState();
   const [cards, setCards] = useState();
 
-  const[xCoord, setXCoord] = useState()
-  const[yCoord, setYCoord] = useState()
+  const [xCoord, setXCoord] = useState();
+  const [yCoord, setYCoord] = useState();
 
   let user = useUser();
 
   const router = useRouter();
 
   const handleMenuHeaderDeck = (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
-    let newXCoord = e.target.offsetLeft + e.target.offsetWidth
-    let newYCoord = e.target.offsetTop + e.target.offsetHeight
+    let newXCoord = e.target.offsetLeft + e.target.offsetWidth;
+    let newYCoord = e.target.offsetTop + e.target.offsetHeight;
 
-    setXCoord(newXCoord)
-    setYCoord(newYCoord)
+    setXCoord(newXCoord);
+    setYCoord(newYCoord);
 
-    if(isOpenMenuHeaderDeck){
-      closeMenuHeaderDeck()
+    if (isOpenMenuHeaderDeck) {
+      closeMenuHeaderDeck();
+    } else {
+      openMenuHeaderDeck();
     }
-    else{
-      openMenuHeaderDeck()
-    }
-  }
+  };
 
+  const goBack = () => {
+    router.back();
+  };
   //check for user
   useEffect(() => {
-
     if (user === USER_STATES.NOT_LOGGED) {
       router.replace("/signin");
     }
-
   }, [user]);
 
-  useEffect(()=>{
-    setIdDeck(router.query.id)
-  }, [router.query.id])
+  useEffect(() => {
+    setIdDeck(router.query.id);
+  }, [router.query.id]);
 
   // useEffect(()=>{
   //   setIdParentDeck(router.query.from)
   // },[router.query.from])
 
-  useEffect(()=>{
-    if(idDeck && user) {
-      listenForDecksV2(idDeck, setDecks)
-      listenForDeckV2(idDeck, setActualDeck)
-      listenForCardsV2(idDeck, setCards)
+  useEffect(() => {
+    if (idDeck && user) {
+      listenForDecksV2(idDeck, setDecks);
+      listenForDeckV2(idDeck, setActualDeck);
+      listenForCardsV2(idDeck, setCards);
       // listenForDecks(idDeck, setActualDeck, setDecks, setCards)
     }
-  }, [idDeck, user])
+  }, [idDeck, user]);
 
-  useEffect(()=>{
-    if(decks){
-      setLoading(false)
+  useEffect(() => {
+    if (decks) {
+      setLoading(false);
     }
-  }, [decks])
+  }, [decks]);
+
+  useEffect(() => {
+    console.log(actualDeck);
+  }, [actualDeck]);
 
   return (
     <main className={styles.main}>
       <Head>
-        <title>{actualDeck ? `Mis Mazos - ${actualDeck.name}` : "Mis Mazos - Liza"}</title>
+        <title>
+          {actualDeck ? `Mis Mazos - ${actualDeck.name}` : "Mis Mazos - Liza"}
+        </title>
       </Head>
       {/* <h1 className={styles.title}>Mis Mazos</h1> */}
-      
-      {actualDeck ? 
+
+      {actualDeck ? (
         <div className={decksStyles.header}>
-          <h1 className={styles.subtitle}>{actualDeck.name}</h1>
+          <span title="Volver atras" onClick={goBack}>
+            <ChevronRightIcon />
+          </span>
+          <h1 className={styles.subtitle}>{actualDeck?.name}</h1>
           <div>
-            <button onClick={openRemoveDeck}><TrashIcon/><span>Eliminar mazo</span></button>
-            <button onClick={e=>handleMenuHeaderDeck(e)}><SettingsIcon/><span>Editar mazo</span></button>
-            {isOpenMenuHeaderDeck &&
-              <MenuHeaderDeck 
+            <button onClick={openRemoveDeck}>
+              <TrashIcon />
+              <span>Eliminar mazo</span>
+            </button>
+            <button onClick={(e) => handleMenuHeaderDeck(e)}>
+              <SettingsIcon />
+              <span>Editar mazo</span>
+            </button>
+            {isOpenMenuHeaderDeck && (
+              <MenuHeaderDeck
                 xCoord={xCoord}
                 yCoord={yCoord}
-                deckId={idDeck} 
-                isOpen={isOpenMenuHeaderDeck} 
+                deckId={idDeck}
+                isOpen={isOpenMenuHeaderDeck}
                 closeWindow={closeMenuHeaderDeck}
                 deckName={actualDeck.name}
                 deckDescription={actualDeck.description}
               />
-            }
+            )}
           </div>
         </div>
-        
-        
-        : 
-        <SpinnerComponent/>
-      }
-     
-      <hr/>
-      
-      <section>
+      ) : (
+        <SpinnerComponent />
+      )}
 
+      <hr />
+
+      <section>
         {/* popups */}
 
-        {
-          isOpenCreateDeck && 
+        {isOpenCreateDeck && (
           <CreateDeckWindow
             isOpen={isOpenCreateDeck}
             closeWindow={closeCreateDeck}
             deckId={idDeck}
           />
-        }
-        
-        {
-          isOpenCreateCard &&
+        )}
+
+        {isOpenCreateCard && (
           <CreateCardWindow
             isOpen={isOpenCreateCard}
             closeWindow={closeCreateCard}
             deckId={idDeck}
           />
-        }
+        )}
 
-        {
-          isOpenRemoveDeck && 
+        {isOpenRemoveDeck && (
           <RemoveDeckWindow
             isOpen={isOpenRemoveDeck}
             closeWindow={closeRemoveDeck}
             deckId={idDeck}
             name={actualDeck?.name}
-          />          
-        }
+          />
+        )}
 
         <div className="decks">
           <h3>Mazos</h3>
-          {
-            loading ? 
-              <SpinnerComponent/>
-            :
+          {loading ? (
+            <SpinnerComponent />
+          ) : (
             <>
-              {decks?.length > 0 ? 
-                
+              {decks?.length > 0 ? (
                 <div className={decksStyles.decks}>
                   {decks.map((deck) => (
                     <DeckContainer
@@ -186,30 +197,27 @@ function index() {
                     />
                   ))}
                 </div>
-                :
+              ) : (
                 <h3>No hay mazos que mostrar</h3>
-              }
-            </> 
-          }
-          
+              )}
+            </>
+          )}
+
           <button
             className={styles.roundedButtonTerciary}
             onClick={openCreateDeck}
           >
-            Crear un nuevo mazo <NewFolderIcon/>
+            Crear un nuevo mazo <NewFolderIcon />
           </button>
-          
         </div>
 
         <div className="Cards">
           <h3>Tarjetas</h3>
-          {
-            loading ? 
-              <SpinnerComponent/>
-            :
+          {loading ? (
+            <SpinnerComponent />
+          ) : (
             <>
-              {cards?.length > 0 ? 
-                
+              {cards?.length > 0 ? (
                 <div className={cardsStyles.cards}>
                   {cards.map((card) => (
                     <CardContainer
@@ -221,30 +229,27 @@ function index() {
                     />
                   ))}
                 </div>
-                :
+              ) : (
                 <h3>Aún no tienes tarjetas en este mazo</h3>
-              }
-            </> 
-          }
-          
+              )}
+            </>
+          )}
+
           <button
             className={styles.roundedButtonTerciary}
             onClick={openCreateCard}
           >
-            Crear una nueva tarjeta <CreateIcon/>
+            Crear una nueva tarjeta <CreateIcon />
           </button>
-
         </div>
-        
       </section>
 
       <style jsx>{`
-
         h3 {
           padding: 20px 10px;
           font-weight: 600;
           font-size: 12px;
-          color: rgba(0,0,0,.5);
+          color: rgba(0, 0, 0, 0.5);
           user-select: none;
         }
 
@@ -253,14 +258,13 @@ function index() {
           margin-bottom: 40px;
         }
 
-        hr{
+        hr {
           margin-top: 4px;
-          border: 1px solid rgba(0,0,0,.02);
+          border: 1px solid rgba(0, 0, 0, 0.02);
         }
-
       `}</style>
     </main>
-    );
+  );
 }
 
 export default index;

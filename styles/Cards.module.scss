@@ -2,15 +2,15 @@
 @import "variables";
 @import "globals";
 
-.cards{
-    display: grid;
-    grid-template-columns: repeat( auto-fill, minmax( 200px, 1fr) );
-    grid-auto-rows: minmax(200px, 1fr);
-    gap: 10px;
-    margin-bottom: 20px;
-    
-    @include breakpoint-up(medium){
-        grid-template-columns: repeat( auto-fill, minmax( 200px, 1fr) );
-        grid-auto-rows: minmax(250px, 250px);
-    }
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-auto-rows: minmax(200px, 1fr);
+  gap: 10px;
+  margin-bottom: 20px;
+
+  @include breakpoint-up(medium) {
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    grid-auto-rows: minmax(250px, 500px);
+  }
 }

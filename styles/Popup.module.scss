@@ -4,210 +4,256 @@
 
 $padding-fields: 1.2em;
 
-.windowBg{
-    z-index: 5000;
-    background: rgba(0,0,0,.4);
-    display: none;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    place-items: center;
-    cursor: not-allowed;
+.windowBg {
+  z-index: 5000;
+  background: rgba(0, 0, 0, 0.4);
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  place-items: center;
+  cursor: not-allowed;
 }
 
 .window {
-    position: relative;
-   display: flex;
-   flex-direction: column;
-   background-color: $bg-color;
-   border-radius: 12px;
-   //border: 1px solid rgba($primary-color,.4);
-   box-shadow: 0 0 5px rgba(0,0,0,.3);
-   max-width: 450px;
-   width: 90%;
-   overflow: hidden;
-   cursor: default;
-   margin: 0 20px;
-   animation: Fade-In 225ms ease-in-out forwards, Zoom-In 125ms cubic-bezier(0.39, 0.575, 0.565, 1) forwards;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background-color: $bg-color;
+  border-radius: 12px;
+  //border: 1px solid rgba($primary-color,.4);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+  max-width: 450px;
+  width: 90%;
+  //overflow: hidden;
+  cursor: default;
+  margin: 0 20px;
+  animation: Fade-In 125ms ease-in-out forwards,
+    Zoom-In 105ms cubic-bezier(0.39, 0.575, 0.565, 1) forwards;
 }
 
-.title{
-    // text-decoration: underline dashed $text-primary;
-    // text-underline-offset: 10px;
-    text-align: left;
-    font-size: $font-size-medium;
-    font-weight: $font-weight-bold;
-    color: $text-primary;
-    padding: .5em 0;
-    margin: 0 1em;
-    margin-top: .5em;
-    border-bottom: 1px solid rgba(0,0,0,.05);
+.title {
+  // text-decoration: underline dashed $text-primary;
+  // text-underline-offset: 10px;
+  text-align: left;
+  font-size: $font-size-medium;
+  font-weight: $font-weight-bold;
+  color: $text-primary;
+  padding: 0.5em 0;
+  margin: 0 1em;
+  margin-top: 0.5em;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 
-    @include breakpoint-up(medium){
-        font-size: $font-size-large;
+  @include breakpoint-up(medium) {
+    font-size: $font-size-large;
+  }
+}
+
+.description {
+  align-self: center;
+  text-align: left;
+  padding: 1em 2em;
+  min-width: 270px;
+  font-size: $font-size-xSmall;
+  font-weight: $font-weight-medium;
+  opacity: 0.6;
+
+  @include breakpoint-up(medium) {
+    font-size: $font-size-small;
+  }
+}
+
+.form {
+  padding: 1em 3em;
+  display: flex;
+  flex-direction: column;
+  //margin-bottom: .5em;
+  gap: 10px;
+
+  // > label{
+  //     // margin-top: 1.5em;
+  //     // margin-bottom: .5em;
+  // }
+
+  input[type="checkbox"] {
+    zoom: 125%;
+  }
+
+  .checkbox {
+    padding-top: $padding-fields;
+    margin-top: 1.5em;
+    * {
+      cursor: pointer;
     }
+
+    display: flex;
+    align-items: center;
+
+    > label {
+      padding-top: 0;
+      display: flex;
+      align-items: center;
+      user-select: none;
+      padding-left: 0.5em;
+
+      svg {
+        zoom: 0.7;
+        margin-left: 5px;
+      }
+    }
+  }
+
+  // input, textarea{
+  //     padding: .5em;
+  // }
+
+  label {
+    font-size: $font-size-xSmall;
+    font-weight: $font-weight-bold;
+    opacity: 0.8;
+
+    padding-top: $padding-fields;
+
+    @include breakpoint-up(medium) {
+      font-size: $font-size-xSmall;
+    }
+
+    svg {
+      pointer-events: none;
+    }
+  }
 }
 
-.description{
-    align-self: center;
-    text-align: left;
-    padding: 1em 2em;
-    min-width: 270px;
+.required {
+  font-weight: $font-weight-bold;
+  color: $error;
+}
+
+.buttons {
+  padding-top: 1em;
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-around;
+
+  button {
+    border-left: 1px solid rgba(0, 0, 0, 0.05);
+    border-radius: 0;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 1.4em 0;
+    background-color: rgba(0, 0, 0, 0);
+    color: $text-secondary;
+    flex: 1;
     font-size: $font-size-xSmall;
     font-weight: $font-weight-medium;
-    opacity: .6;
+    transition: background-color 0.215s linear;
 
-    
-    @include breakpoint-up(medium){
-        font-size: $font-size-small;
+    @include breakpoint-up(medium) {
+      font-size: $font-size-small;
     }
+
+    &:hover,
+    &:focus {
+      background-color: rgba(0, 0, 0, 0.05);
+    }
+
+    &.primaryButton {
+      color: $succes;
+      background-color: transparent;
+      &:hover,
+      &:focus {
+        background-color: rgba($succes, 0.2);
+      }
+    }
+
+    &.removeBtn {
+      background-color: transparent;
+      color: $error;
+
+      &:hover,
+      &:focus {
+        background-color: rgba($error, 0.08);
+      }
+    }
+  }
 }
-
-.form{
-    padding: 1em 3em;
-    display: flex;
-    flex-direction: column;
-    //margin-bottom: .5em;
-    gap: 10px;
-
-    // > label{
-    //     // margin-top: 1.5em;
-    //     // margin-bottom: .5em;
-    // }
-
-    input[type=checkbox]{
-        zoom: 125%;
-    }
-
-    .checkbox{
-        padding-top: $padding-fields;
-        margin-top: 1.5em;
-        *{
-            cursor: pointer;
-        }
-        
-        display: flex;
-        align-items: center;
-        
-        >label{
-            padding-top: 0;
-            display: flex;
-            align-items: center;
-            user-select: none;
-            padding-left: .5em;
-
-            svg{
-                zoom:.7;
-                margin-left: 5px;
-            }
-        }
-    }
-
-    // input, textarea{
-    //     padding: .5em;
-    // }
-
-    label{
-        font-size: $font-size-xSmall;
-        font-weight: $font-weight-bold;
-        opacity: .8;
-
-        padding-top: $padding-fields;
-        
-        @include breakpoint-up(medium){
-            font-size: $font-size-xSmall;
-        }
-
-        svg{
-            pointer-events: none;
-        }
-    }
-
-}
-
-.required{
-    font-weight: $font-weight-bold;
-    color: $error;
-}
-
-.buttons{
-    padding-top: 1em;
-    display: flex;
-    flex-direction: row-reverse;
-    justify-content: space-around;
-
-    button{
-        border-left: 1px solid rgba(0,0,0,.05);
-        border-radius: 0;
-        display: flex;
-        align-items: center;
-        gap: 5px;
-        padding: 1.4em 0;
-        background-color: rgba(0,0,0,.0);
-        color: $text-secondary;
-        flex: 1;
-        font-size: $font-size-xSmall;
-        font-weight: $font-weight-medium;
-        transition: background-color .215s linear;
-        
-        @include breakpoint-up(medium){
-            font-size: $font-size-small;
-        }
-        
-        &:hover, &:focus{
-            background-color: rgba(0,0,0,.05);
-        }
-
-        &.primaryButton{
-            color: $succes;
-            background-color: transparent;
-            &:hover, &:focus{
-                background-color: rgba($succes,.2);
-            }
-        }
-
-        &.removeBtn{
-            background-color: transparent;
-            color: $error;
-
-            &:hover, &:focus{
-                background-color: rgba($error,.08);
-            }
-        }
-    }
-}
-
 
 .ErrorMsg {
-    display: none;
-    font-size: $font-size-xSmall;
-    font-weight: $font-weight-medium;
-    color: $error;
-    text-align: left;
-    align-self: flex-start;
-    border: 2px dashed rgba($error,.2);
-    background-color: rgba($error,.08);
-    padding: .5em .7em;
-    border-radius: .7em;
-    // position: absolute;
-    // bottom: 70px;
+  display: none;
+  font-size: $font-size-xSmall;
+  font-weight: $font-weight-medium;
+  color: $error;
+  text-align: left;
+  align-self: flex-start;
+  border: 2px dashed rgba($error, 0.2);
+  background-color: rgba($error, 0.08);
+  padding: 0.5em 0.7em;
+  border-radius: 0.7em;
+  // position: absolute;
+  // bottom: 70px;
 
-    // @include breakpoint-up(medium) {
-    //   bottom: 90px;
-    // }
+  // @include breakpoint-up(medium) {
+  //   bottom: 90px;
+  // }
 }
 
-.loader{
-    z-index: 10000;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: grid;
-    place-items: center;
-    background-color: $bg-color;
+.loader {
+  z-index: 10000;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  background-color: $bg-color;
 }
 
+.toggleField {
+  border-radius: 7px;
+  max-height: 58px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  //transition: max-height 600ms ease-in-out;
+
+  & > label {
+    display: flex;
+    align-items: center;
+    user-select: none;
+    padding: $padding-fields;
+    cursor: pointer;
+    //pointer-events: none;
+
+    > span {
+      pointer-events: none;
+    }
+    &:hover {
+      background-color: rgba($text-secondary, 0.05);
+    }
+
+    > svg {
+      transition: opacity 125ms linear;
+      margin-left: auto;
+      zoom: 1.25;
+      pointer-events: none;
+    }
+  }
+
+  &.open {
+    overflow: visible;
+    //transition-delay: 0.2s;
+    max-height: 1000px;
+    background-color: rgba($text-secondary, 0.05);
+    & > label {
+      pointer-events: none;
+
+      > svg {
+        opacity: 0;
+      }
+    }
+  }
+}

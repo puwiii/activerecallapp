@@ -7,15 +7,17 @@
   background-color: $bg-color-dark;
   padding: 10px 20px;
   overflow-y: auto;
-  
-  
-  @include breakpoint-up(medium){
-    padding: 20px 28px;
+
+  @include breakpoint-up(medium) {
+    padding: 20px 40px;
   }
 
-  .title{
-    padding: 0;
-    padding-bottom: .5em;
+  @include breakpoint-up(large) {
+    border-top: 1px dashed rgba(0, 0, 0, 0.08);
   }
- 
+
+  .title {
+    padding: 0;
+    padding-bottom: 0.5em;
+  }
 }

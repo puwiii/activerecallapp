@@ -1,18 +1,39 @@
-import React from 'react'
+import React, { useState, useEffect } from "react";
+import dynamic from "next/dynamic";
+import { EditorState, convertFromRaw } from "draft-js";
 
 //styles
-import styles from 'styles/Card.module.scss'
+import "node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import styles from "styles/Card.module.scss";
+import TextEditor from "./TextEditor/TextEditor";
 
-function CardContainer({cardId, front, back, createdAt}) {
-    return (
-        <div className={styles.cardContainer} title={front}>
-            <div className={styles.card}>
-                <div className={styles.front}>
-                        <p>{front}</p>
-                </div>
-            </div>
-        </div>
-    )
+const Editor = dynamic(
+  () => import("react-draft-wysiwyg").then((module) => module.Editor),
+  {
+    ssr: false,
+  }
+);
+
+function CardContainer({ cardId, front, back, createdAt }) {
+  const [editorState, setEditorState] = useState(
+    EditorState.createWithContent(convertFromRaw(front))
+  );
+
+  const onEditorStateChange = (editorState) => {};
+
+  //   useEffect(() => {
+  //     console.log(front);
+  //     console.log(convertFromRaw(front));
+  //     setEditorState(convertFromRaw(front));
+  //   });
+
+  return (
+    <div className={styles.cardContainer}>
+      <div className={styles.card}>
+        <TextEditor isView={true} data={front} />
+      </div>
+    </div>
+  );
 }
 
-export default CardContainer
+export default CardContainer;

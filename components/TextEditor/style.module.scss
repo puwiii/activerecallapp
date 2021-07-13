@@ -1,0 +1,51 @@
+.div {
+  border-radius: 0px;
+  background-color: #fefefe;
+  padding: 0;
+
+  .toolbar {
+    margin: 0;
+    border: none;
+    border-radius: 0;
+    padding: 1rem;
+    box-shadow: 0 4px 5px -5px rgba(0, 0, 0, 0.3);
+    z-index: 200;
+  }
+
+  .editor {
+    background-color: #fff;
+    cursor: text;
+    margin-bottom: 0;
+    padding: 1.5rem 4rem;
+    overflow-y: scroll;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+    flex: 1;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  .wrapper {
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    height: 500px;
+  }
+
+  &.isView {
+    .toolbar {
+      display: none;
+    }
+
+    .wrapper {
+      height: min-content;
+    }
+
+    .editor {
+      pointer-events: none;
+      user-select: all;
+      box-shadow: none;
+    }
+  }
+}

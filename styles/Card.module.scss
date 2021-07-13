@@ -2,31 +2,41 @@
 @import "mixins";
 @import "globals";
 
-.cardContainer{
-    width: 100%;
-    height: 100%;
+.cardContainer {
+  width: 100%;
+  height: 100%;
 }
 
-.card{
-    width: 100%;
-    height: 100%;
-    background-color: $bg-color;
-    border-radius: 7px;
-    border: 1px solid rgba(0,0,0,.1);
-    box-shadow: 0px 0px 10px rgba(0,0,0,.03);
-    display: grid;
-    place-items: center;
-    overflow-y: hidden;
+// .card {
+//   width: 100%;
+//   height: 100%;
+//   background-color: $bg-color;
+//   border-radius: 7px;
+//   border: 1px solid rgba(0, 0, 0, 0.1);
+//   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.03);
+//   display: grid;
+//   place-items: center;
+//   overflow-y: hidden;
+// }
+
+.card {
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+  border-radius: 7px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.03);
+  overflow: hidden;
 }
 
-.front{
-    line-height: 1.5;
-    text-align: center;
-    padding: 0 1em;
-    font-size: $font-size-small;
-    font-weight: $font-weight-medium;
-    display: -webkit-box;
-    -webkit-line-clamp: 8;
-    -webkit-box-orient: vertical;  
-    overflow-y: hidden;
-}
+// .front{
+//     line-height: 1.5;
+//     text-align: center;
+//     padding: 0 1em;
+//     font-size: $font-size-small;
+//     font-weight: $font-weight-medium;
+//     display: -webkit-box;
+//     -webkit-line-clamp: 8;
+//     -webkit-box-orient: vertical;
+//     overflow-y: hidden;
+// }
