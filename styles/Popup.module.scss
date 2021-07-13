@@ -26,6 +26,8 @@ $padding-fields: 1.2em;
   //border: 1px solid rgba($primary-color,.4);
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
   max-width: 450px;
+  max-height: 90%;
+  overflow-y: auto;
   width: 90%;
   //overflow: hidden;
   cursor: default;
@@ -132,6 +134,10 @@ $padding-fields: 1.2em;
 }
 
 .buttons {
+  z-index: 2000;
+  background-color: $bg-color;
+  position: sticky;
+  bottom: 0;
   padding-top: 1em;
   display: flex;
   flex-direction: row-reverse;

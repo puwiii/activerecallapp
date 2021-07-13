@@ -28,10 +28,8 @@ function CardContainer({ cardId, front, back, createdAt }) {
   //   });
 
   return (
-    <div className={styles.cardContainer}>
-      <div className={styles.card}>
-        <TextEditor isView={true} data={front} />
-      </div>
+    <div className={styles.card}>
+      <TextEditor isView={true} data={front} />
     </div>
   );
 }

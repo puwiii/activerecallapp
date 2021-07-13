@@ -28,7 +28,7 @@ function RemoveDeckWindow({ isOpen, closeWindow, deckId, name, stay = false }) {
     if (!stay) {
       setTimeout(() => {
         router.back();
-      }, [500]);
+      }, [100]);
     }
   };
 

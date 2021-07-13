@@ -405,7 +405,6 @@ export const listenForDeckV2 = (id, callback) => {
     .collection("decks")
     .doc(id)
     .onSnapshot((doc) => {
-      console.log("paso >>> " + doc.id);
       const id = doc.id;
       callback({ ...doc.data(), id });
     });

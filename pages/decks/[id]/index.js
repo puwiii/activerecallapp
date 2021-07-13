@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
+import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 
 //styles
 import styles from "styles/Home.module.scss";
@@ -104,12 +105,25 @@ function index() {
     }
   }, [decks]);
 
-  useEffect(() => {
-    console.log(actualDeck);
-  }, [actualDeck]);
-
   return (
     <main className={styles.main}>
+      <div className={decksStyles.floatButtons}>
+        <button
+          title="Crear nuevo mazo"
+          className={styles.roundedButtonTerciary}
+          onClick={openCreateDeck}
+        >
+          <NewFolderIcon />
+        </button>
+        <button
+          title="Crear nueva tarjeta"
+          className={styles.roundedButtonTerciary}
+          onClick={openCreateCard}
+        >
+          <CreateIcon />
+        </button>
+      </div>
+
       <Head>
         <title>
           {actualDeck ? `Mis Mazos - ${actualDeck.name}` : "Mis Mazos - Liza"}
@@ -215,24 +229,32 @@ function index() {
           <h3>Tarjetas</h3>
           {loading ? (
             <SpinnerComponent />
+          ) : cards?.length > 0 ? (
+            // <div className={cardsStyles.cards}>
+            <ResponsiveMasonry
+              columnsCountBreakPoints={{
+                350: 1,
+                1464: 2,
+                2071: 3,
+                2675: 4,
+                3267: 5,
+              }}
+            >
+              <Masonry gutter="10px">
+                {cards.map((card) => (
+                  <CardContainer
+                    key={card.id}
+                    cardId={card.id}
+                    front={card.front}
+                    back={card.back}
+                    createdAt={card.createdAt}
+                  />
+                ))}
+              </Masonry>
+            </ResponsiveMasonry>
           ) : (
-            <>
-              {cards?.length > 0 ? (
-                <div className={cardsStyles.cards}>
-                  {cards.map((card) => (
-                    <CardContainer
-                      key={card.id}
-                      cardId={card.id}
-                      front={card.front}
-                      back={card.back}
-                      createdAt={card.createdAt}
-                    />
-                  ))}
-                </div>
-              ) : (
-                <h3>Aún no tienes tarjetas en este mazo</h3>
-              )}
-            </>
+            // </div>
+            <h3>Aún no tienes tarjetas en este mazo</h3>
           )}
 
           <button

@@ -13,38 +13,54 @@
   }
 
   .editor {
+    max-width: 600px;
+    width: 100%;
+    font-size: 160%;
     background-color: #fff;
     cursor: text;
     margin-bottom: 0;
-    padding: 1.5rem 4rem;
+    padding: 20px 40px;
+    padding-bottom: 0;
+    padding-top: 0;
     overflow-y: scroll;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
     flex: 1;
 
     &::-webkit-scrollbar {
       display: none;
     }
+
+    // &::-webkit-scrollbar {
+    //   width: 5px;
+    //   height: 4px;
+    // }
   }
 
   .wrapper {
+    background-color: #fefefe;
     padding: 0;
     display: flex;
     flex-direction: column;
+    align-items: center;
     height: 500px;
   }
 
   &.isView {
+    background-color: transparent;
+
     .toolbar {
       display: none;
     }
 
     .wrapper {
+      background-color: #fff;
       height: min-content;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.05);
     }
 
     .editor {
-      pointer-events: none;
-      user-select: all;
+      //border: 1px solid rgba(0, 0, 0, 0.1);
       box-shadow: none;
     }
   }

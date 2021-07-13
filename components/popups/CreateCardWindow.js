@@ -173,7 +173,6 @@ function CreateCardWindow({ isOpen, closeWindow, deckId }) {
 
         .is-open > div {
           max-width: 800px;
-          width: 65%;
         }
       `}</style>
     </div>
