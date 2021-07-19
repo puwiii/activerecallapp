@@ -1,0 +1,190 @@
+@import "mixins";
+@import "variables";
+
+.div {
+  border-radius: 0px;
+  background-color: #fefefe;
+  padding: 0;
+
+  .toolbar {
+    justify-content: flex-start;
+    margin: 0;
+    border: none;
+    border-radius: 0;
+    padding: 1rem;
+    column-gap: 20px;
+
+    box-shadow: 0 4px 5px -5px rgba(0, 0, 0, 0.3);
+    z-index: 200;
+  }
+
+  .editor {
+    max-width: 600px;
+    width: 100%;
+    background-color: #fff;
+    cursor: text;
+    margin-bottom: 0;
+    padding: 20px 40px;
+    padding-bottom: 0;
+    padding-top: 0;
+    overflow-y: scroll;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    flex: 1;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    // &::-webkit-scrollbar {
+    //   width: 5px;
+    //   height: 4px;
+    // }
+  }
+
+  .wrapper {
+    background-color: #fefefe;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 500px;
+  }
+
+  &.isView {
+    background-color: transparent;
+
+    .toolbar {
+      display: none;
+    }
+
+    .wrapper {
+      font-size: 160%;
+      border-radius: 5px;
+      background-color: transparent;
+      //background-color: #fff;
+      height: min-content;
+      // border: 1px solid rgba(0, 0, 0, 0.1);
+      // box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .editor {
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      box-shadow: none;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+    }
+  }
+}
+
+//buttons
+
+$hoverBG: rgba(0, 0, 0, 0.07);
+$selectedBG: rgba(0, 0, 0, 0.15);
+
+.toolbarButtons {
+  //border-radius: 12px;
+  //padding: 5px 2px;
+  //background-color: rgba(0, 0, 0, 0.04);
+}
+
+.toolbarButton {
+  border-radius: 5px;
+  padding: 0;
+  padding: 5px;
+  width: 28px;
+  height: 28px;
+
+  @include breakpoint-up(medium) {
+    width: 30px;
+    height: 30px;
+  }
+
+  @include breakpoint-up(large) {
+    width: 32px;
+    height: 32px;
+  }
+
+  & > img {
+    object-fit: contain;
+    width: 100%;
+    height: 100%;
+  }
+
+  &:hover {
+    box-shadow: none;
+    background-color: $hoverBG;
+  }
+}
+
+.toolbarButton[aria-selected="true"] {
+  box-shadow: none;
+  background-color: rgba($primary-color, 0.15);
+}
+
+.toolbarDropdown {
+  border-radius: 5px;
+  justify-content: space-between;
+  position: relative;
+  padding: 0;
+  height: 28px;
+
+  @include breakpoint-up(small) {
+    height: 30px;
+  }
+
+  @include breakpoint-up(medium) {
+    height: 32px;
+  }
+
+  & > img {
+    padding: 0;
+    margin: 0;
+    object-fit: contain;
+  }
+
+  &:hover {
+    box-shadow: none;
+    background-color: $hoverBG;
+  }
+}
+
+.toolbarDropdownList {
+  max-height: 350px;
+  min-width: 100%;
+  width: max-content;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  overflow-y: auto;
+  transition: box-shadow 100ms linear;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+
+  // &::-webkit-scrollbar {
+  //   display: none;
+  // }
+
+  & > li {
+    width: 100%;
+    padding: 0.5em 0.7em;
+  }
+
+  &:hover {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.popup {
+  position: absolute;
+  top: 100%;
+  left: 5px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+  height: auto;
+
+  & > input {
+    padding: 1.2em 1em;
+  }
+
+  & > label {
+    display: flex;
+    align-items: center;
+  }
+}

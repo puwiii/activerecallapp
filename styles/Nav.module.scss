@@ -11,7 +11,7 @@
   //border-right: 1px solid rgba($primary-color, 0.1);
   //background-color: $bg-color;
 
-  @include breakpoint-up(large){
+  @include breakpoint-up(large) {
     background-color: $bg-color;
   }
 
@@ -30,7 +30,7 @@
     }
 
     &:hover {
-      background-color: rgba(0,0,0, 0.1);
+      background-color: rgba(0, 0, 0, 0.1);
     }
   }
 
@@ -57,7 +57,7 @@
       font-weight: $font-weight-medium;
       color: $text-gray;
 
-      @include breakpoint-up(large){
+      @include breakpoint-up(large) {
         font-size: $font-size-small;
       }
 
@@ -65,8 +65,8 @@
         color: $primary-color;
         opacity: 1;
         //background-color: rgba($primary-color, 0.1);
-        
-        &::after{
+
+        &::after {
           content: "";
           display: block;
           position: absolute;
@@ -77,9 +77,9 @@
           background-color: $primary-color;
         }
 
-        @include breakpoint-up(large){
+        @include breakpoint-up(large) {
           background-color: rgba($primary-color, 0.1);
-          &::after{
+          &::after {
             height: 100%;
             width: 0px;
             left: auto;
@@ -96,30 +96,30 @@
         align-items: center;
         justify-content: center;
         gap: 5px;
-        padding: .5em;
+        padding: 1.2em;
         //transition: padding 0.4s cubic-bezier(0.215, 0.61, 0.355, 1);
         //border-top: 1px solid rgba(0,0,0,.1);
 
         @include breakpoint-up(large) {
           gap: 10px;
           justify-content: flex-start;
-          padding: .8em 1.2em;
+          padding: 0.8em 1.2em;
           border-top: none;
         }
 
-        svg{
+        svg {
           zoom: 85%;
         }
       }
 
       span {
+        display: none;
         font-size: $font-size-xxSmall;
         font-weight: $font-weight-bold;
 
-        @include breakpoint-up(large){
+        @include breakpoint-up(large) {
           font-size: $font-size-xSmall;
         }
-
       }
 
       &:hover {
@@ -130,10 +130,13 @@
 
   &.expanded {
     @include breakpoint-up(large) {
-
       > ul li div {
         flex-direction: row;
-        padding: .8em 2em;
+        padding: 0.8em 2em;
+
+        & > span {
+          display: block;
+        }
       }
 
       button {

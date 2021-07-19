@@ -5,7 +5,7 @@ import { EditorState, convertFromRaw } from "draft-js";
 //styles
 import "node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import styles from "styles/Card.module.scss";
-import TextEditor from "./TextEditor/TextEditor";
+import TextEditor from "components/TextEditor";
 
 const Editor = dynamic(
   () => import("react-draft-wysiwyg").then((module) => module.Editor),

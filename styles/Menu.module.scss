@@ -2,88 +2,93 @@
 @import "variables";
 @import "globals";
 
-
-.menuContainer{
-    position: absolute;
-    z-index: 2000;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0,0,0,.1);
+.menuContainer {
+  position: absolute;
+  z-index: 2000;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.1);
 }
 
-.menu{
-    transform-origin: top left;
-    max-width: 250px;
-    position: absolute;
-    background-color: $bg-color;
-    border-radius: 5px;
-    box-shadow: 0 0 5px rgba(0,0,0,.1);
-    overflow: hidden;
-    animation: Fade-In 125ms linear forwards, Zoom-In 125ms cubic-bezier(0.39, 0.575, 0.565, 1) forwards;
+.menu {
+  transform-origin: top left;
+  max-width: 250px;
+  position: absolute;
+  background-color: $bg-color;
+  border-radius: 5px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  animation: Fade-In 125ms linear forwards,
+    Zoom-In 125ms cubic-bezier(0.39, 0.575, 0.565, 1) forwards;
 }
 
-.title{
+.title {
+  user-select: none;
+  display: block;
+  font-size: $font-size-small;
+  font-weight: $font-weight-bold;
+  opacity: 0.35;
+  padding: 0.5em;
+  text-align: center;
+
+  @include breakpoint-up(medium) {
+    padding: 1em 1em 0.5em 1em;
+  }
+}
+
+.options {
+  padding: 5px;
+  z-index: 10000;
+
+  li {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-size: $font-size-xSmall;
+    font-weight: $font-weight-medium;
+    padding: 1em;
     user-select: none;
-    display: block;
-    font-size: $font-size-small;
-    font-weight: $font-weight-bold;
-    opacity: .95;
-    padding: .5em;
-    text-align: center;
+    transition: background-color 0.115s ease-in-out;
 
-    @include breakpoint-up(medium){
-        padding: 1em 1em .5em 1em;
-    }
-}
-
-.options{
-   padding: 5px;
-   z-index: 1000000;
-
-    li{
-        display: flex;
-        align-items: center;
-        cursor: pointer;
-        font-size: $font-size-xSmall;
-        font-weight: $font-weight-medium;
-        padding: 1em;
-        user-select: none;
-        transition: background-color .115s linear;
-
-        @include breakpoint-up(xlarge){
-            font-size: $font-size-small;
-           
-        }
-
-        @include breakpoint-up(medium){
-            padding: 1.5em;
-        }
-
-        &:hover, &:focus{
-            background: rgba($primary-color,.1);
-        }
-
-        svg{
-            margin-right: 10px;
-
-            @include breakpoint-up(medium){
-                zoom: 100%;
-            }
-        }
+    @include breakpoint-up(xlarge) {
+      font-size: $font-size-small;
     }
 
-    .redOption{
-        color: $error;
-        
-        &:hover, &:focus{
-            background-color: rgba($error,.08);
-        }
+    @include breakpoint-up(medium) {
+      padding: 1.3em 1.5em;
     }
 
-    hr{
-        margin: 5px 0;
-        border: 1px solid rgba(0,0,0,.02);
+    &:hover,
+    &:focus {
+      background: rgba($primary-color, 0.1);
     }
+
+    svg {
+      margin-right: 12px;
+
+      @include breakpoint-up(medium) {
+        zoom: 100%;
+      }
+    }
+  }
+
+  .redOption {
+    color: $error;
+
+    &:hover,
+    &:focus {
+      background-color: rgba($error, 0.08);
+    }
+  }
+
+  .mainOption {
+    color: $text-secondary;
+  }
+
+  hr {
+    margin: 5px 0;
+    border: 1px solid rgba(0, 0, 0, 0.02);
+  }
 }

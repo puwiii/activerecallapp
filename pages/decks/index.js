@@ -3,11 +3,11 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 
 //firebase
-import { listenForDecksV2, listenForUserDecks } from "firebase/client";
+import { listenForDecksV2 } from "firebase/client";
 
 //styles
 import styles from "styles/Home.module.scss";
-import decksStyles from "styles/Decks.module.scss"
+import decksStyles from "styles/Decks.module.scss";
 
 //components
 import CreateDeckWindow from "components/popups/CreateDeckWindow";
@@ -19,10 +19,9 @@ import ScreenLoadingComponent from "components/ScreenLoadingComponent";
 import { useModal } from "components/hooks/useModal";
 import useUser, { USER_STATES } from "components/hooks/useUser";
 
-
 function index() {
   const [isOpenCreateDeck, openCreateDeck, closeCreateDeck] = useModal(false);
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(true);
   const [decks, setDecks] = useState();
 
   let user = useUser();
@@ -30,28 +29,24 @@ function index() {
   const router = useRouter();
 
   useEffect(() => {
-
     if (user === USER_STATES.NOT_LOGGED) {
       router.replace("/signin");
     }
 
     if (user) {
-
-      if(!user.emailVerified){
+      if (!user.emailVerified) {
         router.replace("/signin/emailverification");
-      }
-      else{
-        listenForDecksV2(null ,setDecks);
+      } else {
+        listenForDecksV2(null, setDecks);
       }
     }
-
   }, [user]);
 
-  useEffect(()=>{
-    if(decks){
-      setLoading(false)
+  useEffect(() => {
+    if (decks) {
+      setLoading(false);
     }
-  }, [decks])
+  }, [decks]);
 
   return (
     <main className={styles.main}>
@@ -62,25 +57,20 @@ function index() {
       {/* <h1 className={styles.title}>Mis Mazos</h1> */}
 
       <section>
-
-        {
-          isOpenCreateDeck===true &&
+        {isOpenCreateDeck === true && (
           <CreateDeckWindow
             isOpen={isOpenCreateDeck}
             closeWindow={closeCreateDeck}
           />
-        }
-        
+        )}
 
         <div className={`decks`}>
           {/* <h2>Mazos</h2> */}
-          {
-            loading ? 
-              <ScreenLoadingComponent/>
-            :
+          {loading ? (
+            <ScreenLoadingComponent />
+          ) : (
             <>
-              {decks.length > 0 ? 
-                
+              {decks.length > 0 ? (
                 <div className={decksStyles.decks}>
                   {decks.map((deck) => (
                     <DeckContainer
@@ -92,20 +82,17 @@ function index() {
                     />
                   ))}
                 </div>
-                :
+              ) : (
                 <h2>No hay mazos que mostrar</h2>
-              }
+              )}
               <button
                 className={`${styles.roundedButtonTerciary}`}
                 onClick={openCreateDeck}
               >
-                Crear un nuevo mazo <NewFolderIcon/>
+                Crear un nuevo mazo <NewFolderIcon />
               </button>
-            </> 
-            
-          }
-          
-         
+            </>
+          )}
         </div>
       </section>
 
@@ -122,7 +109,9 @@ function index() {
           margin-bottom: 40px;
         }
 
-        
+        .decks > button {
+          margin-top: 20px;
+        }
       `}</style>
     </main>
   );

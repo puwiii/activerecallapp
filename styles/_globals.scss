@@ -6,11 +6,10 @@
 .roundedButtonFilled,
 .roundedButtonSecondary,
 .roundedButtonTerciary {
-
   svg {
     margin-left: 5px;
 
-    @include breakpoint-up(medium){
+    @include breakpoint-up(medium) {
       zoom: 120%;
     }
   }
@@ -26,11 +25,12 @@
   font-weight: $font-weight-medium;
   padding: 0.7em 1.2em;
   white-space: nowrap;
-  border-radius: .4em;
+  border-radius: 0.4em;
   //border-radius: calc(1.5em + #{$font-size-small});
-  transition: background-position 0.36s ease-in-out, background-color 200ms ease-in-out, border 200ms ease-in-out;
+  transition: background-position 0.36s ease-in-out,
+    background-color 200ms ease-in-out, border 200ms ease-in-out;
 
-  @include breakpoint-up(medium){
+  @include breakpoint-up(medium) {
     font-size: $font-size-small;
   }
 }
@@ -40,7 +40,7 @@
   color: $text-white;
 
   //--
-  
+
   //--
 
   //--
@@ -60,13 +60,12 @@
 
 .roundedButtonSecondary {
   backdrop-filter: blur(5px);
-  background-color: $primary-light-color;
-  color: $primary-color;
-  text-shadow: 0px 0px 1px rgba(0,0,0,.25);
+  color: $text-secondary;
+  text-shadow: 0px 0px 1px rgba(0, 0, 0, 0.25);
   background: linear-gradient(
     270deg,
-    rgba($primary-lighter-color,.5) 50%,
-    rgba($primary-light-color,.5) 50%
+    rgba($primary-color, 0.08) 50%,
+    rgba($text-secondary, 0.15) 50%
   );
   background-size: 250% 100%;
   background-position: right bottom;
@@ -78,15 +77,15 @@
 
 .roundedButtonTerciary {
   border: 1px solid transparent;
-  background-color: rgba($primary-color,.04);
+  background-color: rgba($primary-color, 0.04);
   border-color: transparent;
   color: $text-secondary;
   font-weight: $font-weight-medium;
   //text-shadow: 2px 2px 3px rgba(0,0,0,.1);
 
-  &:hover{
-    border: 1px solid rgba($primary-color,.2);
-    background-color: rgba($primary-color,.1);
+  &:hover {
+    border: 1px solid rgba($primary-color, 0.2);
+    background-color: rgba($primary-color, 0.1);
   }
 }
 
@@ -97,7 +96,7 @@
   width: 100%;
   outline: none;
   background-color: transparent;
-  border: 2px solid rgba(0,0,0,.05);
+  border: 2px solid rgba(0, 0, 0, 0.05);
   font-size: $font-size-xSmall;
   font-weight: $font-weight-regular;
   color: $text-black;
@@ -109,11 +108,11 @@
     font-size: $font-size-small;
   }
 
-  &:focus{
+  &:focus {
     border-color: $primary-color;
   }
 
-  &::placeholder{
+  &::placeholder {
     font-weight: $font-weight-medium;
   }
 }
@@ -149,15 +148,13 @@
 //   }
 // }
 
-.subtitle{
-
+.subtitle {
   font-weight: $font-weight-bold;
   letter-spacing: 0px;
 
   @include breakpoint-up(medium) {
     font-size: $font-size-medium;
   }
-
 }
 
 //animations
@@ -165,26 +162,24 @@
   animation: fade-in 1s both linear;
 }
 
-
 //animations
 
 @keyframes Fade-In {
-  0%{
+  0% {
     opacity: 0;
   }
 
-  100%{
+  100% {
     opacity: 1;
   }
 }
 
 @keyframes Zoom-In {
-  0%{
+  0% {
     transform: scale(0);
   }
 
-  100%{
+  100% {
     transform: scale(1);
   }
-  
 }

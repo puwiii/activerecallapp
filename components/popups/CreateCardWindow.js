@@ -12,7 +12,7 @@ import styles from "/styles/Global.module.scss";
 import RightArrowIcon from "components/icons/RightArrowIcon";
 import BackIcon from "components/icons/BackIcon";
 import SpinnerComponentCircle from "components/SpinnerComponentCircle";
-import TextEditor from "components/TextEditor/TextEditor";
+import TextEditor from "components/TextEditor";
 import DownArrowIcon from "components/icons/DownArrowIcon";
 
 function CreateCardWindow({ isOpen, closeWindow, deckId }) {

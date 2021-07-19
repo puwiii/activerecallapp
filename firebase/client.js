@@ -23,6 +23,13 @@ const auth = firebase.auth();
 
 const database = firebase.firestore();
 
+database.settings({
+  ignoreUndefinedProperties: true,
+  merge: true,
+});
+
+let userRef = null;
+
 // USER FUNCTIONS - START
 
 const mapUserFromFirebaseAuth = (user) => {
@@ -40,6 +47,10 @@ const mapUserFromFirebaseAuth = (user) => {
 export const onAuthStateChanged = (onChange) => {
   return firebase.auth().onAuthStateChanged((user) => {
     const normalizedUser = user ? mapUserFromFirebaseAuth(user) : null;
+
+    normalizedUser
+      ? (userRef = null)
+      : (userRef = database.collection("users").doc(auth.currentUser.uid));
 
     onChange(normalizedUser);
   });
@@ -62,7 +73,7 @@ export const saveUserInFirestore = (user) => {
     uid: uid,
     username: displayName,
     usernameLC: usernameLC,
-    photoURL: photoURL,
+    avatar: photoURL,
     email: email,
   });
 };
@@ -117,10 +128,17 @@ export const uploadAvatarImage = (file) => {
   return task;
 };
 
+export const uploadAvatarImageTemp = (file) => {
+  const ref = firebase.storage().ref(`/avatars/${auth.currentUser.uid}temp`);
+  const task = ref.put(file);
+  return task;
+};
+
 //USER FUNCTIONS - END
 
 export const updateDeckName = (deckId, newName) => {
-  return database
+  const user = database.collection("users").doc(auth.currentUser.uid);
+  return user
     .collection("decks")
     .doc(deckId)
     .update({
@@ -135,7 +153,8 @@ export const updateDeckName = (deckId, newName) => {
 };
 
 export const updateDeckDescription = (deckId, newDescription) => {
-  return database
+  const user = database.collection("users").doc(auth.currentUser.uid);
+  return user
     .collection("decks")
     .doc(deckId)
     .update({
@@ -359,33 +378,57 @@ const removeDeckFromFirestore = (deckId) => {
 
 export { auth, database };
 
-// V2 client
+//////////////////////
+// ** V2 client ** ///
+//////////////////////
 
 export const createCardV2 = (deckId, front, back) => {
   const user = database.collection("users").doc(auth.currentUser.uid);
 
-  return database
+  const intervalData = {
+    n: 0,
+    EF: 2.5,
+    I: 0,
+    nextTimestamp: firebase.firestore.Timestamp.fromDate(new Date()),
+  };
+
+  return user
     .collection("cards")
     .add({
       front: front,
       back: back,
       createdAt: firebase.firestore.Timestamp.fromDate(new Date()),
-      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
       fromDeck: deckId,
       author: user,
+      intervarlData: intervalData,
     })
     .then(() => {
       console.log("card created v2");
     })
     .catch((error) => {
-      console.error(error);
+      console.log("error");
+      console.log(error);
     });
 };
 
 export const createDeckV2 = (idDeckParent = null, name, description = "") => {
   const user = database.collection("users").doc(auth.currentUser.uid);
-
-  return database
+  //prueba
+  // user
+  //   .collection("decks")
+  //   .add({
+  //     name: name,
+  //     description: description,
+  //     createdAt: firebase.firestore.Timestamp.fromDate(new Date()),
+  //     parentDeckId: idDeckParent,
+  //     author: user,
+  //   })
+  //   .then(console.info("deck created v2"))
+  //   .catch((e) => {
+  //     console.log(e.message);
+  //   });
+  //prueba
+  return user
     .collection("decks")
     .add({
       name: name,
@@ -401,34 +444,45 @@ export const createDeckV2 = (idDeckParent = null, name, description = "") => {
 };
 
 export const listenForDeckV2 = (id, callback) => {
-  return database
+  const user = database.collection("users").doc(auth.currentUser.uid);
+
+  return user
     .collection("decks")
     .doc(id)
     .onSnapshot((doc) => {
-      const id = doc.id;
-      callback({ ...doc.data(), id });
+      console.log(doc.data());
+      if (doc.data()) {
+        const id = doc.id;
+        callback({ ...doc.data(), id });
+      } else {
+        callback(null);
+      }
     });
 };
 
 export const listenForDecksV2 = (parentDeckId = null, callback) => {
-  let user = database.collection("users").doc(auth.currentUser.uid);
+  const user = database.collection("users").doc(auth.currentUser.uid);
 
-  return database
-    .collection("decks")
-    .where("parentDeckId", "==", parentDeckId)
-    .where("author", "==", user)
-    .onSnapshot((doc) => {
-      var decks = [];
-      doc.docs.forEach((doc) => {
-        const id = doc.id;
-        decks.push({ ...doc.data(), id });
-      });
-      callback(decks);
-    });
+  return (
+    user
+      .collection("decks")
+      .where("parentDeckId", "==", parentDeckId)
+      //.orderBy("name", "asc")
+      .onSnapshot((doc) => {
+        var decks = [];
+        doc.docs.forEach((doc) => {
+          const id = doc.id;
+          decks.push({ ...doc.data(), id });
+        });
+        callback(decks);
+      })
+  );
 };
 
 export const listenForCardsV2 = (deckId, callback) => {
-  return database
+  const user = database.collection("users").doc(auth.currentUser.uid);
+
+  return user
     .collection("cards")
     .where("fromDeck", "==", deckId)
     .onSnapshot((doc) => {
@@ -442,7 +496,11 @@ export const listenForCardsV2 = (deckId, callback) => {
 };
 
 export const removeDecksV2 = (id) => {
-  return database
+  const user = database.collection("users").doc(auth.currentUser.uid);
+  removeDeckV2(id);
+  removeCardsV2(id);
+
+  return user
     .collection("decks")
     .where("parentDeckId", "==", id)
     .get()
@@ -450,16 +508,26 @@ export const removeDecksV2 = (id) => {
       doc.docs.forEach((doc) => {
         removeDecksV2(doc.id);
       });
-      removeDeckV2(doc.id);
-    })
-    .then(() => {
-      removeCardsV2(id);
-      removeDeckV2(id);
+    });
+};
+
+export const removeDeckV2 = (id) => {
+  const user = database.collection("users").doc(auth.currentUser.uid);
+
+  return user
+    .collection("decks")
+    .doc(id)
+    .delete()
+    .then(() => {})
+    .catch((error) => {
+      console.error(error);
     });
 };
 
 const removeCardsV2 = (deckId) => {
-  database
+  const user = database.collection("users").doc(auth.currentUser.uid);
+
+  user
     .collection("cards")
     .where("fromDeck", "==", deckId)
     .get()
@@ -471,7 +539,9 @@ const removeCardsV2 = (deckId) => {
 };
 
 const removeCardV2 = (id) => {
-  database
+  const user = database.collection("users").doc(auth.currentUser.uid);
+
+  user
     .collection("cards")
     .doc(id)
     .delete()
@@ -483,13 +553,41 @@ const removeCardV2 = (id) => {
     });
 };
 
-export const removeDeckV2 = (id) => {
-  return database
-    .collection("decks")
-    .doc(id)
-    .delete()
-    .then(() => {})
-    .catch((error) => {
-      console.error(error);
+export const getCardsForStudy = (id, cards = []) => {
+  const user = database.collection("users").doc(auth.currentUser.uid);
+
+  // user
+  //   .collection("cards")
+  //   .where("fromDeck", "==", id)
+  //   .get()
+  //   .then((docs) => {
+  //     docs.docs.map((doc) => {
+  //       let cardId = doc.id;
+  //       cards.push({ ...doc.data(), cardId });
+  //     });
+  //   });
+
+  user
+    .collection("cards")
+    .where("fromDeck", "==", id)
+    .get()
+    .then((docs) => {
+      docs.docs.map((doc) => {
+        const docId = doc.id;
+        cards.push({ docId, ...doc.data() });
+      });
+
+      user
+        .collection("decks")
+        .where("parentDeckId", "==", id)
+        .get()
+        .then((docs) => {
+          docs.docs.map((doc) => {
+            console.log(doc.data());
+            getCardsForStudy(doc.id, cards);
+          });
+        });
     });
+
+  return cards;
 };

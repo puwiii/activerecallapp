@@ -6,7 +6,6 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
   gap: 10px;
-  margin-bottom: 20px;
 
   @include breakpoint-up(medium) {
     grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
@@ -55,14 +54,15 @@
 
     & > svg {
       margin: 0;
-      width: 32px;
-      height: 32px;
+      width: 28px;
+      height: 28px;
     }
   }
 }
 
 .header {
   display: flex;
+  flex-wrap: wrap;
   justify-content: flex-start;
   align-items: center;
 
@@ -91,21 +91,27 @@
   & > div {
     margin-left: auto;
     display: flex;
-    gap: 10px;
+    flex-direction: column;
+    flex: 1;
+    align-items: flex-end;
+    gap: 7px;
 
     & > button {
+      padding: 0.7em 1em;
+      height: 45px;
       border-radius: 7px;
       font-size: $font-size-small;
       font-weight: $font-weight-medium;
-      padding: 0.1em;
       display: flex;
+      flex-direction: row-reverse;
       gap: 5px;
       align-items: center;
       justify-content: center;
 
       span {
-        display: none;
+        display: block;
         pointer-events: none;
+        white-space: nowrap;
       }
 
       svg {
@@ -126,13 +132,29 @@
         }
       }
 
+      &:nth-child(3) {
+        aspect-ratio: unset;
+        & > span {
+          display: block !important;
+        }
+        & > svg {
+          margin: 0;
+        }
+      }
+
       @include breakpoint-up(medium) {
+        flex-direction: row;
         zoom: 1;
-        padding: 1em;
+        padding: 0.7em 1em;
         span {
           display: block;
         }
       }
+    }
+
+    @include breakpoint-up(medium) {
+      justify-content: flex-end;
+      flex-direction: row;
     }
   }
 }

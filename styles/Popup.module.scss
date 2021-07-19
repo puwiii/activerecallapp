@@ -27,6 +27,7 @@ $padding-fields: 1.2em;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
   max-width: 450px;
   max-height: 90%;
+  overflow-x: hidden;
   overflow-y: auto;
   width: 90%;
   //overflow: hidden;
@@ -219,6 +220,7 @@ $padding-fields: 1.2em;
 }
 
 .toggleField {
+  background-color: rgba($text-secondary, 0.03);
   border-radius: 7px;
   max-height: 58px;
   display: flex;
@@ -238,7 +240,7 @@ $padding-fields: 1.2em;
       pointer-events: none;
     }
     &:hover {
-      background-color: rgba($text-secondary, 0.05);
+      background-color: rgba($text-secondary, 0.04);
     }
 
     > svg {
@@ -253,7 +255,9 @@ $padding-fields: 1.2em;
     overflow: visible;
     //transition-delay: 0.2s;
     max-height: 1000px;
-    background-color: rgba($text-secondary, 0.05);
+    background-color: rgba($primary-color, 0.02);
+    color: $text-secondary;
+
     & > label {
       pointer-events: none;
 

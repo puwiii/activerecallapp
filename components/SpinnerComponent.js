@@ -1,17 +1,15 @@
-import React from 'react'
+import React from "react";
 import { css } from "@emotion/react";
 import Spinner from "react-spinners/PulseLoader";
 
 const override = css`
   display: inline-block;
-  margin: 10px;
+  margin: 15px;
   border-color: #0876bb;
 `;
 
 function SpinnerComponent() {
-    return (
-        <Spinner color={"#0876bb"} loading={true} css={override} size={6} />
-    )
+  return <Spinner color={"#0876bb"} loading={true} css={override} size={6} />;
 }
 
-export default SpinnerComponent
+export default SpinnerComponent;

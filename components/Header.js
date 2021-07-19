@@ -1,15 +1,15 @@
 import React from "react";
 import Link from "next/link";
-import Logo from "components/logos/Logo";
-import { useEffect } from "react";
-import { auth, onAuthStateChanged } from "firebase/client";
-import Avatar from "components/Avatar";
+
+//styles
 import styles from "styles/Header.module.scss";
-import RightArrowIcon from "./icons/RightArrowIcon";
-import useUser, { USER_STATES } from "./hooks/useUser";
+
+//components
+import Avatar from "components/Avatar";
 import SpinnerComponent from "components/SpinnerComponent";
 
-import SvgComponent from "components/logos/SimbaLogo";
+//hooks
+import useUser, { USER_STATES } from "./hooks/useUser";
 
 function Header() {
   let user = useUser();
@@ -18,29 +18,35 @@ function Header() {
     <header className={styles.header}>
       <div className={styles.container}>
         <a href="/" title="Página principal de Liza" className={styles.logo}>
-          <img src="/images/liza_v2.svg"/>
+          <img src="/images/liza_v2.svg" />
           {/* <Logo/> */}
         </a>
         <div className={styles.header__user}>
           {user === USER_STATES.NOT_LOGGED && (
             <>
-            <Link href={"/signin"}>
-              <button className={styles.roundedButtonTerciary}>
-                Iniciar sesión 
-                {/* <RightArrowIcon /> */}
-              </button>
-            </Link>
-            <Link href={"/signin/createaccount"}>
-              <button className={styles.roundedButtonFilled}>
-                Crear cuenta 
-                {/* <RightArrowIcon /> */}
-              </button>
-            </Link>
+              <Link href={"/signin"}>
+                <button className={styles.roundedButtonTerciary}>
+                  Iniciar sesión
+                  {/* <RightArrowIcon /> */}
+                </button>
+              </Link>
+              <Link href={"/signin/createaccount"}>
+                <button className={styles.roundedButtonFilled}>
+                  Crear cuenta
+                  {/* <RightArrowIcon /> */}
+                </button>
+              </Link>
             </>
           )}
-          {user === USER_STATES.NOT_KNOWN && <SpinnerComponent/>}
-          {user && <Avatar username={user.username} avatar={user.avatar} email={user.email} />}
-        </div>   
+          {user === USER_STATES.NOT_KNOWN && <SpinnerComponent />}
+          {user && (
+            <Avatar
+              username={user.username}
+              avatar={user.avatar}
+              email={user.email}
+            />
+          )}
+        </div>
       </div>
       <style jsx>
         {`

@@ -16,20 +16,14 @@ function RemoveDeckWindow({ isOpen, closeWindow, deckId, name, stay = false }) {
   const [loading, setLoading] = useState(false);
 
   const remove = () => {
-    setLoading(true);
+    closeWindow();
     removeDecksV2(deckId)
       .then(() => {
-        setLoading(false);
-        closeWindow();
+        stay ? null : router.back();
       })
       .catch(() => {
         setLoading(false);
       });
-    if (!stay) {
-      setTimeout(() => {
-        router.back();
-      }, [100]);
-    }
   };
 
   return (
