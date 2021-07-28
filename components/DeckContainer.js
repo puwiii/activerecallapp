@@ -9,11 +9,11 @@ import styles from "styles/Deck.module.scss";
 
 //components
 import MenuDeck from "components/menus/MenuDeck";
-import FolderIcon from "components/icons/FolderIcon";
-import VerticalMenuIcon from "./icons/VerticalMenuIcon";
+import FolderIcon from "icons/FolderIcon";
+import VerticalMenuIcon from "icons/VerticalMenuIcon";
 
 //hooks
-import { useModal } from "./hooks/useModal";
+import { useModal } from "hooks/useModal";
 
 function DeckContainer({
   deckId,

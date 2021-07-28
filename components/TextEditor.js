@@ -283,7 +283,7 @@ function TextEditor({ wrapperClassName, callback, isView, data }) {
         toolbarHidden={isView}
         onEditorStateChange={onEditorStateChange}
         toolbar={toolbarConfig}
-        placeholder="¿Sobre qué vamos a anotar hoy?"
+        placeholder="Comienza a escribir aquí..."
       />
       <style jsx>{``}</style>
     </div>

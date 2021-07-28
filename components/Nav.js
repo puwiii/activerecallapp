@@ -5,12 +5,12 @@ import { useRouter } from "next/router";
 //styles
 import styles from "styles/Nav.module.scss";
 
-//components
-import ExploreIcon from "components/icons/ExploreIcon";
-import CardsIcon from "components/icons/CardsIcon";
-import FriendsIcon from "components/icons/FriendsIcon";
-import PushLeftIcon from "components/icons/PushLeftIcon";
-import PushRightIcon from "components/icons/PushRightIcon";
+//icons
+import ExploreIcon from "icons/ExploreIcon";
+import CardsIcon from "icons/CardsIcon";
+import FriendsIcon from "icons/FriendsIcon";
+import PushLeftIcon from "icons/PushLeftIcon";
+import PushRightIcon from "icons/PushRightIcon";
 
 function Nav() {
   const [navContracted, setNavContracted] = useState();

@@ -18,34 +18,32 @@ import {
 } from "firebase/client";
 
 //hooks
-import { useModal } from "components/hooks/useModal";
-import useUser, { USER_STATES } from "components/hooks/useUser";
+import { useModal } from "hooks/useModal";
+import useUser, { USER_STATES } from "hooks/useUser";
 
 //components
-import CardContainer from "components/CardContainer";
 import DeckContainer from "components/DeckContainer";
-import SpinnerComponent from "components/SpinnerComponent";
 import ScreenLoadingComponent from "components/ScreenLoadingComponent";
 
 //svgs
-import AddFolderSvg from "components/svgs/AddFolderSvg";
-import AddCardSvg from "components/svgs/AddCardSvg";
-import StatisticsSvg from "components/svgs/StatisticsSvg";
-import ReviewSvg from "components/svgs/ReviewSvg";
+import AddFolderSvg from "svgs/AddFolderSvg";
+import AddCardSvg from "svgs/AddCardSvg";
+import StatisticsSvg from "svgs/StatisticsSvg";
+import ReviewSvg from "svgs/ReviewSvg";
 
 //icons
-import CardsIcon from "components/icons/CardsIcon";
-import NewFolderIcon from "components/icons/NewFolderIcon";
-import CreateIcon from "components/icons/CreateIcon";
-import TrashIcon from "components/icons/TrashIcon";
-import SettingsIcon from "components/icons/SettingsIcon";
+import CardsIcon from "icons/CardsIcon";
+import NewFolderIcon from "icons/NewFolderIcon";
+import CreateIcon from "icons/CreateIcon";
+import TrashIcon from "icons/TrashIcon";
+import SettingsIcon from "icons/SettingsIcon";
+import ChevronRightIcon from "icons/ChevronRightIcon";
 
 //popups
 import CreateDeckWindow from "components/popups/CreateDeckWindow";
 import RemoveDeckWindow from "components/popups/RemoveDeckWindow";
 import CreateCardWindow from "components/popups/CreateCardWindow";
 import MenuHeaderDeck from "components/menus/MenuHeaderDeck";
-import ChevronRightIcon from "components/icons/ChevronRightIcon";
 
 function index() {
   const [isOpenCreateDeck, openCreateDeck, closeCreateDeck] = useModal(false);

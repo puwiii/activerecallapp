@@ -3,13 +3,15 @@ import React, { useEffect, useState } from "react";
 //styles
 import styles from "styles/Menu.module.scss";
 
+//icons
+import WriteIcon from "icons/WriteIcon";
+
 //components
-import WriteIcon from "components/icons/WriteIcon";
 import UpdateDeckNameWindow from "components/popups/UpdateDeckNameWindow";
 import UpdateDeckDescriptionWindow from "components/popups/UpdateDeckDescriptionWindow";
 
 //hooks
-import { useModal } from "components/hooks/useModal";
+import { useModal } from "hooks/useModal";
 
 function MenuHeaderDeck({
   xCoord,

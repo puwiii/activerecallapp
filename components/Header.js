@@ -9,7 +9,7 @@ import Avatar from "components/Avatar";
 import SpinnerComponent from "components/SpinnerComponent";
 
 //hooks
-import useUser, { USER_STATES } from "./hooks/useUser";
+import useUser, { USER_STATES } from "hooks/useUser";
 
 function Header() {
   let user = useUser();

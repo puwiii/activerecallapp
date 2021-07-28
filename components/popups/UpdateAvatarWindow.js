@@ -10,10 +10,12 @@ import Image from "next/image";
 //styles
 import popupStyles from "styles/Popup.module.scss";
 
+//icons
+import UploadIcon from "icons/UploadIcon";
+import BackIcon from "icons/BackIcon";
+import PictureIcon from "icons/PictureIcon";
+
 //components
-import UploadIcon from "components/icons/UploadIcon";
-import BackIcon from "components/icons/BackIcon";
-import PictureIcon from "components/icons/PictureIcon";
 import SpinnerComponentCircle from "components/SpinnerComponentCircle";
 
 // const INPUT_STATES = {

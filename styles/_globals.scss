@@ -27,8 +27,8 @@
   white-space: nowrap;
   border-radius: 0.4em;
   //border-radius: calc(1.5em + #{$font-size-small});
-  transition: background-position 0.36s ease-in-out,
-    background-color 200ms ease-in-out, border 200ms ease-in-out;
+  transition: background-position 0.26s ease-in-out,
+    background-color 100ms ease-in-out, border 200ms ease-in-out;
 
   @include breakpoint-up(medium) {
     font-size: $font-size-small;
@@ -159,7 +159,7 @@
 
 //animations
 .fadeIn {
-  animation: fade-in 1s both linear;
+  animation: Fade-In 1s both linear;
 }
 
 //animations

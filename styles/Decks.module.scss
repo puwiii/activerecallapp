@@ -180,6 +180,10 @@
   flex-direction: column;
   flex: 1;
 
+  @include breakpoint-up(large) {
+    padding: 2em 0;
+  }
+
   .title {
     letter-spacing: 0.2px;
     padding-bottom: 2em;
@@ -227,18 +231,32 @@
           }
           span {
             transform: translateZ(80px);
-            -webkit-font-smoothing: subpixel-antialiased;
-            -webkit-font-smoothing: antialiased;
           }
 
           background-position: center center;
         }
       }
+
+      &:nth-child(4) {
+        > div {
+          background: linear-gradient(
+            180deg,
+            rgba($primary-color, 0.66) 40%,
+            rgba($primary-color, 0.9) 70%
+          );
+          background-size: 150% 300%;
+          background-position: center top;
+
+          & > span {
+            color: $text-white;
+            font-weight: $font-weight-medium;
+            text-shadow: 0 5px 5px rgba(#000, 0.15);
+          }
+        }
+      }
     }
 
     &__item {
-      -webkit-font-smoothing: subpixel-antialiased;
-      -webkit-font-smoothing: antialiased;
       perspective: 1000px;
       transform-style: preserve-3d;
       pointer-events: none;
@@ -268,6 +286,7 @@
         width: 60%;
         height: 100%;
         transition: transform 300ms ease-in-out;
+        filter: drop-shadow(0 5px 3px rgba(#000, 0.05));
         @include breakpoint-up(medium) {
           width: 80%;
         }
@@ -275,7 +294,7 @@
 
       span {
         user-select: none;
-        letter-spacing: -0.3px;
+        //letter-spacing: -0.3px;
         padding-top: 1em;
         padding-bottom: 1em;
         text-align: center;
@@ -284,7 +303,7 @@
         color: $text-secondary;
         white-space: nowrap;
         transition: transform 300ms ease-in-out;
-
+        text-shadow: 0 3px 5px rgba(#000, 0.1);
         @include breakpoint-up(large) {
           font-size: $font-size-small;
         }

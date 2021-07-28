@@ -3,16 +3,18 @@ import { useRouter } from "next/router";
 import Head from "next/head";
 
 //firebase
-import { createDeck, createDeckV2 } from "firebase/client";
+import { createDeckV2 } from "firebase/client";
 
 //styles
 import popupStyles from "styles/Popup.module.scss";
-import styles from "/styles/Global.module.scss";
+import styles from "styles/Global.module.scss";
+
+//icons
+import RightArrowIcon from "icons/RightArrowIcon";
+import BackIcon from "icons/BackIcon";
+import ExploreIcon from "icons/ExploreIcon";
 
 //components
-import RightArrowIcon from "components/icons/RightArrowIcon";
-import BackIcon from "components/icons/BackIcon";
-import ExploreIcon from "components/icons/ExploreIcon";
 import SpinnerComponentCircle from "components/SpinnerComponentCircle";
 
 function CreateDeckWindow({ isOpen, closeWindow, deckId }) {

@@ -1,14 +1,16 @@
 import React, { useState } from "react";
 import { clearDeckReference, removeDeck, removeDecksV2 } from "firebase/client";
 import { useRouter } from "next/router";
-import ScreenLoadingComponent from "components/ScreenLoadingComponent";
 
 //styles
 import popupStyles from "styles/Popup.module.scss";
 
+//icons
+import TrashIcon from "icons/TrashIcon";
+import BackIcon from "icons/BackIcon";
+
 //components
-import TrashIcon from "components/icons/TrashIcon";
-import BackIcon from "components/icons/BackIcon";
+import ScreenLoadingComponent from "components/ScreenLoadingComponent";
 
 function RemoveDeckWindow({ isOpen, closeWindow, deckId, name, stay = false }) {
   const router = useRouter();

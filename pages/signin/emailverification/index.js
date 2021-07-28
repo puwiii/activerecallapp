@@ -8,13 +8,15 @@ import styles from "styles/Signin.module.scss";
 import { auth, saveUserInFirestore } from "firebase/client";
 import { useRouter } from "next/router";
 
-//components
+//icons
 import SpinnerComponent from "components/SpinnerComponent";
-import AirplaneIcon from "components/icons/AirplaneIcon";
-import RightArrowIcon from "components/icons/RightArrowIcon";
+
+//components
+import AirplaneIcon from "icons/AirplaneIcon";
+import RightArrowIcon from "icons/RightArrowIcon";
 
 //hooks
-import useUser, { USER_STATES } from "components/hooks/useUser";
+import useUser, { USER_STATES } from "hooks/useUser";
 
 function index() {
   const [loading, setLoading] = useState(true);
@@ -69,27 +71,6 @@ function index() {
     e.preventDefault();
     router.reload(window.location.pathname);
   };
-
-  // auth.currentUser.sendEmailVerification().then(()=>{
-  //     console.log("user verified.")
-  // })
-  // .catch((error)=>{
-  //     ErrorMsg.innerText= error.code
-  //     ErrorMsg.style.display="block"
-  // })
-
-  // useEffect(() => {
-  //     const ErrorMsg = document.getElementById('ErrorMsg')
-
-  //     if(userRepeatedPassword != userPassword){
-  //         ErrorMsg.innerText="Las contraseñas no coinciden"
-  //         ErrorMsg.style.display="block"
-
-  //     }
-  //     else{
-  //         ErrorMsg.style.display="none"
-  //     }
-  // }, [userPassword, userRepeatedPassword])
 
   return (
     <div className={styles.signin}>

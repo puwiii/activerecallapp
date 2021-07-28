@@ -6,10 +6,10 @@ import { useRouter } from "next/router";
 
 import GmailButton from "components/GmailButton";
 
-import useUser from "./hooks/useUser";
-import RightArrowIcon from "components/icons/RightArrowIcon";
+import useUser from "hooks/useUser";
+import RightArrowIcon from "icons/RightArrowIcon";
 
-import SpinnerComponentCircle from "./SpinnerComponentCircle";
+import SpinnerComponentCircle from "components/SpinnerComponentCircle";
 
 function index() {
   const [userEmail, setUserEmail] = useState("");

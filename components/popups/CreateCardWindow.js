@@ -2,17 +2,17 @@ import React, { useState, useEffect } from "react";
 import Head from "next/head";
 
 //firebase
-import { createCard, createCardV2 } from "firebase/client";
+import { createCardV2 } from "firebase/client";
 
 //styles
 import popupStyles from "styles/Popup.module.scss";
 import styles from "/styles/Global.module.scss";
 
 //icons
-import RightArrowIcon from "components/icons/RightArrowIcon";
-import BackIcon from "components/icons/BackIcon";
-import DownArrowIcon from "components/icons/DownArrowIcon";
-import ExpandIcon from "components/icons/ExpandIcon";
+import RightArrowIcon from "icons/RightArrowIcon";
+import BackIcon from "icons/BackIcon";
+import DownArrowIcon from "icons/DownArrowIcon";
+import ExpandIcon from "icons/ExpandIcon";
 
 //components
 import SpinnerComponentCircle from "components/SpinnerComponentCircle";
@@ -119,9 +119,9 @@ function CreateCardWindow({ isOpen, closeWindow, deckId }) {
             }`}
           >
             <label onClick={handleFields}>
+              <DownArrowIcon />
               Frente de la tarjeta{" "}
               <span className={popupStyles.required}>*</span>
-              <DownArrowIcon />
             </label>
             <TextEditor
               wrapperClassName={styles.inputRounded}
@@ -134,9 +134,9 @@ function CreateCardWindow({ isOpen, closeWindow, deckId }) {
             }`}
           >
             <label onClick={handleFields}>
+              <DownArrowIcon />
               Reverso de la tarjeta{" "}
               <span className={popupStyles.required}>*</span>
-              <DownArrowIcon />
             </label>
             <TextEditor
               wrapperClassName={styles.inputRounded}

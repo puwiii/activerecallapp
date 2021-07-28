@@ -5,9 +5,9 @@ import { useRouter } from "next/router";
 import styles from "styles/Menu.module.scss";
 
 //icons
-import TrashIcon from "components/icons/TrashIcon";
-import WriteIcon from "components/icons/WriteIcon";
-import LightningIcon from "components/icons/LightningIcon";
+import TrashIcon from "icons/TrashIcon";
+import WriteIcon from "icons/WriteIcon";
+import LightningIcon from "icons/LightningIcon";
 
 //components
 import RemoveDeckWindow from "components/popups/RemoveDeckWindow";
@@ -15,7 +15,7 @@ import UpdateDeckNameWindow from "components/popups/UpdateDeckNameWindow";
 import UpdateDeckDescriptionWindow from "components/popups/UpdateDeckDescriptionWindow";
 
 //hooks
-import { useModal } from "components/hooks/useModal";
+import { useModal } from "hooks/useModal";
 
 function MenuDeck({
   xCoord,

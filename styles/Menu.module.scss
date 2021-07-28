@@ -20,20 +20,22 @@
   border-radius: 5px;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
   overflow: hidden;
-  animation: Fade-In 125ms linear forwards, Zoom-In 125ms linear forwards;
+  animation: Fade-In 125ms linear forwards, Zoom-In 125ms ease-in-out forwards;
 }
 
 .title {
   user-select: none;
   display: block;
-  font-size: $font-size-small;
+  font-size: $font-size-xSmall;
   font-weight: $font-weight-bold;
-  opacity: 0.35;
   padding: 0.5em;
   text-align: center;
+  color: $text-gray;
+  text-decoration: underline 1px dashed $text-gray;
+  text-underline-offset: 3px;
 
   @include breakpoint-up(medium) {
-    padding: 1em 1em 0.5em 1em;
+    padding: 1em 1em 1em 1em;
   }
 }
 
@@ -52,9 +54,9 @@
     user-select: none;
     transition: background-color 0.115s ease-in-out;
 
-    @include breakpoint-up(xlarge) {
-      font-size: $font-size-small;
-    }
+    // @include breakpoint-up(xlarge) {
+    //   font-size: $font-size-small;
+    // }
 
     @include breakpoint-up(medium) {
       padding: 1.3em 1.5em;

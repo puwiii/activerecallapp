@@ -1,4 +1,4 @@
-import * as React from "react"
+import * as React from "react";
 
 function CreateIcon(props) {
   return (
@@ -16,11 +16,10 @@ function CreateIcon(props) {
         strokeLinecap="round"
         strokeLinejoin="round"
       >
-        <path d="M10 4.5H5.5a2 2 0 00-2 2v9a2 2 0 002 2h10a2 2 0 002-2V11" />
-        <path d="M17.5 3.467a1.462 1.462 0 01-.017 2.05L10.5 12.5l-3 1 1-3 6.987-7.046a1.409 1.409 0 011.885-.104zM15.5 5.5l.953 1" />
+        <path d="M9.5 5.5h-4a2 2 0 00-2 2v7a2 2 0 002 2h7a2 2 0 002-2v-4M14.5 2.5v6M17.5 5.5h-6" />
       </g>
     </svg>
-  )
+  );
 }
 
-export default CreateIcon
+export default CreateIcon;

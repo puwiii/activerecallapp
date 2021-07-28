@@ -9,15 +9,17 @@ import { listenForDecksV2 } from "firebase/client";
 import styles from "styles/Home.module.scss";
 import decksStyles from "styles/Decks.module.scss";
 
+//icons
+import NewFolderIcon from "icons/NewFolderIcon";
+
 //components
 import CreateDeckWindow from "components/popups/CreateDeckWindow";
 import DeckContainer from "components/DeckContainer";
-import NewFolderIcon from "components/icons/NewFolderIcon";
 import ScreenLoadingComponent from "components/ScreenLoadingComponent";
 
 //hooks
-import { useModal } from "components/hooks/useModal";
-import useUser, { USER_STATES } from "components/hooks/useUser";
+import { useModal } from "hooks/useModal";
+import useUser, { USER_STATES } from "hooks/useUser";
 
 function index() {
   const [isOpenCreateDeck, openCreateDeck, closeCreateDeck] = useModal(false);
