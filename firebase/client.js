@@ -5,14 +5,26 @@ import decks from "pages/api/decks";
 // import 'firebase/firestore'
 // import 'firebase/storage'
 
+//prod
+// const firebaseConfig = {
+//   apiKey: "AIzaSyDeKcyHA_5L3MB_rCJ1I-8gSV9hFBHgXV0",
+//   authDomain: "activerecallapp.firebaseapp.com",
+//   projectId: "activerecallapp",
+//   storageBucket: "activerecallapp.appspot.com",
+//   messagingSenderId: "276942806108",
+//   appId: "1:276942806108:web:6ffd9fa1b52340c48b9a99",
+//   measurementId: "G-K95VWWN3GB",
+// };
+
+//dev
 const firebaseConfig = {
-  apiKey: "AIzaSyDeKcyHA_5L3MB_rCJ1I-8gSV9hFBHgXV0",
-  authDomain: "activerecallapp.firebaseapp.com",
-  projectId: "activerecallapp",
-  storageBucket: "activerecallapp.appspot.com",
-  messagingSenderId: "276942806108",
-  appId: "1:276942806108:web:6ffd9fa1b52340c48b9a99",
-  measurementId: "G-K95VWWN3GB",
+  apiKey: "AIzaSyCJzbWGekUN17pTOGUZHnw3eCp8DSkqduc",
+  authDomain: "active-recall-dev.firebaseapp.com",
+  projectId: "active-recall-dev",
+  storageBucket: "active-recall-dev.appspot.com",
+  messagingSenderId: "74295123727",
+  appId: "1:74295123727:web:b14bcc6103f5bdafd1e87a",
+  measurementId: "G-NGE0F7QT5K",
 };
 
 if (!firebase.apps.length) {
@@ -28,7 +40,7 @@ database.settings({
   merge: true,
 });
 
-let userRef = null;
+// let userRef = null;
 
 // USER FUNCTIONS - START
 
@@ -45,15 +57,19 @@ const mapUserFromFirebaseAuth = (user) => {
 };
 
 export const onAuthStateChanged = (onChange) => {
-  return firebase.auth().onAuthStateChanged((user) => {
-    const normalizedUser = user ? mapUserFromFirebaseAuth(user) : null;
+  return firebase.auth().onAuthStateChanged(
+    (user) => {
+      const normalizedUser = user ? mapUserFromFirebaseAuth(user) : null;
+      // normalizedUser
+      //   ? (userRef = null)
+      //   : (userRef = database.collection("users").doc(auth.currentUser.uid));
 
-    normalizedUser
-      ? (userRef = null)
-      : (userRef = database.collection("users").doc(auth.currentUser.uid));
-
-    onChange(normalizedUser);
-  });
+      onChange(normalizedUser);
+    },
+    (error) => {
+      console.log(error.message);
+    }
+  );
 };
 
 export const loginWithGmail = () => {
@@ -383,6 +399,7 @@ export { auth, database };
 //////////////////////
 
 export const createCardV2 = (deckId, front, back) => {
+  console.log(auth.currentUser.uid);
   const user = database.collection("users").doc(auth.currentUser.uid);
 
   const intervalData = {
@@ -391,6 +408,11 @@ export const createCardV2 = (deckId, front, back) => {
     I: 0,
     nextTimestamp: firebase.firestore.Timestamp.fromDate(new Date()),
   };
+
+  //card States:
+  // 0 created
+  // 1 studied
+  // 2 learned
 
   return user
     .collection("cards")
@@ -401,6 +423,7 @@ export const createCardV2 = (deckId, front, back) => {
       fromDeck: deckId,
       author: user,
       intervarlData: intervalData,
+      status: 0,
     })
     .then(() => {
       console.log("card created v2");
@@ -411,23 +434,13 @@ export const createCardV2 = (deckId, front, back) => {
     });
 };
 
-export const createDeckV2 = (idDeckParent = null, name, description = "") => {
+export const createDeckV2 = (
+  idDeckParent = null,
+  name,
+  description = "",
+  publicDeck
+) => {
   const user = database.collection("users").doc(auth.currentUser.uid);
-  //prueba
-  // user
-  //   .collection("decks")
-  //   .add({
-  //     name: name,
-  //     description: description,
-  //     createdAt: firebase.firestore.Timestamp.fromDate(new Date()),
-  //     parentDeckId: idDeckParent,
-  //     author: user,
-  //   })
-  //   .then(console.info("deck created v2"))
-  //   .catch((e) => {
-  //     console.log(e.message);
-  //   });
-  //prueba
   return user
     .collection("decks")
     .add({
@@ -436,6 +449,7 @@ export const createDeckV2 = (idDeckParent = null, name, description = "") => {
       createdAt: firebase.firestore.Timestamp.fromDate(new Date()),
       parentDeckId: idDeckParent,
       author: user,
+      isPublic: publicDeck,
     })
     .then(console.info("deck created v2"))
     .catch((e) => {
@@ -449,15 +463,19 @@ export const listenForDeckV2 = (id, callback) => {
   return user
     .collection("decks")
     .doc(id)
-    .onSnapshot((doc) => {
-      console.log(doc.data());
-      if (doc.data()) {
-        const id = doc.id;
-        callback({ ...doc.data(), id });
-      } else {
-        callback(null);
+    .onSnapshot(
+      (doc) => {
+        if (doc.data()) {
+          const id = doc.id;
+          callback({ ...doc.data(), id });
+        } else {
+          callback(null);
+        }
+      },
+      (error) => {
+        console.log(error);
       }
-    });
+    );
 };
 
 export const listenForDecksV2 = (parentDeckId = null, callback) => {
@@ -468,14 +486,21 @@ export const listenForDecksV2 = (parentDeckId = null, callback) => {
       .collection("decks")
       .where("parentDeckId", "==", parentDeckId)
       //.orderBy("name", "asc")
-      .onSnapshot((doc) => {
-        var decks = [];
-        doc.docs.forEach((doc) => {
-          const id = doc.id;
-          decks.push({ ...doc.data(), id });
-        });
-        callback(decks);
-      })
+      .onSnapshot(
+        (doc) => {
+          var decks = [];
+          doc.docs.forEach((doc) => {
+            const id = doc.id;
+            decks.push({ ...doc.data(), id });
+          });
+          callback(decks);
+        },
+        (error) => {
+          console.log(error);
+          console.log(error.message);
+          callback(error.message);
+        }
+      )
   );
 };
 
@@ -553,7 +578,7 @@ const removeCardV2 = (id) => {
     });
 };
 
-export const getCardsForStudy = (id, cards = []) => {
+export const getCardsForStudyV2 = (id) => {
   const user = database.collection("users").doc(auth.currentUser.uid);
 
   // user
@@ -567,26 +592,108 @@ export const getCardsForStudy = (id, cards = []) => {
   //     });
   //   });
 
-  user
+  return user
     .collection("cards")
     .where("fromDeck", "==", id)
     .get()
     .then((docs) => {
+      var cards = [];
+
       docs.docs.map((doc) => {
         const docId = doc.id;
         cards.push({ docId, ...doc.data() });
       });
 
-      user
+      return user
         .collection("decks")
         .where("parentDeckId", "==", id)
         .get()
         .then((docs) => {
-          docs.docs.map((doc) => {
-            console.log(doc.data());
-            getCardsForStudy(doc.id, cards);
+          if (docs.docs.length === 0) {
+            return cards;
+          } else {
+            let promises = docs.docs.map((doc) => {
+              return getCardsForStudyV2(doc.id);
+            });
+
+            return Promise.all(promises).then((resolved) => {
+              var resolvedDestructured = [];
+              resolved.map((item) => {
+                item.map((subitem) => {
+                  resolvedDestructured.push(subitem);
+                });
+              });
+
+              return [...cards, ...resolvedDestructured];
+            });
+          }
+
+          // if (docs.docs.length > 0) {
+          //   docs.docs.map((doc) => {
+          //     console.log("hago recursion");
+          //     return getCardsForStudyV2(doc.id, cards);
+          //   });
+          // }
+
+          // return cards;
+        });
+    });
+};
+
+export async function getCardsForStudy(id, toPrint = false) {
+  const user = database.collection("users").doc(auth.currentUser.uid);
+
+  let cards = [];
+
+  const cardsFromDeck = await getCardsFromDeck(id);
+
+  const cardsFromSubDecks = await user
+    .collection("decks")
+    .where("parentDeckId", "==", id)
+    .get()
+    .then((subDecks) => {
+      var subCards = [];
+      if (subDecks.docs.length > 0) {
+        subDecks.docs.map((subDeck) => {
+          getCardsForStudy(subDeck.id).then((result) => {
+            if (result.length !== 0) subCards.push(...result);
           });
         });
+      }
+
+      return subCards;
+    });
+
+  if (toPrint) {
+    console.log(cardsFromSubDecks);
+    console.log(JSON.stringify(cardsFromSubDecks));
+    console.log(cardsFromDeck);
+  }
+
+  cards.push(...cardsFromSubDecks);
+  cards.push(...cardsFromDeck);
+
+  return cards;
+}
+
+export async function getAllCardsFromDeck(id, callback) {
+  callback(await getCardsForStudy(id, true));
+}
+
+const getCardsFromDeck = async (deckId) => {
+  const user = database.collection("users").doc(auth.currentUser.uid);
+
+  const cards = await user
+    .collection("cards")
+    .where("fromDeck", "==", deckId)
+    .get()
+    .then((docs) => {
+      let array = [];
+      docs.docs.map((doc) => {
+        const docId = doc.id;
+        array.push({ id: docId, ...doc.data() });
+      });
+      return array;
     });
 
   return cards;

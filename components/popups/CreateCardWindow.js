@@ -8,17 +8,21 @@ import { createCard, createCardV2 } from "firebase/client";
 import popupStyles from "styles/Popup.module.scss";
 import styles from "/styles/Global.module.scss";
 
-//components
+//icons
 import RightArrowIcon from "components/icons/RightArrowIcon";
 import BackIcon from "components/icons/BackIcon";
+import DownArrowIcon from "components/icons/DownArrowIcon";
+import ExpandIcon from "components/icons/ExpandIcon";
+
+//components
 import SpinnerComponentCircle from "components/SpinnerComponentCircle";
 import TextEditor from "components/TextEditor";
-import DownArrowIcon from "components/icons/DownArrowIcon";
 
 function CreateCardWindow({ isOpen, closeWindow, deckId }) {
   const [front, setFront] = useState("");
   const [back, setBack] = useState("");
   const [loading, setLoading] = useState(false);
+  const [maximized, setMaximized] = useState(false);
 
   const closeForm = () => {
     createCardErrorMsg.style.display = "none";
@@ -64,8 +68,6 @@ function CreateCardWindow({ isOpen, closeWindow, deckId }) {
         item.classList.remove(popupStyles.open);
     });
 
-    console.log(e);
-
     e.target.parentNode.classList.add(popupStyles.open);
   };
 
@@ -82,6 +84,10 @@ function CreateCardWindow({ isOpen, closeWindow, deckId }) {
   //   // }
   // }, [deckName]);
 
+  const toggleMaximized = () => {
+    maximized ? setMaximized(false) : setMaximized(true);
+  };
+
   return (
     <div className={popupStyles.windowBg + " " + (isOpen && "is-open")}>
       {isOpen && (
@@ -95,37 +101,23 @@ function CreateCardWindow({ isOpen, closeWindow, deckId }) {
             <SpinnerComponentCircle />
           </div>
         )}
-        <h1 className={popupStyles.title}>Crear tarjeta</h1>
-        {/* <form className={popupStyles.form} id="createCardForm">
-          <label>Frente de la tarjeta <span className={popupStyles.required}>*</span></label>
-          <textarea
-            type="text"
-            placeholder="Contenido del frente"
-            aria-label="Ingrese un contenido para el frente de la tarjeta" 
-            rows={5}
-            className={styles.inputRounded}
-            onChange={(e) => setFront((e.target.value).trim())}
 
-            id="createCardInput"
-          />
-          <label>Reverso de la tarjeta <span className={popupStyles.required}>*</span></label>
-          <textarea
-            type="text"
-            placeholder="Contenido del reverso"
-            aria-label="Ingrese un contenido para el reverso de la tarjeta" 
-            rows={5}
-            className={styles.inputRounded}
-            onChange={(e) => setBack((e.target.value).trim())}
-          />
-          <span id="createCardErrorMsg" className={popupStyles.ErrorMsg}></span>
-          <button
-            tabIndex="-1"
-            type="submit"
-            onClick={(e) => addCard(e)}
-          />
-        </form> */}
+        <span
+          className="maximizeButton"
+          onClick={(e) => toggleMaximized()}
+          title={`${maximized ? "Minimizar" : "Maximizar"}`}
+        >
+          <ExpandIcon />
+        </span>
+
+        <h1 className={popupStyles.title}>Crear tarjeta</h1>
+
         <form className={popupStyles.form} id="createCardForm">
-          <div className={`${popupStyles.toggleField} ${popupStyles.open}`}>
+          <div
+            className={`${popupStyles.toggleField} ${popupStyles.open} ${
+              maximized && popupStyles.open
+            }`}
+          >
             <label onClick={handleFields}>
               Frente de la tarjeta{" "}
               <span className={popupStyles.required}>*</span>
@@ -136,7 +128,11 @@ function CreateCardWindow({ isOpen, closeWindow, deckId }) {
               callback={setFront}
             />
           </div>
-          <div className={popupStyles.toggleField}>
+          <div
+            className={`${popupStyles.toggleField} ${
+              maximized && popupStyles.open
+            }`}
+          >
             <label onClick={handleFields}>
               Reverso de la tarjeta{" "}
               <span className={popupStyles.required}>*</span>
@@ -173,7 +169,35 @@ function CreateCardWindow({ isOpen, closeWindow, deckId }) {
 
         .is-open > div {
           max-width: 800px;
+          ${maximized &&
+          `
+          max-width: none;
+          
+
+          `}
         }
+
+        .maximizeButton {
+          zoom: 125%;
+          position: absolute;
+          right: 5px;
+          top: 5px;
+          padding: 5px;
+          cursor: pointer;
+          border-radius: 5px;
+        }
+
+        .maximizeButton:hover {
+          background-color: rgba(0, 0, 0, 0.05);
+        }
+
+        .is-open > div > form {
+          ${maximized && "flex-direction: row;"}
+        }
+
+        // .${popupStyles.toggleField} {
+        //   max-height: none;
+        // }
       `}</style>
     </div>
   );

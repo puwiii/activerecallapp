@@ -1,11 +1,11 @@
-import * as React from "react"
+import * as React from "react";
 
-function DecksIcon(props) {
+function CardsIcon(props) {
   return (
     <svg
-      height={30}
+      height={21}
       viewBox="0 0 21 21"
-      width={30}
+      width={21}
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
@@ -20,7 +20,7 @@ function DecksIcon(props) {
         <path d="M5.305 4.935l-2.004.73a2 2 0 00-1.195 2.563l3.42 9.397A2 2 0 008.09 18.82l5.568-2.198M8.5 7.5h5M8.5 9.5h6M8.5 11.5h3" />
       </g>
     </svg>
-  )
+  );
 }
 
-export default DecksIcon
+export default CardsIcon;

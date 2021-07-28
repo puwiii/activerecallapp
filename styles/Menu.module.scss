@@ -20,8 +20,7 @@
   border-radius: 5px;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
   overflow: hidden;
-  animation: Fade-In 125ms linear forwards,
-    Zoom-In 125ms cubic-bezier(0.39, 0.575, 0.565, 1) forwards;
+  animation: Fade-In 125ms linear forwards, Zoom-In 125ms linear forwards;
 }
 
 .title {
@@ -43,6 +42,7 @@
   z-index: 10000;
 
   li {
+    white-space: nowrap;
     display: flex;
     align-items: center;
     cursor: pointer;

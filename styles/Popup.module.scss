@@ -33,8 +33,8 @@ $padding-fields: 1.2em;
   //overflow: hidden;
   cursor: default;
   margin: 0 20px;
-  animation: Fade-In 125ms ease-in-out forwards,
-    Zoom-In 105ms cubic-bezier(0.39, 0.575, 0.565, 1) forwards;
+  animation: Fade-In 155ms ease-in-out forwards,
+    Zoom-In 155ms cubic-bezier(0.39, 0.575, 0.565, 1) forwards;
 }
 
 .title {
@@ -255,8 +255,9 @@ $padding-fields: 1.2em;
     overflow: visible;
     //transition-delay: 0.2s;
     max-height: 1000px;
-    background-color: rgba($primary-color, 0.02);
-    color: $text-secondary;
+    //background-color: rgba($primary-color, 0.02);
+    //color: $text-secondary;
+    background-color: transparent;
 
     & > label {
       pointer-events: none;

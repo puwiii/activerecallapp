@@ -3,7 +3,8 @@ import dynamic from "next/dynamic";
 import { EditorState, convertToRaw, convertFromRaw } from "draft-js";
 
 //styles
-import "node_modules/blabla/blabla.css";
+// import "node_modules/blabla/blabla.css";
+
 import "node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import styles from "styles/Texteditor.module.scss";
 
@@ -103,8 +104,10 @@ const toolbarConfig = {
 
   fontFamily: {
     options: [
+      "Abril Fatface",
       "Arial",
       "Georgia",
+      "Lato",
       "Lora", //1.3
       "Nunito", //7.8
       "Open Sans", //7

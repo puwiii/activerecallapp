@@ -9,8 +9,10 @@ import decksStyles from "styles/Decks.module.scss";
 
 //firebase
 import {
+  getAllCardsFromDeck,
   getCardsForStudy,
-  listenForCardsV2,
+  getCardsForStudyV2,
+  //listenForCardsV2,
   listenForDecksV2,
   listenForDeckV2,
 } from "firebase/client";
@@ -25,8 +27,14 @@ import DeckContainer from "components/DeckContainer";
 import SpinnerComponent from "components/SpinnerComponent";
 import ScreenLoadingComponent from "components/ScreenLoadingComponent";
 
+//svgs
+import AddFolderSvg from "components/svgs/AddFolderSvg";
+import AddCardSvg from "components/svgs/AddCardSvg";
+import StatisticsSvg from "components/svgs/StatisticsSvg";
+import ReviewSvg from "components/svgs/ReviewSvg";
+
 //icons
-import LightningIcon from "components/icons/LightningIcon";
+import CardsIcon from "components/icons/CardsIcon";
 import NewFolderIcon from "components/icons/NewFolderIcon";
 import CreateIcon from "components/icons/CreateIcon";
 import TrashIcon from "components/icons/TrashIcon";
@@ -50,7 +58,9 @@ function index() {
   const [actualDeck, setActualDeck] = useState(null);
   const [decks, setDecks] = useState(null);
   const [cards, setCards] = useState(null);
-
+  const [createdCards, setCreatedCards] = useState(0);
+  const [studiedCards, setStudiedCards] = useState(0);
+  const [learnedCards, setLearnedCards] = useState(0);
   const [xCoord, setXCoord] = useState(null);
   const [yCoord, setYCoord] = useState(null);
 
@@ -76,17 +86,36 @@ function index() {
     }
   };
 
+  useEffect(() => {
+    if (cards) {
+      let created = 0;
+      let studied = 0;
+      let learned = 0;
+
+      cards.length > 0 &&
+        cards.map((card) => {
+          if (card.status === 0) created++;
+          if (card.status === 1) studied++;
+          if (card.status === 2) learned++;
+        });
+
+      setCreatedCards(created);
+      setStudiedCards(studied);
+      setLearnedCards(learned);
+    }
+  }, [cards]);
+
   const handleStudyButton = (e) => {
     e.preventDefault();
     //router.push(`study/${actualDeck.id}`);
-    const cardsForStudy = getCardsForStudy(actualDeck.id);
+    const cardsForStudy = getAllCardsFromDeck(actualDeck.id);
     console.log(cardsForStudy);
   };
 
   const goBack = () => {
     router.back();
   };
-  //check for user
+
   useEffect(() => {
     if (user === USER_STATES.NOT_LOGGED) {
       router.replace("/signin");
@@ -95,6 +124,7 @@ function index() {
 
   useEffect(() => {
     mounted = true;
+
     setIdDeck(router.query.id);
 
     return () => {
@@ -106,41 +136,80 @@ function index() {
   useEffect(() => {
     let unsubscribeActualDeck;
     let unsubscribeDecks;
-    let unsubscribeCards;
+
+    //handleCardsStatus(getCardsForStudy(idDeck));
 
     if (user && idDeck) {
+      //getAllCardsFromDeck(idDeck, setCards);
+      getCardsForStudyV2(idDeck).then((cards) => {
+        setCards(cards);
+      });
+
       unsubscribeActualDeck = listenForDeckV2(idDeck, setActualDeck);
       unsubscribeDecks = listenForDecksV2(idDeck, setDecks);
-      unsubscribeCards = listenForCardsV2(idDeck, setCards);
+      // unsubscribeCards = listenForCardsV2(idDeck, setCards);
     }
 
     return () => {
       unsubscribeActualDeck && unsubscribeActualDeck();
       unsubscribeDecks && unsubscribeDecks();
-      unsubscribeCards && unsubscribeCards();
+      setLoading(true);
+      //unsubscribeCards && unsubscribeCards();
     };
   }, [user, idDeck]);
 
   useEffect(() => {
     mounted = true;
+
     if (mounted) {
-      if (decks && cards) {
+      if (decks) {
         setLoading(false);
       }
     }
-    console.log(actualDeck);
+
     return () => {
       mounted = false;
-      //setLoading(true);
+      setLoading(true);
     };
-  }, [decks, cards]);
+  }, [decks]);
+
+  //CARD EFFECT
+  const makeMagicOnHover = (e) => {
+    const main = document.querySelector(`.${styles.main}`);
+
+    let xAxis =
+      (e.target.offsetLeft + e.target.offsetWidth / 2 - e.clientX) / -8;
+    let yAxis =
+      (e.target.offsetTop +
+        e.target.offsetHeight / 2 -
+        e.clientY -
+        main.scrollTop) /
+      8;
+
+    // let xAxis = (e.target.offsetLeft + e.target.clientWidth / 2 - e.pageX) / -5;
+    // let yAxis = (e.target.offsetTop + e.target.clientHeight / 2 - e.pageY) / 5;
+
+    // let xAxis = e.target.clientWidth / 2 - e.target.offsetWidth;
+    // let yAxis = e.target.clientHeight / 2 - e.target.offsetHeight;
+
+    e.target.firstChild.style.transition =
+      "transform 0ms ease-in-out, background-position 0.26s ease-in-out";
+    e.target.firstChild.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg) rotateZ(${
+      -xAxis / 8
+    }deg)`;
+  };
+
+  const removeMagicOnHover = (e) => {
+    e.target.firstChild.style.transition =
+      "transform 600ms ease-in-out ,background-position 0.36s ease-in-out";
+    e.target.firstChild.style.transform = `rotateY(0deg) rotateX(0deg)`;
+  };
 
   return (
     <main className={styles.main}>
       <Head>
         <title>
-          Mis mazos
-          {actualDeck && ` / ${actualDeck.name}`}
+          {actualDeck ? `${actualDeck.name} / Liza` : "Mis mazos / Liza"}
         </title>
       </Head>
       {loading ? (
@@ -154,23 +223,22 @@ function index() {
               <div className={decksStyles.floatButtons}>
                 <button
                   title="Crear nuevo mazo"
-                  className={styles.roundedButtonTerciary}
+                  className={styles.roundedButtonFilled}
                   onClick={openCreateDeck}
                 >
                   <NewFolderIcon />
                 </button>
                 <button
                   title="Crear nueva tarjeta"
-                  className={styles.roundedButtonTerciary}
+                  className={styles.roundedButtonFilled}
                   onClick={openCreateCard}
                 >
                   <CreateIcon />
                 </button>
               </div>
 
-              {/* <h1 className={styles.title}>Mis Mazos</h1> */}
-
-              {actualDeck ? (
+              {/* header */}
+              {actualDeck && (
                 <div className={decksStyles.header}>
                   <span title="Volver atras" onClick={goBack}>
                     <ChevronRightIcon />
@@ -181,16 +249,12 @@ function index() {
                       <TrashIcon />
                       <span>Eliminar mazo</span>
                     </button>
-                    <button onClick={(e) => handleMenuHeaderDeck(e)}>
+                    <button
+                      className={styles.roundedButtonTerciary}
+                      onClick={(e) => handleMenuHeaderDeck(e)}
+                    >
                       <SettingsIcon />
                       <span>Modificar mazo</span>
-                    </button>
-                    <button
-                      className={styles.roundedButtonSecondary}
-                      onClick={(e) => handleStudyButton(e)}
-                    >
-                      <LightningIcon />
-                      <span>Estudiar mazo</span>
                     </button>
                     {isOpenMenuHeaderDeck && (
                       <MenuHeaderDeck
@@ -205,13 +269,9 @@ function index() {
                     )}
                   </div>
                 </div>
-              ) : (
-                <></>
               )}
 
-              {/* <hr /> */}
-
-              <section>
+              <section className={decksStyles.managmentContainer}>
                 {/* popups */}
 
                 {isOpenCreateDeck && (
@@ -239,34 +299,110 @@ function index() {
                   />
                 )}
 
-                <div className="decks">
-                  <h3>Mazos</h3>
+                {/* deck managment */}
 
-                  {decks?.length > 0 ? (
-                    <div className={decksStyles.decks}>
-                      {decks.map((deck) => (
-                        <DeckContainer
-                          key={deck.id}
-                          deckId={deck.id}
-                          name={deck.name}
-                          description={deck.description}
-                          parentDeckId={idDeck}
-                        />
-                      ))}
+                <div className={decksStyles.managment}>
+                  <h2 className={decksStyles.title}>Administrar mazo</h2>
+
+                  <div className={decksStyles.card}>
+                    <div
+                      className={decksStyles.card__wrapper}
+                      onClick={openCreateDeck}
+                      onMouseMove={(e) => makeMagicOnHover(e)}
+                      onMouseLeave={(e) => removeMagicOnHover(e)}
+                    >
+                      <div className={decksStyles.card__item}>
+                        <AddFolderSvg />
+                        <span>Crear nuevo mazo</span>
+                      </div>
                     </div>
-                  ) : (
-                    <h3>No hay mazos que mostrar</h3>
-                  )}
-
-                  <button
-                    className={styles.roundedButtonTerciary}
-                    onClick={openCreateDeck}
-                  >
-                    Crear un nuevo mazo <NewFolderIcon />
-                  </button>
+                    <div
+                      className={decksStyles.card__wrapper}
+                      onClick={openCreateCard}
+                      onMouseMove={(e) => makeMagicOnHover(e)}
+                      onMouseLeave={(e) => removeMagicOnHover(e)}
+                    >
+                      <div className={decksStyles.card__item}>
+                        <AddCardSvg />
+                        <span>Crear nueva tarjeta</span>
+                      </div>
+                    </div>
+                    <div
+                      className={decksStyles.card__wrapper}
+                      onMouseMove={(e) => makeMagicOnHover(e)}
+                      onMouseLeave={(e) => removeMagicOnHover(e)}
+                    >
+                      <div className={decksStyles.card__item}>
+                        <StatisticsSvg />
+                        <span>Ver estadísticas</span>
+                      </div>
+                    </div>
+                    <div
+                      className={decksStyles.card__wrapper}
+                      onMouseMove={(e) => makeMagicOnHover(e)}
+                      onMouseLeave={(e) => removeMagicOnHover(e)}
+                    >
+                      <div className={decksStyles.card__item}>
+                        <ReviewSvg />
+                        <span>Estudiar mazo</span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
 
-                <div className="cards">
+                {/* cards */}
+                <div className={decksStyles.cards}>
+                  <h2 className={decksStyles.title}>Tarjetas</h2>
+                  <div className={decksStyles.cards__groups}>
+                    <div>
+                      <p>{createdCards}</p>
+                      <span>creadas</span>
+                    </div>
+                    <div>
+                      <p>{studiedCards}</p>
+                      <span>estudiadas</span>
+                    </div>
+                    <div>
+                      <p>{learnedCards}</p>
+                      <span>aprendidas</span>
+                    </div>
+                  </div>
+                  <button className={styles.roundedButtonTerciary}>
+                    <CardsIcon /> Ver tarjetas
+                  </button>
+                </div>
+              </section>
+
+              <hr />
+
+              <div className="decks">
+                <h3>Mazos</h3>
+
+                {decks?.length > 0 ? (
+                  <div className={decksStyles.decks}>
+                    {decks.map((deck) => (
+                      <DeckContainer
+                        key={deck.id}
+                        deckId={deck.id}
+                        name={deck.name}
+                        description={deck.description}
+                        parentDeckId={idDeck}
+                      />
+                    ))}
+                  </div>
+                ) : (
+                  <h3>No hay mazos que mostrar</h3>
+                )}
+
+                {/* <button
+                  className={styles.roundedButtonTerciary}
+                  onClick={openCreateDeck}
+                >
+                  Crear un nuevo mazo <NewFolderIcon />
+                </button> */}
+              </div>
+
+              {/* <div className="cards">
                   <h3>Tarjetas</h3>
                   {cards?.length > 0 ? (
                     // <div className={cardsStyles.cards}>
@@ -306,8 +442,7 @@ function index() {
                   >
                     Crear una nueva tarjeta <CreateIcon />
                   </button>
-                </div>
-              </section>
+                </div> */}
             </>
           )}
         </>

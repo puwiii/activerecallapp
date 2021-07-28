@@ -10,12 +10,12 @@
   //animation: Fade-In 125ms linear forwards;
 
   @include breakpoint-up(medium) {
-    padding: 20px 40px;
+    padding: 20px 30px;
   }
 
-  @include breakpoint-up(large) {
-    border-top: 1px dashed rgba(0, 0, 0, 0.08);
-  }
+  // @include breakpoint-up(large) {
+  //   border-top: 1px dashed rgba(0, 0, 0, 0.08);
+  // }
 
   .title {
     padding: 0;

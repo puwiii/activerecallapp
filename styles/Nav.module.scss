@@ -21,17 +21,22 @@
     display: none;
     place-items: center;
     color: $primary-dark-color;
-    border-radius: 15px;
+    //border-radius: 15px;
     padding: 7px;
     margin: 10px;
+
+    > svg {
+      margin-left: 0;
+      zoom: 1;
+    }
 
     @include breakpoint-up(large) {
       display: grid;
     }
 
-    &:hover {
-      background-color: rgba(0, 0, 0, 0.1);
-    }
+    // &:hover {
+    //   background-color: rgba(0, 0, 0, 0.1);
+    // }
   }
 
   ul {
@@ -108,7 +113,7 @@
         }
 
         svg {
-          zoom: 85%;
+          zoom: 130%;
         }
       }
 
@@ -132,7 +137,7 @@
     @include breakpoint-up(large) {
       > ul li div {
         flex-direction: row;
-        padding: 0.8em 2em;
+        //padding: 0.8em 2em;
 
         & > span {
           display: block;

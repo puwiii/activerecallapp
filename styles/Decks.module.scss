@@ -3,13 +3,16 @@
 @import "globals";
 
 .decks {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-  gap: 10px;
+  // display: grid;
+  // grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  // gap: 10px;
 
-  @include breakpoint-up(medium) {
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  }
+  // @include breakpoint-up(medium) {
+  //   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  // }
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
 }
 
 .floatButton {
@@ -31,6 +34,7 @@
 }
 
 .floatButtons {
+  z-index: 1999;
   position: absolute;
   bottom: 70px;
   right: 20px;
@@ -40,12 +44,13 @@
 
   @include breakpoint-up(large) {
     bottom: 20px;
+    display: none;
   }
 
   & > button {
     display: grid;
     place-items: center;
-    backdrop-filter: blur(3px);
+    //backdrop-filter: blur(3px);
     padding: 0;
     border-radius: 50%;
     max-width: none;
@@ -62,7 +67,7 @@
 
 .header {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: wrap-reverse;
   justify-content: flex-start;
   align-items: center;
 
@@ -72,7 +77,7 @@
     cursor: pointer;
     width: 40px;
     height: 40px;
-    border-radius: 50%;
+    border-radius: 7px;
     transform: rotateZ(180deg);
     &:hover {
       background-color: rgba(0, 0, 0, 0.05);
@@ -84,14 +89,16 @@
   }
 
   & > h1 {
-    padding: 0.5em;
+    //padding: 0.5em;
+    margin-left: 10px;
+    font-size: $font-size-large;
     //text-shadow: 5px 5px 3px rgba(0,0,0,.05);
   }
 
   & > div {
     margin-left: auto;
     display: flex;
-    flex-direction: column;
+    justify-content: flex-end;
     flex: 1;
     align-items: flex-end;
     gap: 7px;
@@ -109,7 +116,7 @@
       justify-content: center;
 
       span {
-        display: block;
+        display: none;
         pointer-events: none;
         white-space: nowrap;
       }
@@ -120,25 +127,21 @@
 
       &:nth-child(1) {
         color: $error;
+        background-color: rgba($error, 0.05);
         &:hover {
-          background-color: rgba($error, 0.05);
+          background-color: rgba($error, 0.1);
         }
       }
 
       &:nth-child(2) {
-        color: $text-secondary;
-        &:hover {
-          background-color: rgba($text-secondary, 0.1);
-        }
-      }
+        // color: $text-secondary;
+        // background-color: rgba($text-secondary, 0.1);
+        // &:hover {
+        //   background-color: rgba($text-secondary, 0.15);
+        // }
 
-      &:nth-child(3) {
-        aspect-ratio: unset;
-        & > span {
-          display: block !important;
-        }
-        & > svg {
-          margin: 0;
+        > svg {
+          margin-left: 0;
         }
       }
 
@@ -155,6 +158,241 @@
     @include breakpoint-up(medium) {
       justify-content: flex-end;
       flex-direction: row;
+    }
+  }
+}
+
+.managmentContainer {
+  display: flex;
+  padding: 4em 0;
+  flex-direction: column;
+  gap: 4em;
+  flex-wrap: wrap-reverse;
+
+  @include breakpoint-up(large) {
+    flex-direction: row;
+    align-items: flex-end;
+  }
+}
+
+.managment {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+
+  .title {
+    letter-spacing: 0.2px;
+    padding-bottom: 2em;
+    color: $text-gray;
+    font-size: $font-size-xSmall;
+    font-weight: $font-weight-bold;
+  }
+
+  .card {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    // gap: 20px;
+    flex-direction: column;
+    gap: 20px;
+
+    // @include breakpoint-up(medium) {
+    //   grid-template-columns: repeat(3, 1fr);
+    // }
+
+    @include breakpoint-up(medium) {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      //justify-content: flex-start;
+    }
+
+    @include breakpoint-up(xlarge) {
+      justify-content: flex-start;
+    }
+
+    &__wrapper {
+      max-width: 275px;
+      min-width: 120px;
+      cursor: pointer;
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      display: grid;
+      place-items: center;
+
+      &:hover {
+        .card__item {
+          svg {
+            transform: translateZ(80px);
+          }
+          span {
+            transform: translateZ(80px);
+            -webkit-font-smoothing: subpixel-antialiased;
+            -webkit-font-smoothing: antialiased;
+          }
+
+          background-position: center center;
+        }
+      }
+    }
+
+    &__item {
+      -webkit-font-smoothing: subpixel-antialiased;
+      -webkit-font-smoothing: antialiased;
+      perspective: 1000px;
+      transform-style: preserve-3d;
+      pointer-events: none;
+      border-radius: 12px;
+      width: 100%;
+      height: 100%;
+      background-color: $bg-color;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
+      padding: 1.5em;
+
+      transition: background-position 0.36s ease-in-out;
+
+      background: linear-gradient(180deg, $bg-color 40%, rgba(#f4f4f4, 1) 70%);
+      background-size: 150% 300%;
+      background-position: center top;
+
+      &:hover {
+        transition: background-position 0.36s ease-in-out;
+      }
+
+      svg {
+        //margin-top: calc(-1.5em - 40px);
+        width: 60%;
+        height: 100%;
+        transition: transform 300ms ease-in-out;
+        @include breakpoint-up(medium) {
+          width: 80%;
+        }
+      }
+
+      span {
+        user-select: none;
+        letter-spacing: -0.3px;
+        padding-top: 1em;
+        padding-bottom: 1em;
+        text-align: center;
+        font-weight: $font-weight-bold;
+        font-size: $font-size-xSmall;
+        color: $text-secondary;
+        white-space: nowrap;
+        transition: transform 300ms ease-in-out;
+
+        @include breakpoint-up(large) {
+          font-size: $font-size-small;
+        }
+      }
+    }
+  }
+}
+
+.cards {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+
+  @include breakpoint-up(large) {
+    margin-left: auto;
+    flex: 0;
+    background-color: $bg-color;
+    padding: 2em;
+    border-radius: 7px;
+    border: 1px solid rgba($text-gray, 0.1);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+  }
+
+  .title {
+    letter-spacing: 0.2px;
+    padding-bottom: 2em;
+    font-size: $font-size-xSmall;
+    font-weight: $font-weight-bold;
+    color: $text-gray;
+  }
+
+  &__groups {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 5px;
+    margin-bottom: 40px;
+
+    @include breakpoint-up(large) {
+      gap: 10px;
+    }
+
+    > div {
+      padding: 1.5em;
+      border-radius: 7px;
+      width: 100%;
+      display: flex;
+      gap: 10px;
+      flex-direction: column;
+      align-items: center;
+      border: 1px solid transparent;
+
+      @include breakpoint-up(large) {
+        padding: 2em;
+      }
+
+      > p {
+        font-family: "Roboto Slab", "Roboto", sans-serif;
+        padding: 0 0.5em;
+        font-size: $font-size-xLarge;
+        font-weight: $font-weight-black;
+
+        @include breakpoint-up(medium) {
+          font-size: $font-size-xxLarge;
+        }
+
+        @include breakpoint-up(large) {
+          font-size: $font-size-SuperLarge;
+        }
+      }
+
+      > span {
+        font-size: $font-size-xxSmall;
+        font-weight: $font-weight-bold;
+
+        @include breakpoint-up(medium) {
+          font-size: $font-size-xSmall;
+        }
+      }
+
+      &:nth-child(2) {
+        background-color: rgba($primary-color, 0.05);
+        color: $text-secondary;
+        border-color: rgba($text-secondary, 0.1);
+      }
+      &:nth-child(1) {
+        // background-color: rgba($secondary-color, 0.1);
+        // color: $secondary-color;
+        background-color: rgba($bg-color, 1);
+        color: $text-gray;
+        border-color: rgba($text-gray, 0.1);
+      }
+      &:nth-child(3) {
+        background-color: rgba($succes, 0.1);
+        color: $succes;
+        border-color: rgba($succes, 0.1);
+      }
+    }
+  }
+
+  & > button {
+    svg {
+      margin: 0;
+      margin-right: 5px;
+    }
+    align-self: flex-end;
+    margin-bottom: 0;
+    @include breakpoint-up(medium) {
+      align-self: flex-end;
     }
   }
 }

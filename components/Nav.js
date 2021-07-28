@@ -7,7 +7,7 @@ import styles from "styles/Nav.module.scss";
 
 //components
 import ExploreIcon from "components/icons/ExploreIcon";
-import DecksIcon from "components/icons/DecksIcon";
+import CardsIcon from "components/icons/CardsIcon";
 import FriendsIcon from "components/icons/FriendsIcon";
 import PushLeftIcon from "components/icons/PushLeftIcon";
 import PushRightIcon from "components/icons/PushRightIcon";
@@ -63,7 +63,7 @@ function Nav() {
         <li title="Mis mazos" id="DecksLink">
           <Link href={`/decks`}>
             <div>
-              <DecksIcon />
+              <CardsIcon />
               <span>Mis mazos</span>
             </div>
           </Link>
@@ -76,11 +76,19 @@ function Nav() {
         </li>
       </ul>
       {navContracted === false ? (
-        <button onClick={(e) => setNavContracted(true)} title="Contraer">
+        <button
+          onClick={(e) => setNavContracted(true)}
+          title="Contraer"
+          className={styles.roundedButtonTerciary}
+        >
           <PushLeftIcon />
         </button>
       ) : (
-        <button onClick={(e) => setNavContracted(false)} title="Expandir">
+        <button
+          onClick={(e) => setNavContracted(false)}
+          title="Expandir"
+          className={styles.roundedButtonTerciary}
+        >
           <PushRightIcon />
         </button>
       )}

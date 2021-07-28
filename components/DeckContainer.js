@@ -1,6 +1,9 @@
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
+//firebase
+import { getCardsForStudyV2 } from "firebase/client";
+
 //styles
 import styles from "styles/Deck.module.scss";
 
@@ -22,6 +25,11 @@ function DeckContainer({
 }) {
   const [xCoord, setXCoord] = useState(0);
   const [yCoord, setYCoord] = useState(0);
+
+  const [cards, setCards] = useState(null);
+  const [createdCards, setCreatedCards] = useState(0);
+  const [studiedCards, setStudiedCards] = useState(0);
+  const [learnedCards, setLearnedCards] = useState(0);
 
   const [isOpenMenuDeck, openMenuDeck, closeMenuDeck] = useModal(false);
 
@@ -48,19 +56,61 @@ function DeckContainer({
     }
   };
 
+  useEffect(() => {
+    getCardsForStudyV2(deckId).then((cards) => {
+      setCards(cards);
+    });
+  }, []);
+
+  // getCardsForStudyV2(deckId).then((cards) => {
+  //   setCards(cards);
+  // });
+
+  useEffect(() => {
+    if (cards) {
+      let created = 0;
+      let studied = 0;
+      let learned = 0;
+
+      cards.length > 0 &&
+        cards.map((card) => {
+          if (card.status === 0) created++;
+          if (card.status === 1) studied++;
+          if (card.status === 2) learned++;
+        });
+
+      setCreatedCards(created);
+      setStudiedCards(studied);
+      setLearnedCards(learned);
+    }
+  }, [cards]);
+
   return (
     <div className={styles.deckContainer}>
       <Link href={`/decks/${deckId}`}>
         <div
           className={`${styles.deck} ${isPoster && styles.poster}`}
-          title={name}
           onContextMenu={(e) => handleContextMenu(e)}
+          title={`${name}: ${description}`}
         >
           <div className={styles.deck__icon}>
             <FolderIcon />
           </div>
-          <span id={`${deckId}name`}>{name}</span>
-          {isPoster && <p>{description}</p>}
+          <span id={`${deckId}name`} title={name}>
+            {name}
+          </span>
+          <p
+            className={`${description === "" && "emptyDescription"}`}
+            title={description}
+          >
+            {description === "" ? "Sin descripción" : description}
+          </p>
+
+          <div className={styles.cards}>
+            <span title={createdCards}>{createdCards}</span>
+            <span title={studiedCards}>{studiedCards}</span>
+            <span title={learnedCards}>{learnedCards}</span>
+          </div>
 
           <div
             className={styles.deckMenuButton}
@@ -83,6 +133,12 @@ function DeckContainer({
           description={description}
         />
       )}
+
+      <style jsx>{`
+        .emptyDescription {
+          opacity: 0.5;
+        }
+      `}</style>
     </div>
   );
 }

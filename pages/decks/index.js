@@ -44,6 +44,10 @@ function index() {
 
   useEffect(() => {
     if (decks) {
+      if (decks === "Quota exceeded.") {
+        alert("Se ha alcanzado el uso diario, intente mas tarde");
+        setDecks([]);
+      }
       setLoading(false);
     }
   }, [decks]);
@@ -65,7 +69,7 @@ function index() {
         )}
 
         <div className={`decks`}>
-          {/* <h2>Mazos</h2> */}
+          <h2>Mazos</h2>
           {loading ? (
             <ScreenLoadingComponent />
           ) : (
@@ -78,12 +82,18 @@ function index() {
                       deckId={deck.id}
                       name={deck.name}
                       description={deck.description}
-                      isPoster={true}
+                      isPoster={false}
                     />
                   ))}
                 </div>
               ) : (
-                <h2>No hay mazos que mostrar</h2>
+                <>
+                  {decks === "Quota exceeded." ? (
+                    "Intente nuevamente mas tarde."
+                  ) : (
+                    <h2>No hay mazos que mostrar</h2>
+                  )}
+                </>
               )}
               <button
                 className={`${styles.roundedButtonTerciary}`}
@@ -98,10 +108,11 @@ function index() {
 
       <style jsx>{`
         h2 {
-          padding: 20px;
-          opacity: 0.5;
+          padding: 10px;
           font-weight: 600;
           font-size: 12px;
+          color: rgba(0, 0, 0, 0.5);
+          user-select: none;
         }
 
         .decks,

@@ -125,7 +125,8 @@ function MenuDeck({
 
       <style jsx>{`
         .${styles.menu} {
-          ${toLeft && "transform-origin: top right;"}
+          transform-origin: ${toUp ? "bottom" : "top"}
+            ${toLeft ? " right" : " left"};
           position: absolute;
           ${toLeft ? `right: ${newXCoord}px;` : `left: ${xCoord}px;`}
           ${toUp ? `bottom: ${newYCoord}px;` : `top: ${yCoord}px;`}

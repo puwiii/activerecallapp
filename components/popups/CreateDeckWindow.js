@@ -18,6 +18,7 @@ import SpinnerComponentCircle from "components/SpinnerComponentCircle";
 function CreateDeckWindow({ isOpen, closeWindow, deckId }) {
   const [deckName, setDeckName] = useState("");
   const [deckDescription, setDeckDescription] = useState("");
+  const [publicDeck, setPublicDeck] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const router = useRouter();
@@ -43,7 +44,8 @@ function CreateDeckWindow({ isOpen, closeWindow, deckId }) {
       createDeckV2(
         router.query.id ? router.query.id : null,
         deckName,
-        deckDescription
+        deckDescription,
+        publicDeck
       )
         .then(() => {
           console.log("created succesfully");
@@ -108,7 +110,15 @@ function CreateDeckWindow({ isOpen, closeWindow, deckId }) {
             onChange={(e) => setDeckDescription(e.target.value)}
           />
           <div className={popupStyles.checkbox}>
-            <input type="checkbox" id="isPublic" name="isPublic" />
+            <input
+              type="checkbox"
+              id="isPublic"
+              name="isPublic"
+              checked={publicDeck}
+              onChange={(e) => {
+                setPublicDeck(!publicDeck);
+              }}
+            />
             <label htmlFor="isPublic">
               Mazo público
               <ExploreIcon />
