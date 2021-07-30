@@ -31,8 +31,8 @@
   padding: 0.5em;
   text-align: center;
   color: $text-gray;
-  text-decoration: underline 1px dashed $text-gray;
-  text-underline-offset: 3px;
+  // text-decoration: underline 1px dashed $text-gray;
+  // text-underline-offset: 3px;
 
   @include breakpoint-up(medium) {
     padding: 1em 1em 1em 1em;

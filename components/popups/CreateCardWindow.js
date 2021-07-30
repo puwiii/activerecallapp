@@ -18,7 +18,7 @@ import ExpandIcon from "icons/ExpandIcon";
 import SpinnerComponentCircle from "components/SpinnerComponentCircle";
 import TextEditor from "components/TextEditor";
 
-function CreateCardWindow({ isOpen, closeWindow, deckId }) {
+function CreateCardWindow({ isOpen, closeWindow, deckId, cards, setCards }) {
   const [front, setFront] = useState("");
   const [back, setBack] = useState("");
   const [loading, setLoading] = useState(false);
@@ -41,7 +41,8 @@ function CreateCardWindow({ isOpen, closeWindow, deckId }) {
     setLoading(true);
     if (validateForm()) {
       createCardV2(deckId, front, back)
-        .then(() => {
+        .then((card) => {
+          setCards([...cards, card]);
           createCardForm.reset();
           setFront("");
           setBack("");
@@ -156,7 +157,7 @@ function CreateCardWindow({ isOpen, closeWindow, deckId }) {
             Crear tarjeta
             <RightArrowIcon />
           </button>
-          <button onClick={closeForm}>
+          <button onClick={closeForm} className={popupStyles.cancelBtn}>
             <BackIcon />
             Cancelar
           </button>

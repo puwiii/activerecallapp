@@ -69,7 +69,7 @@ $padding-fields: 1.2em;
 }
 
 .form {
-  padding: 1em 3em;
+  padding: 1em 2.5em;
   display: flex;
   flex-direction: column;
   //margin-bottom: .5em;
@@ -136,53 +136,66 @@ $padding-fields: 1.2em;
 
 .buttons {
   z-index: 2000;
-  background-color: $bg-color;
+  background-color: rgba(0, 0, 0, 0.01);
   position: sticky;
   bottom: 0;
-  padding-top: 1em;
+  margin-top: 1em;
   display: flex;
   flex-direction: row-reverse;
-  justify-content: space-around;
+  justify-content: space-between;
+  padding: 2em 2.5em;
 
   button {
-    border-left: 1px solid rgba(0, 0, 0, 0.05);
-    border-radius: 0;
+    //border-left: 1px solid rgba(0, 0, 0, 0.05);
+    border-radius: 7px;
     display: flex;
     align-items: center;
     gap: 5px;
-    padding: 1.4em 0;
-    background-color: rgba(0, 0, 0, 0);
+    padding: 0.8em 1em;
     color: $text-secondary;
-    flex: 1;
     font-size: $font-size-xSmall;
     font-weight: $font-weight-medium;
     transition: background-color 0.215s linear;
 
-    @include breakpoint-up(medium) {
-      font-size: $font-size-small;
+    // @include breakpoint-up(medium) {
+    //   font-size: $font-size-small;
+    // }
+
+    & > svg {
+      zoom: 1;
     }
 
     &:hover,
     &:focus {
-      background-color: rgba(0, 0, 0, 0.05);
+      //background-color: rgba(0, 0, 0, 0.05);
     }
 
     &.primaryButton {
-      color: $succes;
-      background-color: transparent;
+      color: $text-white;
+      background-color: $primary-color;
       &:hover,
       &:focus {
-        background-color: rgba($succes, 0.2);
+        background-color: rgba($primary-color, 0.7);
+      }
+    }
+
+    &.cancelBtn {
+      color: $text-secondary;
+      background-color: transparent;
+
+      &:hover,
+      &:focus {
+        background-color: rgba($primary-color, 0.1);
       }
     }
 
     &.removeBtn {
-      background-color: transparent;
-      color: $error;
+      background-color: rgba($error, 0.9);
+      color: $text-white;
 
       &:hover,
       &:focus {
-        background-color: rgba($error, 0.08);
+        background-color: rgba($error, 0.7);
       }
     }
   }

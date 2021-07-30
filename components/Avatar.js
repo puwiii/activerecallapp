@@ -32,23 +32,25 @@ function Avatar({ username, avatar, email }) {
     <div className={styles.avatarContainer}>
       <div onClick={toggleMenu} className={styles.avatar}>
         <div className={styles.avatar__image}>
-          <Image src={avatar} layout="fill" objectFit="cover" />
+          <Image src={avatar} layout="fill" objectFit="cover" alt={username} />
         </div>
         <DownArrowIcon onClick={toggleMenu} />
       </div>
 
-      <ul className="menu">
+      <div className={styles.menu}>
         <h3 className={styles.subtitle}> Hola, {username} 👋</h3>
         <span>{email}</span>
-        <li onClick={goAccount} className={styles.roundedButtonTerciary}>
-          <UserIcon />
-          Mi cuenta{" "}
-        </li>
-        <li onClick={logout} className={styles.roundedButtonTerciary}>
-          <DoorIcon />
-          Cerrar sesión{" "}
-        </li>
-      </ul>
+        <ul>
+          <li onClick={goAccount} className={styles.roundedButtonTerciary}>
+            <UserIcon />
+            Mi cuenta{" "}
+          </li>
+          <li onClick={logout} className={styles.roundedButtonFilled}>
+            <DoorIcon />
+            Cerrar sesión{" "}
+          </li>
+        </ul>
+      </div>
 
       <style jsx>
         {`
@@ -56,7 +58,7 @@ function Avatar({ username, avatar, email }) {
             font-size: 8px !important;
           }
 
-          .menu {
+          .${styles.menu} {
             display: ${active ? "flex" : "none"};
           }
         `}

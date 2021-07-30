@@ -22,9 +22,9 @@ function MenuDeck({
   yCoord,
   deckId,
   closeWindow,
-  isOpen,
   name,
   description,
+  handleCardsOnDelete = false,
 }) {
   let mounted = false;
 
@@ -102,6 +102,7 @@ function MenuDeck({
           deckId={deckId}
           name={name}
           stay={true}
+          handleCardsOnDelete={handleCardsOnDelete}
         />
       )}
 

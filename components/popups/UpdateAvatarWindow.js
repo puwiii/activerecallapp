@@ -235,7 +235,7 @@ function UpdateAvatarWindow({ isOpen, closeWindow }) {
             <UploadIcon />
             Subir foto
           </button>
-          <button onClick={closeForm}>
+          <button onClick={closeForm} className={popupStyles.cancelBtn}>
             <BackIcon />
             Cancelar
           </button>

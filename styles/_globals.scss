@@ -7,8 +7,6 @@
 .roundedButtonSecondary,
 .roundedButtonTerciary {
   svg {
-    margin-left: 5px;
-
     @include breakpoint-up(medium) {
       zoom: 120%;
     }
@@ -17,6 +15,7 @@
   display: flex;
   align-items: center;
   max-width: max-content;
+  gap: 10px;
   width: 100%;
   cursor: pointer;
   outline: none;

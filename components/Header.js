@@ -17,7 +17,7 @@ function Header() {
   return (
     <header className={styles.header}>
       <a href="/" title="Página principal de Liza" className={styles.logo}>
-        <img src="/images/liza_v2.svg" />
+        <img src="/images/liza_v2.svg" alt="Liza" />
       </a>
       <div className={styles.header__user}>
         {user === USER_STATES.NOT_LOGGED && (

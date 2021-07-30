@@ -20,6 +20,7 @@ import ScreenLoadingComponent from "components/ScreenLoadingComponent";
 //hooks
 import { useModal } from "hooks/useModal";
 import useUser, { USER_STATES } from "hooks/useUser";
+import EmptySvg from "svgs/EmptySvg";
 
 function index() {
   const [isOpenCreateDeck, openCreateDeck, closeCreateDeck] = useModal(false);
@@ -93,7 +94,14 @@ function index() {
                   {decks === "Quota exceeded." ? (
                     "Intente nuevamente mas tarde."
                   ) : (
-                    <h2>No hay mazos que mostrar</h2>
+                    <div className={decksStyles.emptyData}>
+                      <h3>
+                        <span>Aun no tienes mazos creados.</span>
+                        Comienza creando uno presionando en el boton "Crear un
+                        nuevo mazo"
+                      </h3>
+                      <EmptySvg />
+                    </div>
                   )}
                 </>
               )}
@@ -101,7 +109,7 @@ function index() {
                 className={`${styles.roundedButtonTerciary}`}
                 onClick={openCreateDeck}
               >
-                Crear un nuevo mazo <NewFolderIcon />
+                <NewFolderIcon /> Crear un nuevo mazo
               </button>
             </>
           )}
@@ -124,6 +132,10 @@ function index() {
 
         .decks > button {
           margin-top: 20px;
+        }
+
+        .${styles.roundedButtonTerciary} {
+          gap: 10px;
         }
       `}</style>
     </main>

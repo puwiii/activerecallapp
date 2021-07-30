@@ -19,9 +19,9 @@ function DeckContainer({
   deckId,
   name,
   description,
-  icon,
   isPoster,
-  parentDeckId = "none",
+  paramCards,
+  paramSetCards,
 }) {
   const [xCoord, setXCoord] = useState(0);
   const [yCoord, setYCoord] = useState(0);
@@ -32,6 +32,8 @@ function DeckContainer({
   const [learnedCards, setLearnedCards] = useState(0);
 
   const [isOpenMenuDeck, openMenuDeck, closeMenuDeck] = useModal(false);
+
+  let mounted = false;
 
   const handleContextMenu = (e) => {
     e.preventDefault();
@@ -57,9 +59,18 @@ function DeckContainer({
   };
 
   useEffect(() => {
-    getCardsForStudyV2(deckId).then((cards) => {
-      setCards(cards);
-    });
+    mounted = true;
+
+    if (mounted) {
+      getCardsForStudyV2(deckId).then((cards) => {
+        setCards(cards);
+      });
+    }
+
+    return () => {
+      setCards(null);
+      mounted = false;
+    };
   }, []);
 
   // getCardsForStudyV2(deckId).then((cards) => {
@@ -67,28 +78,49 @@ function DeckContainer({
   // });
 
   useEffect(() => {
-    if (cards) {
-      let created = 0;
-      let studied = 0;
-      let learned = 0;
+    mounted = true;
 
-      cards.length > 0 &&
-        cards.map((card) => {
-          if (card.status === 0) created++;
-          if (card.status === 1) studied++;
-          if (card.status === 2) learned++;
-        });
+    if (mounted) {
+      if (cards) {
+        let created = 0;
+        let studied = 0;
+        let learned = 0;
 
-      setCreatedCards(created);
-      setStudiedCards(studied);
-      setLearnedCards(learned);
+        cards.length > 0 &&
+          cards.map((card) => {
+            if (card.status === 0) created++;
+            if (card.status === 1) studied++;
+            if (card.status === 2) learned++;
+          });
+
+        setCreatedCards(created);
+        setStudiedCards(studied);
+        setLearnedCards(learned);
+      }
     }
+
+    return () => {
+      setCreatedCards(0);
+      setStudiedCards(0);
+      setLearnedCards(0);
+      mounted = false;
+    };
   }, [cards]);
+
+  const handleCardsOnDelete = () => {
+    const idCards = cards.map((card) => {
+      return card.id;
+    });
+    const filteredCards = paramCards.filter(
+      (card) => !idCards.includes(card.id)
+    );
+    paramSetCards(filteredCards);
+  };
 
   return (
     <div className={styles.deckContainer}>
       <Link href={`/decks/${deckId}`}>
-        <div
+        <a
           className={`${styles.deck} ${isPoster && styles.poster}`}
           onContextMenu={(e) => handleContextMenu(e)}
           title={`${name}: ${description}`}
@@ -120,7 +152,7 @@ function DeckContainer({
           >
             <VerticalMenuIcon />
           </div>
-        </div>
+        </a>
       </Link>
       {isOpenMenuDeck && (
         <MenuDeck
@@ -131,6 +163,7 @@ function DeckContainer({
           deckId={deckId}
           name={name}
           description={description}
+          handleCardsOnDelete={handleCardsOnDelete}
         />
       )}
 

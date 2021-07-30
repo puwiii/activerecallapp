@@ -12,87 +12,101 @@ import FriendsIcon from "icons/FriendsIcon";
 import PushLeftIcon from "icons/PushLeftIcon";
 import PushRightIcon from "icons/PushRightIcon";
 
+//hooks
+import { useLocalStorage } from "hooks/useLocalStorage";
+import { set } from "stylis";
+import ScreenLoadingComponent from "./ScreenLoadingComponent";
+
 function Nav() {
-  const [navContracted, setNavContracted] = useState();
+  const [navContracted, setNavContracted] = useLocalStorage(
+    "navContracted",
+    false
+  );
+
+  const [loading, setLoading] = useState(true);
 
   const router = useRouter();
 
   useEffect(() => {
-    if (localStorage.getItem("navContracted") !== "undefined")
-      setNavContracted(JSON.parse(localStorage.getItem("navContracted")));
-    else {
-      setNavContracted(false);
-      localStorage.setItem("navContracted", navContracted);
-    }
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem("navContracted", navContracted);
-
-    if (navContracted === true) {
-      document.getElementById("nav").classList.remove(styles.expanded);
-    } else {
-      document.getElementById("nav").classList.add(styles.expanded);
-    }
+    setLoading(false);
   }, [navContracted]);
 
-  useEffect(() => {
-    if (router.pathname.includes("decks")) {
-      DecksLink.classList.add(styles.selected);
-      if (ExploreLink.classList.contains(styles.selected))
-        ExploreLink.classList.remove(styles.selected);
-      return;
-    } else {
-      ExploreLink.classList.add(styles.selected);
-      if (DecksLink.classList.contains(styles.selected))
-        DecksLink.classList.remove(styles.selected);
-    }
-  }, [router.pathname]);
+  // useEffect(() => {
+  //   if (localStorage.getItem("navContracted") !== "undefined")
+  //     setNavContracted(JSON.parse(localStorage.getItem("navContracted")));
+  //   else {
+  //     setNavContracted(false);
+  //     localStorage.setItem("navContracted", navContracted);
+  //   }
+  // }, []);
+
+  // useEffect(() => {
+  //   localStorage.setItem("navContracted", navContracted);
+
+  //   if (navContracted === true) {
+  //     setNavContracted;
+  //   } else {
+  //     document.getElementById("nav").classList.add(styles.expanded);
+  //   }
+  // }, [navContracted]);
+
+  // useEffect(() => {
+  //   if (router.pathname.includes("decks")) {
+  //     DecksLink.classList.add(styles.selected);
+  //     if (ExploreLink.classList.contains(styles.selected))
+  //       ExploreLink.classList.remove(styles.selected);
+  //     return;
+  //   } else {
+  //     ExploreLink.classList.add(styles.selected);
+  //     if (DecksLink.classList.contains(styles.selected))
+  //       DecksLink.classList.remove(styles.selected);
+  //   }
+  // }, [router.pathname]);
 
   return (
-    <nav className={styles.nav} id="nav">
-      <ul>
-        <li title="Explorar" id="ExploreLink">
-          <Link href={"/"}>
-            <div>
-              <ExploreIcon />
-              <span>Explorar</span>
-            </div>
-          </Link>
-        </li>
-        <li title="Mis mazos" id="DecksLink">
-          <Link href={`/decks`}>
-            <div>
-              <CardsIcon />
-              <span>Mis mazos</span>
-            </div>
-          </Link>
-        </li>
-        <li title="Mis amigos" id="FriendsLink">
-          <div>
-            <FriendsIcon />
-            <span>Amigos</span>
-          </div>
-        </li>
-      </ul>
-      {navContracted === false ? (
-        <button
-          onClick={(e) => setNavContracted(true)}
-          title="Contraer"
-          className={styles.roundedButtonTerciary}
-        >
-          <PushLeftIcon />
-        </button>
+    <>
+      {loading ? (
+        <ScreenLoadingComponent />
       ) : (
-        <button
-          onClick={(e) => setNavContracted(false)}
-          title="Expandir"
-          className={styles.roundedButtonTerciary}
+        <nav
+          className={`${styles.nav} ${!navContracted && styles.expanded}`}
+          id="nav"
         >
-          <PushRightIcon />
-        </button>
+          <ul>
+            <li title="Explorar" id="ExploreLink">
+              <Link href={"/"}>
+                <a>
+                  <ExploreIcon />
+                  <span>Explorar</span>
+                </a>
+              </Link>
+            </li>
+            <li title="Mis mazos" id="DecksLink">
+              <Link href={`/decks`}>
+                <a>
+                  <CardsIcon />
+                  <span>Mis mazos</span>
+                </a>
+              </Link>
+            </li>
+            <li title="Mis amigos" id="FriendsLink">
+              <a>
+                <FriendsIcon />
+                <span>Amigos</span>
+              </a>
+            </li>
+          </ul>
+
+          <button
+            onClick={(e) => setNavContracted(!navContracted)}
+            title={`${navContracted ? "Expandir" : "Contraer"}`}
+            className={styles.roundedButtonTerciary}
+          >
+            {navContracted ? <PushRightIcon /> : <PushLeftIcon />}
+          </button>
+        </nav>
       )}
-    </nav>
+    </>
   );
 }
 

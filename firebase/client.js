@@ -399,7 +399,6 @@ export { auth, database };
 //////////////////////
 
 export const createCardV2 = (deckId, front, back) => {
-  console.log(auth.currentUser.uid);
   const user = database.collection("users").doc(auth.currentUser.uid);
 
   const intervalData = {
@@ -425,8 +424,15 @@ export const createCardV2 = (deckId, front, back) => {
       intervarlData: intervalData,
       status: 0,
     })
-    .then(() => {
-      console.log("card created v2");
+    .then((algo) => {
+      return user
+        .collection("cards")
+        .doc(algo.id)
+        .get()
+        .then((doc) => {
+          const docId = doc.id;
+          return { docId, ...doc.data() };
+        });
     })
     .catch((error) => {
       console.log("error");
@@ -601,7 +607,7 @@ export const getCardsForStudyV2 = (id) => {
 
       docs.docs.map((doc) => {
         const docId = doc.id;
-        cards.push({ docId, ...doc.data() });
+        cards.push({ id: docId, ...doc.data() });
       });
 
       return user

@@ -89,7 +89,7 @@ function UpdateDeckDescriptionWindow({
             Cambiar descripción
             <RightArrowIcon />
           </button>
-          <button onClick={closeForm}>
+          <button onClick={closeForm} className={popupStyles.cancelBtn}>
             <BackIcon />
             Cancelar
           </button>

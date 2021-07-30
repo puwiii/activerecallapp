@@ -12,7 +12,14 @@ import BackIcon from "icons/BackIcon";
 //components
 import ScreenLoadingComponent from "components/ScreenLoadingComponent";
 
-function RemoveDeckWindow({ isOpen, closeWindow, deckId, name, stay = false }) {
+function RemoveDeckWindow({
+  isOpen,
+  closeWindow,
+  deckId,
+  name,
+  stay = false,
+  handleCardsOnDelete = false,
+}) {
   const router = useRouter();
 
   const [loading, setLoading] = useState(false);
@@ -21,6 +28,9 @@ function RemoveDeckWindow({ isOpen, closeWindow, deckId, name, stay = false }) {
     closeWindow();
     removeDecksV2(deckId)
       .then(() => {
+        if (handleCardsOnDelete) {
+          handleCardsOnDelete();
+        }
         stay ? null : router.back();
       })
       .catch(() => {
@@ -42,7 +52,7 @@ function RemoveDeckWindow({ isOpen, closeWindow, deckId, name, stay = false }) {
             <TrashIcon />
             Eliminar
           </button>
-          <button onClick={closeWindow}>
+          <button onClick={closeWindow} className={popupStyles.cancelBtn}>
             <BackIcon />
             Cancelar
           </button>

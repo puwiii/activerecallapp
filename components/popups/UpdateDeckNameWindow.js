@@ -88,7 +88,7 @@ function UpdateDeckNameWindow({ isOpen, closeWindow, deckId, deckName }) {
             Cambiar nombre
             <RightArrowIcon />
           </button>
-          <button onClick={closeForm}>
+          <button onClick={closeForm} className={popupStyles.cancelBtn}>
             <BackIcon />
             Cancelar
           </button>

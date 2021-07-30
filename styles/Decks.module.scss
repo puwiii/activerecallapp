@@ -224,6 +224,11 @@
       display: grid;
       place-items: center;
 
+      &_disabled {
+        cursor: not-allowed;
+        filter: grayscale(95%);
+      }
+
       &:hover {
         .card__item {
           svg {
@@ -241,8 +246,8 @@
         > div {
           background: linear-gradient(
             180deg,
-            rgba($primary-color, 0.66) 40%,
-            rgba($primary-color, 0.9) 70%
+            rgba($primary-color, 0.8) 50%,
+            rgba($primary-dark-color, 1) 70%
           );
           background-size: 150% 300%;
           background-position: center top;
@@ -298,13 +303,14 @@
         padding-top: 1em;
         padding-bottom: 1em;
         text-align: center;
-        font-weight: $font-weight-bold;
+        font-weight: $font-weight-medium;
         font-size: $font-size-xSmall;
         color: $text-secondary;
         white-space: nowrap;
         transition: transform 300ms ease-in-out;
-        text-shadow: 0 3px 5px rgba(#000, 0.1);
-        @include breakpoint-up(large) {
+        //text-shadow: 0 3px 5px rgba(#000, 0.1);
+
+        @include breakpoint-up(xlarge) {
           font-size: $font-size-small;
         }
       }
@@ -413,5 +419,27 @@
     @include breakpoint-up(medium) {
       align-self: flex-end;
     }
+  }
+}
+
+.emptyData {
+  display: flex;
+  gap: 40px;
+  flex-direction: column;
+
+  & > h3 {
+    & > span {
+      display: block;
+      font-size: $font-size-large;
+      color: $text-secondary;
+      font-weight: $font-weight-black;
+      margin-bottom: 0.5em;
+    }
+  }
+
+  @include breakpoint-up(medium) {
+    flex-direction: row-reverse;
+    align-items: center;
+    justify-content: center;
   }
 }

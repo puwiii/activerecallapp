@@ -139,7 +139,7 @@ function CreateDeckWindow({ isOpen, closeWindow, deckId }) {
             Crear mazo
             <RightArrowIcon />
           </button>
-          <button onClick={closeForm}>
+          <button onClick={closeForm} className={popupStyles.cancelBtn}>
             <BackIcon />
             Cancelar
           </button>
