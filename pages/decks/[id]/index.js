@@ -61,6 +61,7 @@ function index() {
   const [learnedCards, setLearnedCards] = useState(0);
   const [xCoord, setXCoord] = useState(null);
   const [yCoord, setYCoord] = useState(null);
+  const [emptyCards, setEmptyCards] = useState(true);
 
   let user = useUser();
 
@@ -85,33 +86,52 @@ function index() {
   };
 
   useEffect(() => {
-    if (cards) {
-      let created = 0;
-      let studied = 0;
-      let learned = 0;
+    mounted = true;
 
-      cards.length > 0 &&
-        cards.map((card) => {
-          if (card.status === 0) created++;
-          if (card.status === 1) studied++;
-          if (card.status === 2) learned++;
-        });
+    if (mounted) {
+      if (cards) {
+        if (cards.length > 0) {
+          setEmptyCards(false);
+        }
 
-      setCreatedCards(created);
-      setStudiedCards(studied);
-      setLearnedCards(learned);
+        let created = 0;
+        let studied = 0;
+        let learned = 0;
+
+        cards.length > 0 &&
+          cards.map((card) => {
+            if (card.status === 0) created++;
+            if (card.status === 1) studied++;
+            if (card.status === 2) learned++;
+          });
+
+        setCreatedCards(created);
+        setStudiedCards(studied);
+        setLearnedCards(learned);
+      }
     }
+
+    return () => {
+      setEmptyCards(true);
+      setCreatedCards(0);
+      setStudiedCards(0);
+      setLearnedCards(0);
+      mounted = false;
+    };
   }, [cards]);
 
   const handleStudyButton = (e) => {
     e.preventDefault();
-    //router.push(`study/${actualDeck.id}`);
-    const cardsForStudy = getAllCardsFromDeck(actualDeck.id);
-    console.log(cardsForStudy);
+    router.push(`/study/${actualDeck.id}`);
+    //console.log(cards);
   };
 
   const goBack = () => {
-    router.back();
+    if (actualDeck.parentDeckId) {
+      router.push(actualDeck.parentDeckId);
+    } else {
+      router.push("/decks");
+    }
   };
 
   useEffect(() => {
@@ -151,6 +171,7 @@ function index() {
     return () => {
       unsubscribeActualDeck && unsubscribeActualDeck();
       unsubscribeDecks && unsubscribeDecks();
+      setCards(null);
       setLoading(true);
       //unsubscribeCards && unsubscribeCards();
     };
@@ -183,12 +204,6 @@ function index() {
         e.clientY -
         main.scrollTop) /
       8;
-
-    // let xAxis = (e.target.offsetLeft + e.target.clientWidth / 2 - e.pageX) / -5;
-    // let yAxis = (e.target.offsetTop + e.target.clientHeight / 2 - e.pageY) / 5;
-
-    // let xAxis = e.target.clientWidth / 2 - e.target.offsetWidth;
-    // let yAxis = e.target.clientHeight / 2 - e.target.offsetHeight;
 
     e.target.firstChild.style.transition =
       "transform 0ms ease-in-out, background-position 0.26s ease-in-out";
@@ -285,6 +300,8 @@ function index() {
                     isOpen={isOpenCreateCard}
                     closeWindow={closeCreateCard}
                     deckId={idDeck}
+                    cards={cards}
+                    setCards={setCards}
                   />
                 )}
 
@@ -336,7 +353,12 @@ function index() {
                       </div>
                     </div>
                     <div
-                      className={decksStyles.card__wrapper}
+                      className={`${decksStyles.card__wrapper} ${
+                        emptyCards && decksStyles.card__wrapper_disabled
+                      }`}
+                      onClick={(e) => {
+                        !emptyCards && handleStudyButton(e);
+                      }}
                       onMouseMove={(e) => makeMagicOnHover(e)}
                       onMouseLeave={(e) => removeMagicOnHover(e)}
                     >
@@ -385,6 +407,8 @@ function index() {
                         name={deck.name}
                         description={deck.description}
                         parentDeckId={idDeck}
+                        paramCards={cards}
+                        paramSetCards={setCards}
                       />
                     ))}
                   </div>
