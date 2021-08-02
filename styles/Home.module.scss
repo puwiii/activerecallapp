@@ -5,20 +5,21 @@
 .main {
   flex: 1;
   background-color: $bg-color-dark;
-  padding: 10px 20px;
   overflow-y: auto;
   //animation: Fade-In 125ms linear forwards;
-
-  @include breakpoint-up(medium) {
-    padding: 20px 30px;
-  }
+  // padding: 10px 20px;
+  padding: 2em;
+  // @include breakpoint-up(medium) {
+  //   padding: 20px 30px;
+  // }
 
   // @include breakpoint-up(large) {
   //   border-top: 1px dashed rgba(0, 0, 0, 0.08);
   // }
+  padding-bottom: 100px;
 
-  .title {
-    padding: 0;
-    padding-bottom: 0.5em;
+  @include breakpoint-up(large) {
+    padding-bottom: 0;
+    padding: 4em 6em;
   }
 }

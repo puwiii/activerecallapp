@@ -15,16 +15,8 @@
   flex-direction: column;
   overflow: hidden;
   background-color: $bg-color-dark;
-}
 
-.mainDiv {
-  //position: relative;
-  overflow-y: hidden;
-  height: 100%;
-  display: flex;
-  flex-direction: column-reverse;
-
-  @include breakpoint-up(large) {
-    flex-direction: row;
-  }
+  // @include breakpoint-up(medium) {
+  //   padding: 0 1em;
+  // }
 }

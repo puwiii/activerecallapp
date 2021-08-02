@@ -97,13 +97,13 @@ function Nav() {
             </li>
           </ul>
 
-          <button
+          {/* <button
             onClick={(e) => setNavContracted(!navContracted)}
             title={`${navContracted ? "Expandir" : "Contraer"}`}
             className={styles.roundedButtonTerciary}
           >
             {navContracted ? <PushRightIcon /> : <PushLeftIcon />}
-          </button>
+          </button> */}
         </nav>
       )}
     </>

@@ -44,6 +44,7 @@ import RemoveDeckWindow from "components/popups/RemoveDeckWindow";
 import CreateCardWindow from "components/popups/CreateCardWindow";
 import MenuHeaderDeck from "components/menus/MenuHeaderDeck";
 import CardsWindow from "components/popups/CardsWindow";
+import ExploreIcon from "icons/ExploreIcon";
 
 function index() {
   const [isOpenCreateDeck, openCreateDeck, closeCreateDeck] = useModal(false);
@@ -250,7 +251,13 @@ function index() {
       ) : (
         <>
           {actualDeck === null ? (
-            "No encontramos este mazo"
+            <div className={decksStyles.noResults}>
+              <h2>
+                <strong>404</strong> <br />
+                No hemos encontrado el mazo que buscas
+              </h2>
+              <NoResultsSvg />
+            </div>
           ) : (
             <>
               <div className={decksStyles.floatButtons}>
@@ -276,7 +283,12 @@ function index() {
                   <span title="Volver atras" onClick={goBack}>
                     <ChevronRightIcon />
                   </span>
-                  <h1 className={styles.subtitle}>{actualDeck?.name}</h1>
+                  <h1 className={styles.title}>
+                    {actualDeck?.name}{" "}
+                    {actualDeck?.isPublic && (
+                      <ExploreIcon title="Mazo público" />
+                    )}
+                  </h1>
                   <div>
                     <button onClick={openRemoveDeck}>
                       <TrashIcon />
@@ -435,7 +447,7 @@ function index() {
                         name="searchInput"
                         id="searchInput"
                         autoComplete="off"
-                        placeholder="Buscar mazo..."
+                        placeholder="Buscar mazo 🛰️..."
                         onChange={(e) => handleSearch(e.target.value)}
                       />
                     </div>

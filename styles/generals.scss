@@ -50,10 +50,6 @@ a:visited {
 }
 
 @include breakpoint-up(medium) {
-  scrollbar ::-webkit-scrollbar {
-    width: 15px;
-    height: 4px;
-  }
   ::-webkit-scrollbar-thumb {
     width: 5px;
     border-radius: 500px;
@@ -62,7 +58,9 @@ a:visited {
   }
 
   ::-webkit-scrollbar {
+    cursor: pointer;
     width: 14px;
+    height: 14px;
   }
 
   ::-webkit-scrollbar-thumb {
@@ -125,8 +123,9 @@ label,
 select,
 textarea {
   &::placeholder {
-    font-weight: $font-weight-regular;
-    color: rgba(0, 0, 0, 0.3);
+    font-size: $font-size-xSmall;
+    font-weight: $font-weight-medium;
+    color: rgba(0, 0, 0, 0.6);
   }
 
   &:focus {

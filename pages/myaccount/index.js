@@ -77,7 +77,13 @@ function index() {
               Foto de perfil
             </span>
             <div className={accountPage.avatar}>
-              <Image src={user?.avatar} layout="fill" objectFit="cover" />
+              <Image
+                src={user?.avatar}
+                layout="fill"
+                objectFit="cover"
+                alt={user?.username}
+                quality={1}
+              />
             </div>
             <ChevronRightIcon />
           </div>

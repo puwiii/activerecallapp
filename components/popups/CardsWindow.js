@@ -23,6 +23,7 @@ function CardsWindow({ cards = null, isOpen, closeWindow }) {
   const [searchValue, setSearchValue] = useState("");
 
   let timer;
+  let loadingTimer;
 
   const handleSearch = (value) => {
     clearTimeout(timer);
@@ -54,6 +55,14 @@ function CardsWindow({ cards = null, isOpen, closeWindow }) {
     }, 1000);
   };
 
+  const handleLoadingSearch = () => {
+    setLoading(true);
+    clearTimeout(loadingTimer);
+    loadingTimer = setTimeout(() => {
+      setLoading(false);
+    }, 2000);
+  };
+
   return (
     <div className={popupStyles.windowBg}>
       <div className={popupStyles.window}>
@@ -69,8 +78,9 @@ function CardsWindow({ cards = null, isOpen, closeWindow }) {
               name="searchInput"
               id="searchInput"
               autoComplete="off"
-              placeholder="Buscar tarjeta..."
+              placeholder="Buscar tarjeta 🛰️..."
               onKeyUp={(e) => handleSearch(e.target.value.trim())}
+              onChange={handleLoadingSearch}
             />
             {loading && <SpinnerComponentCircle size={30} />}
           </div>

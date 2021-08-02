@@ -11,6 +11,9 @@ import DoorIcon from "icons/DoorIcon";
 import UserIcon from "icons/UserIcon";
 import DownArrowIcon from "icons/DownArrowIcon";
 
+//components
+import SpinnerComponentCircle from "./SpinnerComponentCircle";
+
 function Avatar({ username, avatar, email }) {
   const router = useRouter();
   const [active, setActive] = useState(false);
@@ -28,7 +31,13 @@ function Avatar({ username, avatar, email }) {
     <div className={styles.avatarContainer}>
       <div onClick={(e) => setActive(!active)} className={styles.avatar}>
         <div className={styles.avatar__image}>
-          <Image src={avatar} layout="fill" objectFit="cover" alt={username} />
+          <Image
+            src={avatar}
+            layout="fill"
+            objectFit="cover"
+            alt={username}
+            quality={1}
+          />
         </div>
         <DownArrowIcon />
       </div>

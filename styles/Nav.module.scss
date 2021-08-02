@@ -4,15 +4,17 @@
 
 .nav {
   background-color: $bg-color-dark;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  //border-right: 1px solid rgba($primary-color, 0.1);
+  display: grid;
+  place-items: center;
   background-color: $bg-color;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
 
   @include breakpoint-up(large) {
-    background-color: $bg-color;
+    position: relative;
+    width: auto;
+    place-items: flex-end;
   }
 
   button {
@@ -49,8 +51,8 @@
     transition: padding 0.4s cubic-bezier(0.215, 0.61, 0.355, 1);
 
     @include breakpoint-up(large) {
-      flex-direction: column;
-      gap: 0;
+      // flex-direction: column;
+      width: max-content;
       padding: 0;
     }
 
@@ -60,10 +62,16 @@
       cursor: pointer;
       font-size: $font-size-xSmall;
       font-weight: $font-weight-medium;
-      color: $text-secondary;
+      color: $text-gray;
+      transition: color 125ms linear;
 
       @include breakpoint-up(large) {
         font-size: $font-size-small;
+        border-radius: 20em;
+      }
+
+      &:hover {
+        color: $text-primary;
       }
 
       &.selected {
@@ -108,7 +116,7 @@
         @include breakpoint-up(large) {
           gap: 10px;
           justify-content: flex-start;
-          padding: 0.8em 1.2em;
+          padding: 1em;
           border-top: none;
         }
 
@@ -121,6 +129,7 @@
         display: none;
         font-size: $font-size-xxSmall;
         font-weight: $font-weight-bold;
+        white-space: nowrap;
 
         @include breakpoint-up(medium) {
           display: block;
@@ -130,10 +139,6 @@
           display: none;
           font-size: $font-size-xSmall;
         }
-      }
-
-      &:hover {
-        background-color: rgba($primary-color, 0.1);
       }
     }
   }

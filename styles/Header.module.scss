@@ -5,18 +5,35 @@
 .header {
   position: relative;
   z-index: 2000;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 3em;
+  padding: 1em 2em;
   background-color: $bg-color;
   box-shadow: 0 0px 10px rgba(0, 0, 0, 0.1);
 
   @include breakpoint-up(large) {
     //box-shadow: none;
-    box-shadow: 150px 0px 10px rgba(0, 0, 0, 0.05);
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.05);
   }
 
-  padding: 8px 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  &__user {
+    border-left: 2px solid rgba(0, 0, 0, 0.05);
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding-left: 5px;
+  }
+
+  &__searcher {
+    display: none;
+    margin-right: auto;
+    @include breakpoint-up(medium) {
+      display: flex;
+    }
+  }
 }
 
 .logo {
@@ -27,13 +44,4 @@
     height: inherit;
     object-fit: contain;
   }
-}
-
-.header__user {
-  border-left: 2px solid rgba(0, 0, 0, 0.05);
-  justify-self: flex-end;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  padding-left: 5px;
 }

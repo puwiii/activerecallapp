@@ -110,10 +110,6 @@
   &:focus {
     border-color: $primary-color;
   }
-
-  &::placeholder {
-    font-weight: $font-weight-medium;
-  }
 }
 
 .searchInput {
@@ -124,9 +120,10 @@
   justify-content: space-between;
   border-radius: 5px;
   background-color: $bg-color;
-  border: 1px solid rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(0, 0, 0, 0.05);
   //box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
   padding: 0 1em;
+  transition: border-color 150ms linear;
 
   & > input {
     font-size: $font-size-small;
@@ -135,6 +132,10 @@
     outline: none;
     border: none;
     padding: 0.7em;
+  }
+
+  &:focus-within {
+    border-color: rgba(0, 0, 0, 0.2);
   }
 }
 
@@ -168,22 +169,29 @@
       left: 50%;
       transform: translate(-50%, -50%);
       font-size: $font-size-medium;
+      font-weight: $font-weight-bold;
     }
 
     & > strong {
+      font-family: "Lora", "Roboto", sans-serif;
       display: block;
       font-size: $font-size-medium;
-      margin-top: 1em;
+      margin-top: 0.8em;
       color: $text-primary;
 
       @include breakpoint-up(medium) {
-        font-size: $font-size-xLarge;
+        font-size: $font-size-xxLarge;
+      }
+
+      @include breakpoint-up(large) {
+        font-size: $font-size-SuperLarge;
+        font-weight: $font-weight-black;
       }
     }
   }
 
   & > svg {
-    opacity: 0.2;
+    opacity: 0.3;
     max-width: 100%;
     height: auto;
   }
@@ -206,19 +214,19 @@
 
 //texts
 
-// .title {
-//   font-size: $font-size-large;
-//   font-weight: $font-weight-black;
-//   color: $primary-color;
+.title {
+  font-size: $font-size-large;
+  font-weight: $font-weight-black;
+  color: $primary-color;
 
-//   @include breakpoint-up(medium) {
-//     font-size: $font-size-xLarge;
-//   }
+  @include breakpoint-up(medium) {
+    font-size: $font-size-xLarge;
+  }
 
-//   @include breakpoint-up(large) {
-//     font-size: $font-size-xxLarge;
-//   }
-// }
+  @include breakpoint-up(large) {
+    font-size: $font-size-xxLarge;
+  }
+}
 
 .subtitle {
   font-weight: $font-weight-bold;

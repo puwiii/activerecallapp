@@ -11,10 +11,8 @@ export default function MyApp({ Component, pageProps }) {
   return (
     <Layout>
       <Header />
-      <div className={styles.mainDiv}>
-        <Nav />
-        <Component {...pageProps} />
-      </div>
+
+      <Component {...pageProps} />
 
       {/* <style jsx>{`
                 div{
