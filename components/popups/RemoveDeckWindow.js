@@ -19,6 +19,7 @@ function RemoveDeckWindow({
   name,
   stay = false,
   handleCardsOnDelete = false,
+  paramSetLoading = null,
 }) {
   const router = useRouter();
 
@@ -28,10 +29,13 @@ function RemoveDeckWindow({
     closeWindow();
     removeDecksV2(deckId)
       .then(() => {
+        paramSetLoading && paramSetLoading(true);
         if (handleCardsOnDelete) {
           handleCardsOnDelete();
         }
-        stay ? null : router.back();
+        if (!stay) {
+          router.back();
+        }
       })
       .catch(() => {
         setLoading(false);

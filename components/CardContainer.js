@@ -5,7 +5,12 @@ import { EditorState, convertFromRaw } from "draft-js";
 //styles
 import "node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import styles from "styles/Card.module.scss";
+
+//components
 import TextEditor from "components/TextEditor";
+
+//icons
+import CaptureIcon from "icons/CaptureIcon";
 
 const Editor = dynamic(
   () => import("react-draft-wysiwyg").then((module) => module.Editor),
@@ -14,22 +19,16 @@ const Editor = dynamic(
   }
 );
 
-function CardContainer({ cardId, front, back, createdAt }) {
-  const [editorState, setEditorState] = useState(
-    EditorState.createWithContent(convertFromRaw(front))
-  );
-
-  const onEditorStateChange = (editorState) => {};
-
-  //   useEffect(() => {
-  //     console.log(front);
-  //     console.log(convertFromRaw(front));
-  //     setEditorState(convertFromRaw(front));
-  //   });
-
+function CardContainer({ cardId, data, createdAt, type = null }) {
   return (
     <div className={styles.card}>
-      <TextEditor isView={true} data={front} />
+      {type && (
+        <span>
+          <CaptureIcon />
+          {type}
+        </span>
+      )}
+      <TextEditor isView={true} data={data} />
     </div>
   );
 }

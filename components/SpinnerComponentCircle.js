@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 import { css } from "@emotion/react";
 import Spinner from "react-spinners/PuffLoader";
 
@@ -8,10 +8,16 @@ const override = css`
   border-color: #0876bb;
 `;
 
-function SpinnerComponentCircle() {
-    return (
-        <Spinner color={"#0876bb"} loading={true} css={override} size={50} />
-    )
+function SpinnerComponentCircle(props) {
+  return (
+    <Spinner
+      color={"#0876bb"}
+      loading={true}
+      css={override}
+      size={50}
+      {...props}
+    />
+  );
 }
 
-export default SpinnerComponentCircle
+export default SpinnerComponentCircle;

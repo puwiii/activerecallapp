@@ -13,6 +13,7 @@ import styles from "styles/Global.module.scss";
 import RightArrowIcon from "icons/RightArrowIcon";
 import BackIcon from "icons/BackIcon";
 import ExploreIcon from "icons/ExploreIcon";
+import CloseIcon from "icons/CloseIcon";
 
 //components
 import SpinnerComponentCircle from "components/SpinnerComponentCircle";
@@ -57,18 +58,12 @@ function CreateDeckWindow({ isOpen, closeWindow, deckId }) {
           setLoading(false);
           console.log(error);
         });
+    }
+  };
 
-      //PRUEBAS
-      //setLoading(true)
-      // createDeck(deckId, deckName.trim(), deckDescription.trim())
-      // .then(() => {
-      //   createDeckForm.reset();
-      //   setDeckDescription("");
-      //   setDeckName("");
-      //   setLoading(false)
-      //   closeWindow();
-      // })
-      // .catch(alert);
+  const handleEsc = (e) => {
+    if (e.key === "Escape") {
+      closeForm();
     }
   };
 
@@ -89,6 +84,9 @@ function CreateDeckWindow({ isOpen, closeWindow, deckId }) {
             <SpinnerComponentCircle />
           </div>
         )}
+        <button onClick={(e) => closeForm()} className={popupStyles.closeBtn}>
+          <CloseIcon />
+        </button>
         <h1 className={popupStyles.title}>Crear mazo</h1>
         <form className={popupStyles.form} id="createDeckForm">
           <label>

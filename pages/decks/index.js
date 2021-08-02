@@ -20,6 +20,8 @@ import ScreenLoadingComponent from "components/ScreenLoadingComponent";
 //hooks
 import { useModal } from "hooks/useModal";
 import useUser, { USER_STATES } from "hooks/useUser";
+
+//svgs
 import EmptySvg from "svgs/EmptySvg";
 
 function index() {
@@ -72,52 +74,62 @@ function index() {
         )}
 
         <div className={`decks`}>
-          <h2>Mazos</h2>
+          <h3>Mazos</h3>
           {loading ? (
             <ScreenLoadingComponent />
           ) : (
             <>
               {decks.length > 0 ? (
-                <div className={decksStyles.decks}>
-                  {decks.map((deck) => (
-                    <DeckContainer
-                      key={deck.id}
-                      deckId={deck.id}
-                      name={deck.name}
-                      description={deck.description}
-                      isPoster={false}
-                    />
-                  ))}
-                </div>
+                <>
+                  <div className={decksStyles.decks}>
+                    {decks.map((deck) => (
+                      <DeckContainer
+                        key={deck.id}
+                        deckId={deck.id}
+                        name={deck.name}
+                        description={deck.description}
+                        isPoster={false}
+                      />
+                    ))}
+                  </div>
+                  <button
+                    className={`${styles.roundedButtonTerciary}`}
+                    onClick={openCreateDeck}
+                  >
+                    <NewFolderIcon /> Crear un nuevo mazo
+                  </button>
+                </>
               ) : (
                 <>
                   {decks === "Quota exceeded." ? (
                     "Intente nuevamente mas tarde."
                   ) : (
                     <div className={decksStyles.emptyData}>
-                      <h3>
-                        <span>Aun no tienes mazos creados.</span>
-                        Comienza creando uno presionando en el boton "Crear un
-                        nuevo mazo"
-                      </h3>
                       <EmptySvg />
+                      <div>
+                        <h2>Aun no tienes mazos creados.</h2>
+                        <p>
+                          Comienza creando uno presionando en el boton{" "}
+                          <strong>"Crear un nuevo mazo"</strong>
+                        </p>
+                        <button
+                          className={`${styles.roundedButtonTerciary}`}
+                          onClick={openCreateDeck}
+                        >
+                          <NewFolderIcon /> Crear un nuevo mazo
+                        </button>
+                      </div>
                     </div>
                   )}
                 </>
               )}
-              <button
-                className={`${styles.roundedButtonTerciary}`}
-                onClick={openCreateDeck}
-              >
-                <NewFolderIcon /> Crear un nuevo mazo
-              </button>
             </>
           )}
         </div>
       </section>
 
       <style jsx>{`
-        h2 {
+        h3 {
           padding: 10px;
           font-weight: 600;
           font-size: 12px;

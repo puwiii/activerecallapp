@@ -72,23 +72,31 @@ function MenuDeck({
         <span className={styles.title}>{name}</span>
         <ul className={styles.options}>
           <li
-            className={styles.mainOption}
+            className={`${styles.mainOption} ${styles.roundedButtonFilled}`}
             //onClick={(e) => handleStudyButton(e)}
           >
             <LightningIcon />
             Estudiar mazo
           </li>
           <hr />
-          <li onClick={openUpdateNameDeck}>
+          <li
+            onClick={openUpdateNameDeck}
+            className={styles.roundedButtonTerciary}
+          >
             <WriteIcon />
             Cambiar nombre
           </li>
-          <li onClick={openUpdateDescriptionDeck}>
+          <li
+            onClick={openUpdateDescriptionDeck}
+            className={styles.roundedButtonTerciary}
+          >
             <WriteIcon />
             Cambiar descripción
           </li>
-          <hr />
-          <li className={styles.redOption} onClick={(e) => openRemoveDeck(e)}>
+          <li
+            className={`${styles.redOption} ${styles.roundedButtonTerciary}`}
+            onClick={(e) => openRemoveDeck(e)}
+          >
             <TrashIcon />
             Eliminar mazo
           </li>

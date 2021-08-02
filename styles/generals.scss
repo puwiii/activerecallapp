@@ -15,7 +15,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Lora:wght@400;500;700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@200;300;400;600;700;900&display=swap");
 
-.app{
+.app {
   min-height: 100vh;
 }
 
@@ -125,13 +125,12 @@ label,
 select,
 textarea {
   &::placeholder {
-    color: $light-gray;
-    font-weight: $font-weight-thin;
-    font-size: $font-size-xxSmall;
+    font-weight: $font-weight-regular;
+    color: rgba(0, 0, 0, 0.3);
+  }
 
-    @include breakpoint-up(medium) {
-      font-size: $font-size-xSmall;
-    }
+  &:focus {
+    border-color: $primary-color;
   }
 }
 

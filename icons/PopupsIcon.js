@@ -1,6 +1,6 @@
 import * as React from "react";
 
-function CloseIcon(props) {
+function PopupIcon(props) {
   return (
     <svg
       height={21}
@@ -16,10 +16,14 @@ function CloseIcon(props) {
         strokeLinecap="round"
         strokeLinejoin="round"
       >
-        <path d="M7.5 7.5l6 6M13.5 7.5l-6 6" />
+        <path d="M5.5 3.5h10a2 2 0 012 2v10a2 2 0 01-2 2h-10a2 2 0 01-2-2v-10a2 2 0 012-2z" />
+        <path
+          d="M5.5 5.5h10a2 2 0 012 2v-2c0-1-.895-2-2-2h-10c-1.105 0-2 1-2 2v2a2 2 0 012-2z"
+          fill="currentColor"
+        />
       </g>
     </svg>
   );
 }
 
-export default CloseIcon;
+export default PopupIcon;

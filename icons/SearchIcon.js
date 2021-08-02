@@ -1,6 +1,6 @@
 import * as React from "react";
 
-function CloseIcon(props) {
+function SearchIcon(props) {
   return (
     <svg
       height={21}
@@ -16,10 +16,11 @@ function CloseIcon(props) {
         strokeLinecap="round"
         strokeLinejoin="round"
       >
-        <path d="M7.5 7.5l6 6M13.5 7.5l-6 6" />
+        <circle cx={8.5} cy={8.5} r={5} />
+        <path d="M17.571 17.5L12 12" />
       </g>
     </svg>
   );
 }
 
-export default CloseIcon;
+export default SearchIcon;

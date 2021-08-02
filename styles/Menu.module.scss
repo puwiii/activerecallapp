@@ -40,8 +40,11 @@
 }
 
 .options {
-  padding: 5px;
+  padding: 2em;
   z-index: 10000;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
 
   li {
     white-space: nowrap;
@@ -50,9 +53,8 @@
     cursor: pointer;
     font-size: $font-size-xSmall;
     font-weight: $font-weight-medium;
-    padding: 1em;
     user-select: none;
-    transition: background-color 0.115s ease-in-out;
+    max-width: none;
 
     // @include breakpoint-up(xlarge) {
     //   font-size: $font-size-small;
@@ -60,11 +62,6 @@
 
     @include breakpoint-up(medium) {
       padding: 1.3em 1.5em;
-    }
-
-    &:hover,
-    &:focus {
-      background: rgba($primary-color, 0.1);
     }
 
     svg {
@@ -77,16 +74,18 @@
   }
 
   .redOption {
+    background-color: rgba($error, 0.1);
     color: $error;
 
     &:hover,
     &:focus {
+      border-color: rgba($error, 0.18);
       background-color: rgba($error, 0.08);
     }
   }
 
   .mainOption {
-    color: $text-secondary;
+    // color: $text-secondary;
   }
 
   hr {

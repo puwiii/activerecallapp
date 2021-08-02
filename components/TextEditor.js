@@ -274,7 +274,7 @@ function TextEditor({ wrapperClassName, callback, isView, data }) {
       className={`${wrapperClassName} ${styles.div} ${isView && styles.isView}`}
     >
       <Editor
-        tabIndex="-1"
+        // tabIndex="-1"
         editorState={editorState}
         toolbarClassName={styles.toolbar}
         wrapperClassName={styles.wrapper}

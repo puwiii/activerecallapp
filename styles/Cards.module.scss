@@ -3,20 +3,8 @@
 @import "globals";
 
 .cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  grid-auto-rows: minmax(200px, 1fr);
-  gap: 10px;
-  margin-bottom: 20px;
-
-  @include breakpoint-up(medium) {
-    grid-template-columns: repeat(auto-fill, minmax(auto, 600px));
-    justify-content: center;
-
-    // display: flex;
-    // flex-wrap: wrap;
-
-    // display: block;
-    // column-count: 2;
-  }
+  padding: 3em;
+  max-height: 80%;
+  overflow-y: auto;
+  flex: 1;
 }

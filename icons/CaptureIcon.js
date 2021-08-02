@@ -1,6 +1,6 @@
 import * as React from "react";
 
-function CloseIcon(props) {
+function CaptureIcon(props) {
   return (
     <svg
       height={21}
@@ -9,17 +9,15 @@ function CloseIcon(props) {
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
-      <g
+      <path
+        d="M18.5 7.5V4.494a2 2 0 00-1.994-2L13.5 2.485m5 11.015v3a2 2 0 01-2 2h-3m-6-16.015l-3.006.01a2 2 0 00-1.994 2V7.5m5 11h-3a2 2 0 01-2-2v-3"
         fill="none"
-        fillRule="evenodd"
         stroke="currentColor"
         strokeLinecap="round"
         strokeLinejoin="round"
-      >
-        <path d="M7.5 7.5l6 6M13.5 7.5l-6 6" />
-      </g>
+      />
     </svg>
   );
 }
 
-export default CloseIcon;
+export default CaptureIcon;

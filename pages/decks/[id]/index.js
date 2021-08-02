@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 
 //styles
 import styles from "styles/Home.module.scss";
@@ -9,10 +8,7 @@ import decksStyles from "styles/Decks.module.scss";
 
 //firebase
 import {
-  getAllCardsFromDeck,
-  getCardsForStudy,
   getCardsForStudyV2,
-  //listenForCardsV2,
   listenForDecksV2,
   listenForDeckV2,
 } from "firebase/client";
@@ -30,6 +26,8 @@ import AddFolderSvg from "svgs/AddFolderSvg";
 import AddCardSvg from "svgs/AddCardSvg";
 import StatisticsSvg from "svgs/StatisticsSvg";
 import ReviewSvg from "svgs/ReviewSvg";
+import EmptySvg from "svgs/EmptySvg";
+import NoResultsSvg from "svgs/NoResultsSvg";
 
 //icons
 import CardsIcon from "icons/CardsIcon";
@@ -38,12 +36,14 @@ import CreateIcon from "icons/CreateIcon";
 import TrashIcon from "icons/TrashIcon";
 import SettingsIcon from "icons/SettingsIcon";
 import ChevronRightIcon from "icons/ChevronRightIcon";
+import SearchIcon from "icons/SearchIcon";
 
 //popups
 import CreateDeckWindow from "components/popups/CreateDeckWindow";
 import RemoveDeckWindow from "components/popups/RemoveDeckWindow";
 import CreateCardWindow from "components/popups/CreateCardWindow";
 import MenuHeaderDeck from "components/menus/MenuHeaderDeck";
+import CardsWindow from "components/popups/CardsWindow";
 
 function index() {
   const [isOpenCreateDeck, openCreateDeck, closeCreateDeck] = useModal(false);
@@ -51,10 +51,12 @@ function index() {
   const [isOpenCreateCard, openCreateCard, closeCreateCard] = useModal(false);
   const [isOpenMenuHeaderDeck, openMenuHeaderDeck, closeMenuHeaderDeck] =
     useModal(false);
+  const [isOpenCards, openCards, closeCards] = useModal(false);
   const [loading, setLoading] = useState(true);
   const [idDeck, setIdDeck] = useState(null);
   const [actualDeck, setActualDeck] = useState(null);
   const [decks, setDecks] = useState(null);
+  const [decksForShow, setDeckForShow] = useState(null);
   const [cards, setCards] = useState(null);
   const [createdCards, setCreatedCards] = useState(0);
   const [studiedCards, setStudiedCards] = useState(0);
@@ -62,6 +64,7 @@ function index() {
   const [xCoord, setXCoord] = useState(null);
   const [yCoord, setYCoord] = useState(null);
   const [emptyCards, setEmptyCards] = useState(true);
+  const [searchValue, setSearchValue] = useState("");
 
   let user = useUser();
 
@@ -182,12 +185,14 @@ function index() {
 
     if (mounted) {
       if (decks) {
+        setDeckForShow(decks);
         setLoading(false);
       }
     }
 
     return () => {
       mounted = false;
+      setDeckForShow(null);
       setLoading(true);
     };
   }, [decks]);
@@ -216,6 +221,21 @@ function index() {
     e.target.firstChild.style.transition =
       "transform 600ms ease-in-out ,background-position 0.36s ease-in-out";
     e.target.firstChild.style.transform = `rotateY(0deg) rotateX(0deg)`;
+  };
+
+  const handleSearch = (value) => {
+    if (value.trim() === "") {
+      setDeckForShow(decks);
+    } else {
+      setSearchValue(value.trim());
+      const checkForInclude = (object) => {
+        return object.name.toLowerCase().includes(value.trim().toLowerCase());
+      };
+
+      const newDecks = decks.filter(checkForInclude);
+
+      setDeckForShow(newDecks);
+    }
   };
 
   return (
@@ -284,38 +304,44 @@ function index() {
                 </div>
               )}
 
+              {/* popups */}
+              {isOpenCreateDeck && (
+                <CreateDeckWindow
+                  isOpen={isOpenCreateDeck}
+                  closeWindow={closeCreateDeck}
+                  deckId={idDeck}
+                />
+              )}
+
+              {isOpenCreateCard && (
+                <CreateCardWindow
+                  isOpen={isOpenCreateCard}
+                  closeWindow={closeCreateCard}
+                  deckId={idDeck}
+                  cards={cards}
+                  setCards={setCards}
+                />
+              )}
+
+              {isOpenRemoveDeck && (
+                <RemoveDeckWindow
+                  isOpen={isOpenRemoveDeck}
+                  closeWindow={closeRemoveDeck}
+                  deckId={idDeck}
+                  name={actualDeck?.name}
+                  paramSetLoading={setLoading}
+                />
+              )}
+
+              {isOpenCards && (
+                <CardsWindow
+                  isOpen={isOpenCards}
+                  closeWindow={closeCards}
+                  cards={cards}
+                />
+              )}
+
               <section className={decksStyles.managmentContainer}>
-                {/* popups */}
-
-                {isOpenCreateDeck && (
-                  <CreateDeckWindow
-                    isOpen={isOpenCreateDeck}
-                    closeWindow={closeCreateDeck}
-                    deckId={idDeck}
-                  />
-                )}
-
-                {isOpenCreateCard && (
-                  <CreateCardWindow
-                    isOpen={isOpenCreateCard}
-                    closeWindow={closeCreateCard}
-                    deckId={idDeck}
-                    cards={cards}
-                    setCards={setCards}
-                  />
-                )}
-
-                {isOpenRemoveDeck && (
-                  <RemoveDeckWindow
-                    isOpen={isOpenRemoveDeck}
-                    closeWindow={closeRemoveDeck}
-                    deckId={idDeck}
-                    name={actualDeck?.name}
-                  />
-                )}
-
-                {/* deck managment */}
-
                 <div className={decksStyles.managment}>
                   <h2 className={decksStyles.title}>Administrar mazo</h2>
 
@@ -370,7 +396,6 @@ function index() {
                   </div>
                 </div>
 
-                {/* cards */}
                 <div className={decksStyles.cards}>
                   <h2 className={decksStyles.title}>Tarjetas</h2>
                   <div className={decksStyles.cards__groups}>
@@ -387,7 +412,11 @@ function index() {
                       <span>aprendidas</span>
                     </div>
                   </div>
-                  <button className={styles.roundedButtonTerciary}>
+                  <button
+                    className={styles.roundedButtonTerciary}
+                    disabled={cards?.length === 0}
+                    onClick={openCards}
+                  >
                     <CardsIcon /> Ver tarjetas
                   </button>
                 </div>
@@ -396,24 +425,66 @@ function index() {
               <hr />
 
               <div className="decks">
-                <h3>Mazos</h3>
+                <h3>Sub mazos</h3>
+                <div className={decksStyles.toolbar}>
+                  {decks.length > 0 && (
+                    <div className={styles.searchInput}>
+                      <SearchIcon />
+                      <input
+                        type="text"
+                        name="searchInput"
+                        id="searchInput"
+                        autoComplete="off"
+                        placeholder="Buscar mazo..."
+                        onChange={(e) => handleSearch(e.target.value)}
+                      />
+                    </div>
+                  )}
+                </div>
 
                 {decks?.length > 0 ? (
-                  <div className={decksStyles.decks}>
-                    {decks.map((deck) => (
-                      <DeckContainer
-                        key={deck.id}
-                        deckId={deck.id}
-                        name={deck.name}
-                        description={deck.description}
-                        parentDeckId={idDeck}
-                        paramCards={cards}
-                        paramSetCards={setCards}
-                      />
-                    ))}
-                  </div>
+                  <>
+                    {decksForShow.length > 0 ? (
+                      <div className={decksStyles.decks}>
+                        {decksForShow.map((deck) => (
+                          <DeckContainer
+                            key={deck.id}
+                            deckId={deck.id}
+                            name={deck.name}
+                            description={deck.description}
+                            parentDeckId={idDeck}
+                            paramCards={cards}
+                            paramSetCards={setCards}
+                          />
+                        ))}
+                      </div>
+                    ) : (
+                      <div className={decksStyles.noResults}>
+                        <h2>
+                          No hay resultados para esta busqueda... <br />
+                          <strong>{searchValue}</strong>
+                        </h2>
+                        <NoResultsSvg />
+                      </div>
+                    )}
+                  </>
                 ) : (
-                  <h3>No hay mazos que mostrar</h3>
+                  <div className={decksStyles.emptyData}>
+                    <EmptySvg />
+                    <div>
+                      <h2>Aun no tienes submazos creados.</h2>
+                      <p>
+                        Comienza creando uno presionando en el boton "Crear un
+                        nuevo mazo"
+                      </p>
+                      <button
+                        className={`${styles.roundedButtonTerciary}`}
+                        onClick={openCreateDeck}
+                      >
+                        <NewFolderIcon /> Crear un nuevo mazo
+                      </button>
+                    </div>
+                  </div>
                 )}
 
                 {/* <button
@@ -472,10 +543,10 @@ function index() {
 
       <style jsx>{`
         h3 {
-          padding: 20px 10px;
+          padding: 1em 0;
           font-weight: 600;
           font-size: 12px;
-          color: rgba(0, 0, 0, 0.5);
+          color: rgba(0, 0, 0, 0.8);
           user-select: none;
         }
 

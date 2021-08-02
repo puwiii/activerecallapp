@@ -121,7 +121,7 @@
         white-space: nowrap;
       }
 
-      svg {
+      & > svg {
         pointer-events: none;
       }
 
@@ -134,13 +134,7 @@
       }
 
       &:nth-child(2) {
-        // color: $text-secondary;
-        // background-color: rgba($text-secondary, 0.1);
-        // &:hover {
-        //   background-color: rgba($text-secondary, 0.15);
-        // }
-
-        > svg {
+        & > svg {
           margin-left: 0;
         }
       }
@@ -216,7 +210,7 @@
     }
 
     &__wrapper {
-      max-width: 275px;
+      max-width: 255px;
       min-width: 120px;
       cursor: pointer;
       width: 100%;
@@ -231,10 +225,10 @@
 
       &:hover {
         .card__item {
-          svg {
+          & > svg {
             transform: translateZ(80px);
           }
-          span {
+          & > span {
             transform: translateZ(80px);
           }
 
@@ -243,7 +237,7 @@
       }
 
       &:nth-child(4) {
-        > div {
+        & > div {
           background: linear-gradient(
             180deg,
             rgba($primary-color, 0.8) 50%,
@@ -286,7 +280,7 @@
         transition: background-position 0.36s ease-in-out;
       }
 
-      svg {
+      & > svg {
         //margin-top: calc(-1.5em - 40px);
         width: 60%;
         height: 100%;
@@ -410,7 +404,7 @@
   }
 
   & > button {
-    svg {
+    & > svg {
       margin: 0;
       margin-right: 5px;
     }
@@ -423,23 +417,69 @@
 }
 
 .emptyData {
+  height: 100%;
   display: flex;
   gap: 40px;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
 
-  & > h3 {
-    & > span {
-      display: block;
-      font-size: $font-size-large;
+  & > div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2em;
+    text-align: center;
+
+    @include breakpoint-up(large) {
+      align-items: flex-start;
+      text-align: left;
+    }
+
+    & > h2 {
+      font-size: $font-size-small;
       color: $text-secondary;
       font-weight: $font-weight-black;
-      margin-bottom: 0.5em;
+
+      @include breakpoint-up(medium) {
+        font-size: $font-size-large;
+      }
+    }
+
+    & > p {
+      font-size: $font-size-xSmall;
+      font-weight: $font-weight-medium;
+
+      @include breakpoint-up(medium) {
+        font-size: $font-size-small;
+      }
+
+      & > strong {
+        white-space: pre;
+      }
     }
   }
 
-  @include breakpoint-up(medium) {
-    flex-direction: row-reverse;
+  & > svg {
+    overflow: visible;
+    width: auto;
+    height: 25vh;
+
+    @include breakpoint-up(large) {
+      width: unset;
+      height: auto;
+      max-width: 300px;
+      flex: 1;
+    }
+  }
+
+  @include breakpoint-up(large) {
+    flex-direction: row;
     align-items: center;
     justify-content: center;
   }
+}
+
+.toolbar {
+  padding: 1.5em 0;
 }

@@ -405,7 +405,7 @@ export const createCardV2 = (deckId, front, back) => {
     n: 0,
     EF: 2.5,
     I: 0,
-    nextTimestamp: firebase.firestore.Timestamp.fromDate(new Date()),
+    nextTimestamp: firebase.firestore.FieldValue.serverTimestamp(),
   };
 
   //card States:

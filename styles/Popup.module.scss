@@ -289,3 +289,20 @@ $padding-fields: 1.2em;
     }
   }
 }
+
+.closeBtn {
+  zoom: 125%;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 5px;
+  cursor: pointer;
+  border-radius: 5px;
+  color: $text-gray;
+
+  &:hover,
+  &:focus {
+    color: $text-black;
+    background-color: transparent;
+  }
+}

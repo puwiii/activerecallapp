@@ -13,6 +13,7 @@ import RightArrowIcon from "icons/RightArrowIcon";
 import BackIcon from "icons/BackIcon";
 import DownArrowIcon from "icons/DownArrowIcon";
 import ExpandIcon from "icons/ExpandIcon";
+import CloseIcon from "icons/CloseIcon";
 
 //components
 import SpinnerComponentCircle from "components/SpinnerComponentCircle";
@@ -40,16 +41,21 @@ function CreateCardWindow({ isOpen, closeWindow, deckId, cards, setCards }) {
     e.preventDefault();
     setLoading(true);
     if (validateForm()) {
-      createCardV2(deckId, front, back)
-        .then((card) => {
+      try {
+        createCardV2(deckId, front, back).then((card) => {
           setCards([...cards, card]);
           createCardForm.reset();
           setFront("");
           setBack("");
           setLoading(false);
           closeWindow();
-        })
-        .catch(alert);
+        });
+      } catch (error) {
+        setLoading(false);
+        createCardErrorMsg.innerText =
+          "(*) Hay un error con el contenido de la tarjeta";
+        createCardErrorMsg.style.display = "block";
+      }
     } else {
       setLoading(false);
       createCardErrorMsg.innerText =
@@ -103,13 +109,17 @@ function CreateCardWindow({ isOpen, closeWindow, deckId, cards, setCards }) {
           </div>
         )}
 
-        <span
-          className="maximizeButton"
+        <button
+          className={`${popupStyles.closeBtn} maximizeButton`}
           onClick={(e) => toggleMaximized()}
           title={`${maximized ? "Minimizar" : "Maximizar"}`}
         >
           <ExpandIcon />
-        </span>
+        </button>
+
+        <button onClick={(e) => closeForm()} className={popupStyles.closeBtn}>
+          <CloseIcon />
+        </button>
 
         <h1 className={popupStyles.title}>Crear tarjeta</h1>
 
@@ -179,17 +189,7 @@ function CreateCardWindow({ isOpen, closeWindow, deckId, cards, setCards }) {
         }
 
         .maximizeButton {
-          zoom: 125%;
-          position: absolute;
-          right: 5px;
-          top: 5px;
-          padding: 5px;
-          cursor: pointer;
-          border-radius: 5px;
-        }
-
-        .maximizeButton:hover {
-          background-color: rgba(0, 0, 0, 0.05);
+          right: 45px;
         }
 
         .is-open > div > form {

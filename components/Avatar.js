@@ -15,13 +15,9 @@ function Avatar({ username, avatar, email }) {
   const router = useRouter();
   const [active, setActive] = useState(false);
 
-  const toggleMenu = () => {
-    setActive(!active);
-  };
-
   const goAccount = () => {
     router.push("/myaccount");
-    setActive(!active);
+    setActive(false);
   };
 
   const logout = () => {
@@ -30,14 +26,14 @@ function Avatar({ username, avatar, email }) {
 
   return (
     <div className={styles.avatarContainer}>
-      <div onClick={toggleMenu} className={styles.avatar}>
+      <div onClick={(e) => setActive(!active)} className={styles.avatar}>
         <div className={styles.avatar__image}>
           <Image src={avatar} layout="fill" objectFit="cover" alt={username} />
         </div>
-        <DownArrowIcon onClick={toggleMenu} />
+        <DownArrowIcon />
       </div>
 
-      <div className={styles.menu}>
+      <div className={`${styles.menu} ${active && "visible"}`}>
         <h3 className={styles.subtitle}> Hola, {username} 👋</h3>
         <span>{email}</span>
         <ul>
@@ -58,8 +54,8 @@ function Avatar({ username, avatar, email }) {
             font-size: 8px !important;
           }
 
-          .${styles.menu} {
-            display: ${active ? "flex" : "none"};
+          .visible {
+            display: flex;
           }
         `}
       </style>
