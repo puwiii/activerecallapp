@@ -46,6 +46,9 @@ function RemoveDeckWindow({
     <div className={popupStyles.windowBg + " " + (isOpen && "is-open")}>
       {loading && <ScreenLoadingComponent />}
       <div className={popupStyles.window}>
+        <button onClick={(e) => closeForm()} className={popupStyles.closeBtn}>
+          <CloseIcon />
+        </button>
         <h1 className={popupStyles.title}>¡Cuidado!</h1>
         <p className={popupStyles.description}>
           Si eliminas el mazo <strong>"{name}"</strong>, todo su contenido

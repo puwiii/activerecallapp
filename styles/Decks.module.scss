@@ -12,8 +12,11 @@
   // }
   display: flex;
   flex-direction: column;
-  gap: 1.5em;
+  background-color: $bg-color;
+  border-radius: 7px;
+  overflow: hidden;
   flex: 1;
+  box-shadow: 0 0 20px rgba(#000, 0.05);
 }
 
 .floatButton {
@@ -92,10 +95,18 @@
 
   & > h1 {
     display: flex;
-    align-items: flex-start;
-    gap: 10px;
+    align-items: center;
+
+    & > span,
     & > svg {
-      color: $text-primary;
+      margin-left: 5px;
+      color: $text-secondary;
+      text-shadow: 5px 5px 3px rgba(#000, 0.05);
+    }
+
+    & > span {
+      margin-left: 5px;
+      font-size: $font-size-xSmall;
     }
   }
   // & > h1 {
@@ -142,14 +153,17 @@
       }
 
       &:nth-child(1) {
+        transition: border-color 125ms ease-in-out;
+        border: 1px solid transparent;
         color: $error;
-        background-color: rgba($error, 0.05);
+        //background-color: rgba($error, 0.05);
         &:hover {
-          background-color: rgba($error, 0.1);
+          border-color: rgba($error, 0.5);
         }
       }
 
       &:nth-child(2) {
+        background-color: transparent;
         & > svg {
           margin-left: 0;
         }
@@ -173,8 +187,24 @@
 }
 
 .managmentContainer {
+  background-image: radial-gradient(
+    rgba(#0876bb, 0.24) 0.35000000000000003px,
+    $bg-color-dark 0.35000000000000003px
+  );
+  background-size: 7px 7px;
+
+  // background-size: 7px 7px;
+  // background-image: repeating-linear-gradient(
+  //   45deg,
+  //   #0876bb1a 0,
+  //   #0876bb1a 0.7000000000000001px,
+  //   $bg-color-dark 0,
+  //   $bg-color-dark 50%
+  // );
+
   display: flex;
-  padding: 4em 0;
+  padding: 2em;
+  margin: 1em 0;
   flex-direction: column;
   gap: 4em;
   flex-wrap: wrap-reverse;
@@ -272,7 +302,7 @@
     }
 
     &__item {
-      perspective: 1000px;
+      perspective: 800px;
       transform-style: preserve-3d;
       pointer-events: none;
       border-radius: 12px;
@@ -356,7 +386,7 @@
     grid-template-columns: repeat(3, 1fr);
     gap: 5px;
     margin-bottom: 40px;
-
+    background-color: $bg-color-dark;
     @include breakpoint-up(large) {
       gap: 10px;
     }
@@ -375,7 +405,7 @@
         padding: 2em;
       }
 
-      > p {
+      > span {
         font-family: "Roboto Slab", "Roboto", sans-serif;
         padding: 0 0.5em;
         font-size: $font-size-xLarge;
@@ -390,7 +420,7 @@
         }
       }
 
-      > span {
+      > p {
         font-size: $font-size-xxSmall;
         font-weight: $font-weight-bold;
 

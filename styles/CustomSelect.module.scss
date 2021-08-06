@@ -1,0 +1,77 @@
+@import "variables";
+@import "mixins";
+@import "globals";
+
+.select {
+  position: relative;
+  transition: border-color 150ms linear;
+  color: $text-gray;
+  font-size: $font-size-xSmall;
+  font-weight: $font-weight-medium;
+
+  &__value {
+    user-select: none;
+    border-radius: 5px;
+    background-color: $bg-color;
+    border: 2px solid rgba(0, 0, 0, 0.05);
+    //box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    gap: 0.7em;
+    padding: 1em;
+    transition: border-color 100ms ease-in-out;
+
+    &__focus {
+      border-color: $primary-color;
+    }
+  }
+
+  &__options {
+    padding: 4px;
+    z-index: 3000;
+    position: absolute;
+    top: calc(100% + 5px);
+    right: 0;
+    display: none;
+    border-radius: 5px;
+    background-color: $bg-color;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.15);
+    max-height: 500px;
+    overflow-y: auto;
+    animation: Fade-In 125ms linear forwards, Zoom-In 105ms ease-in-out forwards;
+    transform-origin: top;
+  }
+
+  &__option {
+    user-select: none;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 0.7em;
+    padding: 1em;
+    cursor: pointer;
+
+    & > svg {
+      zoom: 120%;
+    }
+
+    &:hover {
+      background-color: rgba($primary-color, 1);
+      color: $text-white;
+
+      & > svg {
+        & > path {
+          //fill: $text-white;
+          stroke: $text-white;
+        }
+      }
+    }
+  }
+
+  &__opened {
+    display: block;
+  }
+}

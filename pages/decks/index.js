@@ -88,6 +88,7 @@ function index() {
                         deckId={deck.id}
                         name={deck.name}
                         description={deck.description}
+                        isPublic={deck.isPublic}
                         isPoster={false}
                       />
                     ))}

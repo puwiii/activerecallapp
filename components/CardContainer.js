@@ -19,16 +19,34 @@ const Editor = dynamic(
   }
 );
 
-function CardContainer({ cardId, data, createdAt, type = null }) {
+const cardStates = {
+  0: "Nueva",
+  1: "Estudiada",
+  2: "Aprendida",
+};
+
+function CardContainer({ cardId, data, createdAt, type = null, state = null }) {
   return (
     <div className={styles.card}>
-      {type && (
-        <span>
-          <CaptureIcon />
-          {type}
-        </span>
-      )}
+      <div className={styles.card__info}>
+        {type && (
+          <span>
+            <CaptureIcon />
+            {type}
+          </span>
+        )}
+        <span>·</span>
+        <span>{cardStates[state]}</span>
+      </div>
       <TextEditor isView={true} data={data} />
+      {/* 
+      <style jsx>{`
+        .${styles.card} {
+          ${state === 0 && "background: #b6b31211;"}
+          ${state === 1 && "background: #0876bb11;"}
+          ${state === 2 && "background: #21a04711;"}
+        }
+      `}</style> */}
     </div>
   );
 }

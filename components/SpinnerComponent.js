@@ -4,7 +4,7 @@ import Spinner from "react-spinners/PulseLoader";
 
 const override = css`
   display: inline-block;
-  margin: 15px;
+  margin: auto;
   border-color: #0876bb;
 `;
 

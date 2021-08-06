@@ -149,3 +149,30 @@ a {
 textarea {
   resize: none;
 }
+
+input[type="checkbox"] {
+  zoom: 125%;
+}
+
+input[type="number"] {
+  -webkit-appearance: textfield;
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+}
+
+input[type="number"] {
+  font-size: $font-size-xSmall;
+  padding: 0.4em;
+  text-align: center;
+  border: none;
+  outline: none;
+}
+
+input[type="radio"] {
+  cursor: pointer;
+  padding: 10px;
+}

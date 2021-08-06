@@ -54,6 +54,9 @@ function UpdateDeckNameWindow({ isOpen, closeWindow, deckId, deckName }) {
             <SpinnerComponentCircle />
           </div>
         )}
+        <button onClick={(e) => closeForm()} className={popupStyles.closeBtn}>
+          <CloseIcon />
+        </button>
         <h1 className={popupStyles.title}>Cambiar nombre</h1>
 
         <form className={popupStyles.form} id="updateDeckNameForm">

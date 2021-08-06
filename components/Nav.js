@@ -14,22 +14,21 @@ import PushRightIcon from "icons/PushRightIcon";
 
 //hooks
 import { useLocalStorage } from "hooks/useLocalStorage";
-import { set } from "stylis";
 import ScreenLoadingComponent from "./ScreenLoadingComponent";
 
 function Nav() {
-  const [navContracted, setNavContracted] = useLocalStorage(
-    "navContracted",
-    false
-  );
+  // const [navContracted, setNavContracted] = useLocalStorage(
+  //   "navContracted",
+  //   false
+  // );
 
-  const [loading, setLoading] = useState(true);
+  // const [loading, setLoading] = useState(true);
 
-  const router = useRouter();
+  // const router = useRouter();
 
-  useEffect(() => {
-    setLoading(false);
-  }, [navContracted]);
+  // useEffect(() => {
+  //   setLoading(false);
+  // }, [navContracted]);
 
   // useEffect(() => {
   //   if (localStorage.getItem("navContracted") !== "undefined")
@@ -64,49 +63,40 @@ function Nav() {
   // }, [router.pathname]);
 
   return (
-    <>
-      {loading ? (
-        <ScreenLoadingComponent />
-      ) : (
-        <nav
-          className={`${styles.nav} ${!navContracted && styles.expanded}`}
-          id="nav"
-        >
-          <ul>
-            <li title="Explorar" id="ExploreLink">
-              <Link href={"/"}>
-                <a>
-                  <ExploreIcon />
-                  <span>Explorar</span>
-                </a>
-              </Link>
-            </li>
-            <li title="Mis mazos" id="DecksLink">
-              <Link href={`/decks`}>
-                <a>
-                  <CardsIcon />
-                  <span>Mis mazos</span>
-                </a>
-              </Link>
-            </li>
-            <li title="Mis amigos" id="FriendsLink">
-              <a>
-                <FriendsIcon />
-                <span>Amigos</span>
-              </a>
-            </li>
-          </ul>
+    <nav className={styles.nav} id="nav">
+      <ul>
+        <li title="Explorar" id="ExploreLink">
+          <Link href={"/"}>
+            <a>
+              <ExploreIcon />
+              <span>Explorar</span>
+            </a>
+          </Link>
+        </li>
+        <li title="Mis mazos" id="DecksLink">
+          <Link href={`/decks`}>
+            <a>
+              <CardsIcon />
+              <span>Mis mazos</span>
+            </a>
+          </Link>
+        </li>
+        <li title="Mis amigos" id="FriendsLink">
+          <a>
+            <FriendsIcon />
+            <span>Amigos</span>
+          </a>
+        </li>
+      </ul>
 
-          {/* <button
+      {/* <button
             onClick={(e) => setNavContracted(!navContracted)}
             title={`${navContracted ? "Expandir" : "Contraer"}`}
             className={styles.roundedButtonTerciary}
           >
             {navContracted ? <PushRightIcon /> : <PushLeftIcon />}
           </button> */}
-        </nav>
-      )}
-    </>
+    </nav>
   );
 }
 

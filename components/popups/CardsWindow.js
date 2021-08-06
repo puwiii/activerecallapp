@@ -110,6 +110,7 @@ function CardsWindow({ cards = null, isOpen, closeWindow }) {
                   key={card.id}
                   cardId={card.id}
                   data={card.front}
+                  state={card.status}
                   createdAt={card.createdAt}
                   type="Frente"
                 />

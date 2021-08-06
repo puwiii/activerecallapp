@@ -10,16 +10,17 @@ import styles from "styles/Deck.module.scss";
 //components
 import MenuDeck from "components/menus/MenuDeck";
 import FolderIcon from "icons/FolderIcon";
-import VerticalMenuIcon from "icons/VerticalMenuIcon";
+import SpinnerComponent from "components/SpinnerComponent";
 
 //hooks
 import { useModal } from "hooks/useModal";
+import ExploreIcon from "icons/ExploreIcon";
 
 function DeckContainer({
   deckId,
   name,
   description,
-  isPoster,
+  isPublic,
   paramCards,
   paramSetCards,
 }) {
@@ -30,8 +31,8 @@ function DeckContainer({
   const [createdCards, setCreatedCards] = useState(0);
   const [studiedCards, setStudiedCards] = useState(0);
   const [learnedCards, setLearnedCards] = useState(0);
-
   const [isOpenMenuDeck, openMenuDeck, closeMenuDeck] = useModal(false);
+  const [loadingCards, setLoadingCards] = useState(true);
 
   let mounted = false;
 
@@ -96,6 +97,7 @@ function DeckContainer({
         setCreatedCards(created);
         setStudiedCards(studied);
         setLearnedCards(learned);
+        setLoadingCards(false);
       }
     }
 
@@ -121,7 +123,7 @@ function DeckContainer({
     <div className={styles.deckContainer}>
       <Link href={`/decks/${deckId}`}>
         <a
-          className={`${styles.deck} ${isPoster && styles.poster}`}
+          className={styles.deck}
           onContextMenu={(e) => handleContextMenu(e)}
           title={`${name}: ${description}`}
         >
@@ -131,6 +133,12 @@ function DeckContainer({
           <span id={`${deckId}name`} title={name}>
             {name}
           </span>
+          {isPublic && (
+            <span>
+              <ExploreIcon />
+            </span>
+          )}
+
           <p
             className={`${description === "" && "emptyDescription"}`}
             title={description}
@@ -138,20 +146,15 @@ function DeckContainer({
             {description === "" ? "Sin descripción" : description}
           </p>
 
-          <div className={styles.cards}>
-            <span title={createdCards}>{createdCards}</span>
-            <span title={studiedCards}>{studiedCards}</span>
-            <span title={learnedCards}>{learnedCards}</span>
-          </div>
-
-          <div
-            className={styles.deckMenuButton}
-            id={`${deckId}button`}
-            onClick={(e) => handleVerticalMenu(e)}
-            title="Mas opciones"
-          >
-            <VerticalMenuIcon />
-          </div>
+          {loadingCards ? (
+            <SpinnerComponent />
+          ) : (
+            <div className={styles.cards}>
+              <span title={createdCards}>{createdCards}</span>
+              <span title={studiedCards}>{studiedCards}</span>
+              <span title={learnedCards}>{learnedCards}</span>
+            </div>
+          )}
         </a>
       </Link>
       {isOpenMenuDeck && (

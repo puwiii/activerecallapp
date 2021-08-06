@@ -53,6 +53,9 @@ function UpdateDeckDescriptionWindow({
             <SpinnerComponentCircle />
           </div>
         )}
+        <button onClick={(e) => closeForm()} className={popupStyles.closeBtn}>
+          <CloseIcon />
+        </button>
         <h1 className={popupStyles.title}>Cambiar descripción</h1>
 
         <form className={popupStyles.form} id="updateDeckDescriptionForm">

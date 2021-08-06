@@ -56,7 +56,7 @@
       padding: 0;
     }
 
-    li {
+    & > li {
       flex: 1;
       position: relative;
       cursor: pointer;
@@ -114,49 +114,48 @@
         //border-top: 1px solid rgba(0,0,0,.1);
 
         @include breakpoint-up(large) {
-          gap: 10px;
+          gap: 7px;
           justify-content: flex-start;
-          padding: 1em;
+          padding: 0.8em;
           border-top: none;
         }
 
-        svg {
-          zoom: 130%;
+        & > svg {
+          zoom: 110%;
         }
-      }
-
-      span {
-        display: none;
-        font-size: $font-size-xxSmall;
-        font-weight: $font-weight-bold;
-        white-space: nowrap;
-
-        @include breakpoint-up(medium) {
-          display: block;
-        }
-
-        @include breakpoint-up(large) {
-          display: none;
-          font-size: $font-size-xSmall;
-        }
-      }
-    }
-  }
-
-  &.expanded {
-    @include breakpoint-up(large) {
-      > ul li a {
-        flex-direction: row;
-        //padding: 0.8em 2em;
-
         & > span {
-          display: block;
-        }
-      }
+          display: none;
+          font-size: $font-size-xxSmall;
+          font-weight: $font-weight-bold;
+          white-space: nowrap;
 
-      button {
-        align-self: flex-end;
+          @include breakpoint-up(medium) {
+            display: block;
+          }
+
+          @include breakpoint-up(large) {
+            display: block;
+            font-size: $font-size-xSmall;
+          }
+        }
       }
     }
   }
+
+  // &.expanded {
+  //   @include breakpoint-up(large) {
+  //     > ul li a {
+  //       flex-direction: row;
+  //       //padding: 0.8em 2em;
+
+  //       & > span {
+  //         display: block;
+  //       }
+  //     }
+
+  //     button {
+  //       align-self: flex-end;
+  //     }
+  //   }
+  // }
 }

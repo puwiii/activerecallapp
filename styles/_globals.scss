@@ -120,10 +120,10 @@
   justify-content: space-between;
   border-radius: 5px;
   background-color: $bg-color;
-  border: 1px solid rgba(0, 0, 0, 0.05);
+  border: 2px solid rgba(0, 0, 0, 0.05);
   //box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
   padding: 0 1em;
-  transition: border-color 150ms linear;
+  transition: border-color 100ms ease-in-out;
 
   & > input {
     font-size: $font-size-small;
@@ -135,7 +135,31 @@
   }
 
   &:focus-within {
-    border-color: rgba(0, 0, 0, 0.2);
+    border-color: $primary-color;
+  }
+}
+
+.inputNumber {
+  display: inline-flex;
+  align-items: stretch;
+  border: 2px solid rgba(0, 0, 0, 0.05);
+  transition: border-color 100ms ease-in-out;
+
+  &:focus-within {
+    border-color: $primary-color;
+  }
+
+  & > input {
+    font-weight: $font-weight-medium;
+  }
+
+  & > button {
+    display: grid;
+    place-items: center;
+    background-color: $primary-color;
+    color: $text-white;
+    border-radius: 0;
+    padding: 0 0.2em;
   }
 }
 
@@ -144,10 +168,14 @@
   align-items: center;
   justify-content: space-between;
   padding: 1.5em 3em;
+  gap: 1em;
+  flex-wrap: wrap;
 }
 
 .noResults {
   position: relative;
+  margin: auto;
+  height: 100%;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -164,10 +192,11 @@
     text-shadow: 5px 5px 10px rgba(#fff, 0.8);
 
     @include breakpoint-up(medium) {
-      position: absolute;
-      top: 30%;
-      left: 50%;
-      transform: translate(-50%, -50%);
+      // position: absolute;
+      // z-index: 3000;
+      // top: 30%;
+      // left: 50%;
+      // transform: translate(-50%, -50%);
       font-size: $font-size-medium;
       font-weight: $font-weight-bold;
     }
@@ -176,7 +205,6 @@
       font-family: "Lora", "Roboto", sans-serif;
       display: block;
       font-size: $font-size-medium;
-      margin-top: 0.8em;
       color: $text-primary;
 
       @include breakpoint-up(medium) {
@@ -191,9 +219,15 @@
   }
 
   & > svg {
-    opacity: 0.3;
+    //opacity: 0.3;
     max-width: 100%;
     height: auto;
+  }
+
+  &__buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1em;
   }
 }
 

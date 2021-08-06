@@ -421,7 +421,7 @@ export const createCardV2 = (deckId, front, back) => {
       createdAt: firebase.firestore.Timestamp.fromDate(new Date()),
       fromDeck: deckId,
       author: user,
-      intervarlData: intervalData,
+      intervalData: intervalData,
       status: 0,
     })
     .then((algo) => {

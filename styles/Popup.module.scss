@@ -80,13 +80,21 @@ $padding-fields: 1.2em;
   //     // margin-bottom: .5em;
   // }
 
-  input[type="checkbox"] {
-    zoom: 125%;
+  .field {
+    margin-top: 12px;
+    display: flex;
+    align-items: center;
+    gap: 1.2em;
+
+    & > label {
+      padding: 0;
+      margin: 0;
+    }
   }
 
   .checkbox {
     padding-top: $padding-fields;
-    margin-top: 1.5em;
+
     * {
       cursor: pointer;
     }
@@ -95,6 +103,7 @@ $padding-fields: 1.2em;
     align-items: center;
 
     > label {
+      margin: 0;
       padding-top: 0;
       display: flex;
       align-items: center;
@@ -116,7 +125,6 @@ $padding-fields: 1.2em;
     font-size: $font-size-xSmall;
     font-weight: $font-weight-bold;
     opacity: 0.8;
-
     padding-top: $padding-fields;
 
     @include breakpoint-up(medium) {
@@ -291,18 +299,23 @@ $padding-fields: 1.2em;
 }
 
 .closeBtn {
-  zoom: 125%;
+  zoom: 135%;
   position: absolute;
   top: 10px;
   right: 10px;
   padding: 5px;
   cursor: pointer;
-  border-radius: 5px;
+  border-radius: 50em;
   color: $text-gray;
+  display: grid;
+  place-items: center;
+
+  transition: filter 100ms ease-in-out, color 100ms ease-in-out;
 
   &:hover,
   &:focus {
     color: $text-black;
-    background-color: transparent;
+    filter: drop-shadow(2px 2px 1px rgba(0, 0, 0, 0.3));
+    background-color: rgba(0, 0, 0, 0.05);
   }
 }

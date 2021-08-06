@@ -35,15 +35,20 @@
   background-color: $bg-color;
   box-shadow: 0 0 10px rgba(#000, 0.05);
 
-  & > span {
+  &__info {
     display: flex;
     align-items: center;
-    gap: 0.5em;
-    font-size: $font-size-xSmall;
-    font-weight: $font-weight-medium;
-    color: $text-gray;
-    & > svg {
-      zoom: 80%;
+    gap: 0.4em;
+    & > span {
+      display: flex;
+      align-items: center;
+      gap: 0.5em;
+      font-size: $font-size-xSmall;
+      font-weight: $font-weight-medium;
+      color: $text-gray;
+      & > svg {
+        zoom: 80%;
+      }
     }
   }
 }

@@ -6,6 +6,7 @@ const override = css`
   display: inline-block;
   margin: 0px;
   border-color: #0876bb;
+  margin: auto;
 `;
 
 function SpinnerComponentCircle(props) {
