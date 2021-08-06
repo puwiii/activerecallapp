@@ -8,6 +8,7 @@ import popupStyles from "styles/Popup.module.scss";
 //icons
 import TrashIcon from "icons/TrashIcon";
 import BackIcon from "icons/BackIcon";
+import CloseIcon from "icons/CloseIcon";
 
 //components
 import ScreenLoadingComponent from "components/ScreenLoadingComponent";

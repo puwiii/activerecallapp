@@ -14,6 +14,7 @@ import popupStyles from "styles/Popup.module.scss";
 import UploadIcon from "icons/UploadIcon";
 import BackIcon from "icons/BackIcon";
 import PictureIcon from "icons/PictureIcon";
+import CloseIcon from "icons/CloseIcon";
 
 //components
 import SpinnerComponentCircle from "components/SpinnerComponentCircle";

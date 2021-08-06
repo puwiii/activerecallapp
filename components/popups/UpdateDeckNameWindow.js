@@ -9,6 +9,7 @@ import SpinnerComponentCircle from "components/SpinnerComponentCircle";
 //icons
 import RightArrowIcon from "icons/RightArrowIcon";
 import BackIcon from "icons/BackIcon";
+import CloseIcon from "icons/CloseIcon";
 
 //firebase
 import { updateDeckName } from "firebase/client";

@@ -40,7 +40,7 @@ function StudyCardsWindow({ isOpen, closeWindow, cards }) {
         const now = new Date();
 
         cards.map((card) => {
-          if (card.intervarlData.nextTimestamp.toDate() > now) return;
+          if (card.intervalData.nextTimestamp.toDate() > now) return;
           else {
             cardsForStudy.push(card);
             if (card.status === 0) created++;
