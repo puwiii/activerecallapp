@@ -74,6 +74,15 @@
   }
 }
 
+.flex_ai_c {
+  display: flex;
+  align-items: center;
+}
+
+.p_1 {
+  padding: 1em;
+}
+
 .roundedButtonTerciary {
   border: 1px solid transparent;
   background-color: rgba($primary-color, 0.04);
@@ -136,6 +145,60 @@
 
   &:focus-within {
     border-color: $primary-color;
+  }
+}
+
+.infoBox {
+  position: relative;
+  cursor: pointer;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  display: grid;
+  place-items: center;
+
+  &__info {
+    animation: Fade-In 125ms linear forwards;
+    $backgroundInfo: #272732;
+    font-size: $font-size-xSmall;
+    font-weight: $font-weight-medium;
+    color: $text-white;
+    position: absolute;
+    top: 50%;
+    right: calc(100% + 10px);
+    transform: translateY(-50%);
+    background-color: rgba($backgroundInfo, 1);
+    border-radius: 3px;
+    padding: 1em;
+    display: none;
+    z-index: 2000;
+    white-space: nowrap;
+
+    // &::before,
+    // &::after {
+    //   content: "";
+    //   position: absolute;
+    //   top: 50%;
+    //   right: 0;
+    //   background-color: rgba($backgroundInfo, 1);
+    //   width: 20px;
+    //   height: 20px;
+    // }
+
+    // &::before {
+    //   transform: skew(-35deg);
+    // }
+
+    // &::after {
+    //   transform: translateY(-99%) skew(35deg);
+    // }
+  }
+
+  &:hover,
+  &:focus {
+    .infoBox__info {
+      display: block;
+    }
   }
 }
 
@@ -295,5 +358,15 @@
 
   100% {
     transform: scale(1);
+  }
+}
+
+@keyframes Fade-Right {
+  0% {
+    transform: translateX(50%);
+  }
+
+  100% {
+    transform: translateX(0px);
   }
 }

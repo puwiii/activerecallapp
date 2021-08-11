@@ -11,6 +11,7 @@ import styles from "styles/Deck.module.scss";
 import MenuDeck from "components/menus/MenuDeck";
 import FolderIcon from "icons/FolderIcon";
 import SpinnerComponent from "components/SpinnerComponent";
+import SpinnerComponentCircle from "./SpinnerComponentCircle";
 
 //hooks
 import { useModal } from "hooks/useModal";
@@ -32,7 +33,7 @@ function DeckContainer({
   const [studiedCards, setStudiedCards] = useState(0);
   const [learnedCards, setLearnedCards] = useState(0);
   const [isOpenMenuDeck, openMenuDeck, closeMenuDeck] = useModal(false);
-  const [loadingCards, setLoadingCards] = useState(true);
+  const [loadingCards, setLoadingCards] = useState(false);
 
   let mounted = false;
 
@@ -62,21 +63,17 @@ function DeckContainer({
   useEffect(() => {
     mounted = true;
 
-    if (mounted) {
-      getCardsForStudyV2(deckId).then((cards) => {
-        setCards(cards);
-      });
-    }
+    // if (mounted) {
+    //   getCardsForStudyV2(deckId).then((cards) => {
+    //     setCards(cards);
+    //   });
+    // }
 
     return () => {
       setCards(null);
       mounted = false;
     };
   }, []);
-
-  // getCardsForStudyV2(deckId).then((cards) => {
-  //   setCards(cards);
-  // });
 
   useEffect(() => {
     mounted = true;
@@ -108,6 +105,16 @@ function DeckContainer({
       mounted = false;
     };
   }, [cards]);
+
+  const handleLoadCards = (e) => {
+    setLoadingCards(true);
+    e.preventDefault();
+    e.stopPropagation();
+
+    getCardsForStudyV2(deckId).then((cards) => {
+      setCards(cards);
+    });
+  };
 
   const handleCardsOnDelete = () => {
     const idCards = cards.map((card) => {
@@ -147,13 +154,24 @@ function DeckContainer({
           </p>
 
           {loadingCards ? (
-            <SpinnerComponent />
+            <SpinnerComponentCircle />
           ) : (
-            <div className={styles.cards}>
-              <span title={createdCards}>{createdCards}</span>
-              <span title={studiedCards}>{studiedCards}</span>
-              <span title={learnedCards}>{learnedCards}</span>
-            </div>
+            <>
+              {cards ? (
+                <div className={styles.cards}>
+                  <span title={createdCards}>{createdCards}</span>
+                  <span title={studiedCards}>{studiedCards}</span>
+                  <span title={learnedCards}>{learnedCards}</span>
+                </div>
+              ) : (
+                <button
+                  className={styles.roundedButtonTerciary}
+                  onClick={(e) => handleLoadCards(e)}
+                >
+                  Ver Tarjetas
+                </button>
+              )}
+            </>
           )}
         </a>
       </Link>

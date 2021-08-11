@@ -1,7 +1,6 @@
 import firebase from "firebase";
 
 import decks from "pages/api/decks";
-
 // import 'firebase/firestore'
 // import 'firebase/storage'
 
@@ -115,6 +114,7 @@ export const updateUsernameFromFirebase = (username) => {
     .doc(auth.currentUser.uid)
     .update({
       username: username,
+      usernameLC: username.toLowerCase(),
     })
     .then(console.log("updated succesfully"))
     .catch(console.log("update unsuccesfully"));

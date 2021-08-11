@@ -41,17 +41,11 @@ function MenuHeaderDeck({
     >
       <div className={styles.menu}>
         <ul className={styles.options}>
-          <li
-            onClick={openUpdateNameDeck}
-            className={styles.roundedButtonTerciary}
-          >
+          <li onClick={openUpdateNameDeck}>
             <WriteIcon />
             Cambiar nombre
           </li>
-          <li
-            onClick={openUpdateDescriptionDeck}
-            className={styles.roundedButtonTerciary}
-          >
+          <li onClick={openUpdateDescriptionDeck}>
             <WriteIcon />
             Cambiar descripción
           </li>

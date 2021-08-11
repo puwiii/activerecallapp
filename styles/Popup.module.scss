@@ -38,11 +38,9 @@ $padding-fields: 1.2em;
 }
 
 .title {
-  // text-decoration: underline dashed $text-primary;
-  // text-underline-offset: 10px;
   text-align: left;
   font-size: $font-size-medium;
-  font-weight: $font-weight-bold;
+  font-weight: $font-weight-black;
   color: $text-primary;
   padding: 0.5em 0;
   margin: 0 1em;
@@ -69,6 +67,11 @@ $padding-fields: 1.2em;
 }
 
 .form {
+  &.stageStep {
+    animation: Fade-In 755ms ease-in-out forwards,
+      Fade-Right 455ms ease-in-out forwards;
+  }
+
   padding: 1em 2.5em;
   display: flex;
   flex-direction: column;
@@ -144,7 +147,7 @@ $padding-fields: 1.2em;
 
 .buttons {
   z-index: 2000;
-  background-color: rgba(0, 0, 0, 0.01);
+  background-color: #f9f9f9;
   position: sticky;
   bottom: 0;
   margin-top: 1em;
@@ -160,7 +163,6 @@ $padding-fields: 1.2em;
     align-items: center;
     gap: 5px;
     padding: 0.8em 1em;
-    color: $text-secondary;
     font-size: $font-size-xSmall;
     font-weight: $font-weight-medium;
     transition: background-color 0.215s linear;
@@ -173,39 +175,130 @@ $padding-fields: 1.2em;
       zoom: 1;
     }
 
+    &.cancelBtn {
+      margin-right: auto;
+    }
+
     &:hover,
     &:focus {
       //background-color: rgba(0, 0, 0, 0.05);
     }
+  }
+}
 
-    &.primaryButton {
-      color: $text-white;
-      background-color: $primary-color;
-      &:hover,
-      &:focus {
-        background-color: rgba($primary-color, 0.7);
-      }
-    }
+.primaryButton,
+.cancelBtn,
+.removeBtn,
+.scoreBtn0,
+.scoreBtn1,
+.scoreBtn2,
+.scoreBtn3,
+.scoreBtn4 {
+  border-radius: 7px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 0.8em 1em;
+  font-size: $font-size-xSmall;
+  font-weight: $font-weight-medium;
+  transition: background-color 0.215s ease-in-out, border-color 0.2s ease-in-out,
+    color 0.2s ease-in-out;
+}
 
-    &.cancelBtn {
-      color: $text-secondary;
-      background-color: transparent;
+.scoreBtn1,
+.scoreBtn2,
+.scoreBtn3,
+.scoreBtn4,
+.scoreBtn0 {
+  border-radius: 3px;
+  border: 2px solid transparent;
+  // color: $text-white;
 
-      &:hover,
-      &:focus {
-        background-color: rgba($primary-color, 0.1);
-      }
-    }
+  &:hover,
+  &:focus {
+    color: $text-primary;
+  }
 
-    &.removeBtn {
-      background-color: rgba($error, 0.9);
-      color: $text-white;
+  & > span {
+    font-size: $font-size-small;
+  }
+}
 
-      &:hover,
-      &:focus {
-        background-color: rgba($error, 0.7);
-      }
-    }
+.scoreBtn0 {
+  background-color: #f8956d;
+
+  &:hover,
+  &:focus {
+    background-color: transparent;
+    border-color: #f8956d;
+  }
+}
+
+.scoreBtn1 {
+  background-color: #ffb158;
+
+  &:hover,
+  &:focus {
+    background-color: transparent;
+    border-color: #ffb158;
+  }
+}
+
+.scoreBtn2 {
+  background-color: #fecf6d;
+
+  &:hover,
+  &:focus {
+    background-color: transparent;
+    border-color: #fecf6d;
+  }
+}
+
+.scoreBtn3 {
+  background-color: rgba($succes, 0.25);
+
+  &:hover,
+  &:focus {
+    background-color: transparent;
+    border-color: rgba($succes, 0.25);
+  }
+}
+.scoreBtn4 {
+  background-color: rgba($succes, 0.5);
+
+  &:hover,
+  &:focus {
+    background-color: transparent;
+    border-color: rgba($succes, 0.5);
+  }
+}
+
+.primaryButton {
+  color: $text-white;
+  background-color: $primary-color;
+  &:hover,
+  &:focus {
+    background-color: rgba($primary-color, 0.7);
+  }
+}
+
+.cancelBtn {
+  color: $text-secondary;
+  background-color: transparent;
+
+  &:hover,
+  &:focus {
+    background-color: rgba($primary-color, 0.1);
+  }
+}
+
+.removeBtn {
+  background-color: rgba($error, 0.9);
+  color: $text-white;
+
+  &:hover,
+  &:focus {
+    background-color: rgba($error, 0.7);
   }
 }
 

@@ -32,9 +32,27 @@ html {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
+
+  &:focus,
+  &:focus-visible,
+  &:focus-within {
+    outline: none;
+    border: none;
+  }
+
+  &:focus-visible {
+    outline: 4px dashed black;
+  }
+
+  &:not(:focus-visible) {
+    outline: none;
+    box-shadow: 1px 1px 5px rgba(1, 1, 0, 0.7);
+  }
 }
 
 body {
+  font-size: $font-size-xxSmall;
+  font-weight: $font-weight-medium;
   color: $text-primary;
   min-height: 100% !important;
   height: 100%;

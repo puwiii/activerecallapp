@@ -45,12 +45,12 @@ function MenuDeck({
   useEffect(() => {
     mounted = true;
     if (mounted) {
-      if (xCoord > window.innerWidth / 2) {
+      if (xCoord + menu.clientWidth > window.innerWidth) {
         setToLeft(true);
         setNewXCoord(window.innerWidth - xCoord);
       }
 
-      if (yCoord > window.innerHeight / 2) {
+      if (yCoord + menu.clientHeight > window.innerHeight) {
         setToUp(true);
         setNewYCoord(window.innerHeight - yCoord);
       }
@@ -68,33 +68,27 @@ function MenuDeck({
       className={`${styles.menuContainer} menuDeck`}
       onMouseUp={(e) => handleClick(e)}
     >
-      <div className={styles.menu}>
+      <div className={styles.menu} id="menu">
         <span className={styles.title}>{name}</span>
         <ul className={styles.options}>
           <li
-            className={`${styles.mainOption} ${styles.roundedButtonFilled}`}
+            className={`${styles.mainOption}`}
             //onClick={(e) => handleStudyButton(e)}
           >
             <LightningIcon />
             Estudiar mazo
           </li>
-          <hr />
-          <li
-            onClick={openUpdateNameDeck}
-            className={styles.roundedButtonTerciary}
-          >
+
+          <li onClick={openUpdateNameDeck}>
             <WriteIcon />
             Cambiar nombre
           </li>
-          <li
-            onClick={openUpdateDescriptionDeck}
-            className={styles.roundedButtonTerciary}
-          >
+          <li onClick={openUpdateDescriptionDeck}>
             <WriteIcon />
             Cambiar descripción
           </li>
           <li
-            className={`${styles.redOption} ${styles.roundedButtonTerciary}`}
+            className={`${styles.redOption} `}
             onClick={(e) => openRemoveDeck(e)}
           >
             <TrashIcon />

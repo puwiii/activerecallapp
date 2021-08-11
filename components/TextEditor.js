@@ -266,7 +266,7 @@ function TextEditor({ wrapperClassName, callback, isView, data }) {
       setEditorState(EditorState.createWithContent(convertFromRaw(data)));
       //console.log(editorState.getCurrentContent().getPlainText());
     }
-  }, []);
+  }, [data]);
 
   return (
     <div

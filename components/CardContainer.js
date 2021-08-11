@@ -11,6 +11,7 @@ import TextEditor from "components/TextEditor";
 
 //icons
 import CaptureIcon from "icons/CaptureIcon";
+import SpinnerComponent from "./SpinnerComponent";
 
 const Editor = dynamic(
   () => import("react-draft-wysiwyg").then((module) => module.Editor),
@@ -26,6 +27,21 @@ const cardStates = {
 };
 
 function CardContainer({ cardId, data, createdAt, type = null, state = null }) {
+  // const [type, setType] = useState(propType);
+  // const [data, setData] = useState(propData);
+  // const [loading, setLoading] = useState(true);
+
+  // useEffect(() => {
+  //   console.log("data Cambio");
+  //   if (data) {
+  //     setLoading(false);
+  //   }
+  // }, [data]);
+
+  // // useEffect(() => {
+  // //   setData(propData);
+  // // }, [propData]);
+
   return (
     <div className={styles.card}>
       <div className={styles.card__info}>
@@ -38,15 +54,7 @@ function CardContainer({ cardId, data, createdAt, type = null, state = null }) {
         <span>·</span>
         <span>{cardStates[state]}</span>
       </div>
-      <TextEditor isView={true} data={data} />
-      {/* 
-      <style jsx>{`
-        .${styles.card} {
-          ${state === 0 && "background: #b6b31211;"}
-          ${state === 1 && "background: #0876bb11;"}
-          ${state === 2 && "background: #21a04711;"}
-        }
-      `}</style> */}
+      {false ? <SpinnerComponent /> : <TextEditor isView={true} data={data} />}
     </div>
   );
 }

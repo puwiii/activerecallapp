@@ -1,4 +1,4 @@
-import * as React from "react"
+import * as React from "react";
 
 function InfoIcon(props) {
   return (
@@ -17,7 +17,7 @@ function InfoIcon(props) {
         <circle cx={8.5} cy={5.5} fill="currentColor" r={1} />
       </g>
     </svg>
-  )
+  );
 }
 
-export default InfoIcon
+export default InfoIcon;

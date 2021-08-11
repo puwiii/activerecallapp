@@ -29,7 +29,7 @@
   }
 
   &__options {
-    padding: 4px;
+    padding: 8px 0;
     z-index: 3000;
     position: absolute;
     top: calc(100% + 5px);
@@ -59,13 +59,13 @@
     }
 
     &:hover {
-      background-color: rgba($primary-color, 1);
-      color: $text-white;
+      background-color: rgba($primary-color, 0.05);
+      color: $text-secondary;
 
       & > svg {
         & > path {
           //fill: $text-white;
-          stroke: $text-white;
+          stroke: $text-secondary;
         }
       }
     }

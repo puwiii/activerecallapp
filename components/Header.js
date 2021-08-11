@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-
+import Image from "next/image";
 //styles
 import styles from "styles/Header.module.scss";
 
@@ -21,7 +21,7 @@ function Header() {
   return (
     <header className={styles.header}>
       <a href="/" title="Página principal de Liza" className={styles.logo}>
-        <img src="/images/liza_v2.svg" alt="Liza" />
+        <img src="/images/Logo_v3.png" alt="Liza" />
       </a>
       <Nav />
       <div className={`${styles.searchInput} ${styles.header__searcher}`}>

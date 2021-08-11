@@ -77,6 +77,10 @@
       border: none;
       box-shadow: none;
       margin: 0;
+
+      @include breakpoint-down(small) {
+        padding: 20px 0px;
+      }
     }
   }
 }
