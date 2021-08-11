@@ -70,7 +70,8 @@ function index() {
       {loading ? (
         <ScreenLoadingComponent />
       ) : (
-        <div className={accountPage.form}>
+        <div className={`${accountPage.form} ${styles.container}`}>
+          <h1>Configuraciones de cuenta</h1>
           <div className={accountPage.field} onClick={openAvatarUpdate}>
             <span>
               <PhotoIcon />

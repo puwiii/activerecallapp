@@ -2,96 +2,105 @@
 @import "variables";
 @import "globals";
 
-.form{
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
+.form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  //align-items: center;
+  gap: 10px;
+
+  & > h1 {
+    color: $text-gray;
+    text-align: left;
+    font-size: $font-size-small;
+    font-weight: $font-weight-bold;
+    padding: 1em 0;
+    //border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  }
 }
 
-.field{
-    border: 1px solid rgba(0,0,0,.05);
-    background-color: $bg-color;
-    border-radius: 5px;
-    *{
-        user-select: none;
-    }
-    cursor: pointer;
-    width: 100%;
+.field {
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  background-color: $bg-color;
+  border-radius: 5px;
+  * {
+    user-select: none;
+  }
+  cursor: pointer;
+  width: 100%;
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 3.5em 2em 2.5em 2em;
+  transition: transform 100ms ease-in-out;
+  border-radius: 10px;
+
+  &:hover,
+  &:focus {
+    transform: scale(1.008);
+  }
+
+  .avatar {
     position: relative;
+    background-color: rgba(224, 157, 157, 0.05);
+    width: 80px;
+    height: 80px;
+    clip-path: circle(38px);
+
+    @include breakpoint-up(medium) {
+      width: 120px;
+      height: 120px;
+      clip-path: circle(58px);
+    }
+  }
+
+  > svg {
+    //align-self: center;
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: $primary-color;
+    zoom: 1.5;
+  }
+
+  h3 {
+    font-size: $font-size-small;
+    font-weight: $font-weight-medium;
+
+    @include breakpoint-up(medium) {
+      font-size: $font-size-medium;
+    }
+  }
+
+  span {
+    color: $text-secondary;
     display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    padding: 3.5em 2em 2.5em 2em;
-    transition: transform 100ms ease-in-out;
-    border-radius: 10px;
+    align-items: center;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    font-size: $font-size-xSmall;
+    font-weight: $font-weight-medium;
+    opacity: 0.4;
 
-    &:hover, &:focus{
-        transform: scale(1.008);
+    svg {
+      zoom: 80%;
+      margin-right: 5px;
     }
-
-    .avatar{
-        position: relative;
-        background-color: rgba(224, 157, 157, 0.05);
-        width: 80px;
-        height: 80px;
-        clip-path: circle(38px);
-
-
-        @include breakpoint-up(medium){
-            width: 120px;
-            height: 120px;
-            clip-path: circle(58px);
-        }
-    }
-
-    >svg{
-        //align-self: center;
-        position: absolute;
-        right: 10px;
-        top: 50%;
-        transform: translateY(-50%);
-        color: $primary-color;
-        zoom: 1.5;
-    }
-
-    h3{
-        font-size: $font-size-small;
-        font-weight: $font-weight-medium;
-
-        @include breakpoint-up(medium){
-            font-size: $font-size-medium
-        }
-    }
-
-    span{
-        color: $text-secondary;
-        display: flex;
-        align-items: center;
-        position: absolute;
-        top: 10px;
-        left: 10px;
-        font-size: $font-size-xSmall;
-        font-weight: $font-weight-medium;
-        opacity: .4;
-
-        svg{
-            zoom: 80%;
-            margin-right: 5px;
-        }
-    }
+  }
 }
 
-.avatar{
-    cursor: pointer;
-    width: 250px;
-    height: 250px;
-    background-color: rgba(0,0,0,.05);
+.avatar {
+  cursor: pointer;
+  width: 250px;
+  height: 250px;
+  background-color: rgba(0, 0, 0, 0.05);
+  border-radius: 50%;
+  img {
+    width: 100%;
     border-radius: 50%;
-    img{
-        width: 100%;
-        border-radius: 50%;
-        //object-fit: contain;
-    }
+    //object-fit: contain;
+  }
 }
