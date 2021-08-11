@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 //styles
 import styles from "styles/Home.module.scss";
 import decksStyles from "styles/Decks.module.scss";
+import componentsStyles from "styles/ComponentsStyles.module.scss";
 
 //firebase
 import {
@@ -54,6 +55,7 @@ import ExploreIcon from "icons/ExploreIcon";
 
 import SpinnerComponent from "components/SpinnerComponentCircle";
 import StudyCardsWindow from "components/popups/StudyCardsWindow";
+import { useLocalStorage } from "hooks/useLocalStorage";
 
 function index() {
   const [isOpenCreateDeck, openCreateDeck, closeCreateDeck] = useModal(false);
@@ -76,6 +78,10 @@ function index() {
   const [yCoord, setYCoord] = useState(null);
   const [emptyCards, setEmptyCards] = useState(true);
   const [searchValue, setSearchValue] = useState("");
+  const [useMagicOnHover, setUseMagicOnHover] = useLocalStorage(
+    "magicOnHoverCards",
+    false
+  );
 
   const [decksLoading, setDecksLoading] = useState(true);
 
@@ -383,7 +389,9 @@ function index() {
 
               {/* header */}
               {actualDeck && (
-                <div className={decksStyles.header}>
+                <div
+                  className={`${decksStyles.header} ${decksStyles.container}`}
+                >
                   <span title="Volver atras" onClick={goBack}>
                     <ChevronRightIcon />
                   </span>
@@ -469,16 +477,45 @@ function index() {
                 />
               )}
 
-              <section className={decksStyles.managmentContainer}>
+              <section
+                className={`${decksStyles.managmentContainer} ${decksStyles.container}`}
+              >
                 <div className={decksStyles.managment}>
-                  <h2 className={decksStyles.title}>Administrar mazo</h2>
+                  <div
+                    className={`${styles.flex_ai_c} ${styles.flex_jc_sb} ${styles.pb_2}`}
+                  >
+                    <h2 className={decksStyles.title}>Administrar mazo</h2>
+                    <div className={`${styles.flex_ai_c} ${styles.gap_1}`}>
+                      <span className={componentsStyles.switch__icon}>🔮</span>
+                      <label
+                        className={componentsStyles.switch}
+                        htmlFor="toggleMagic"
+                      >
+                        <input
+                          type="checkbox"
+                          name="toggleMagic"
+                          id="toggleMagic"
+                          defaultChecked={useMagicOnHover}
+                          onChange={(e) => setUseMagicOnHover(!useMagicOnHover)}
+                          // onClick={(e) => setUseMagicOnHover(!useMagicOnHover)}
+                        />
+                        <span
+                          className={componentsStyles.switch__slider}
+                        ></span>
+                      </label>
+                    </div>
+                  </div>
 
                   <div className={decksStyles.card}>
                     <div
                       className={decksStyles.card__wrapper}
                       onClick={openCreateDeck}
-                      onMouseMove={(e) => makeMagicOnHover(e)}
-                      onMouseLeave={(e) => removeMagicOnHover(e)}
+                      onMouseMove={(e) =>
+                        useMagicOnHover && makeMagicOnHover(e)
+                      }
+                      onMouseLeave={(e) =>
+                        useMagicOnHover && removeMagicOnHover(e)
+                      }
                     >
                       <div className={decksStyles.card__item}>
                         <AddFolderSvg />
@@ -488,8 +525,12 @@ function index() {
                     <div
                       className={decksStyles.card__wrapper}
                       onClick={openCreateCard}
-                      onMouseMove={(e) => makeMagicOnHover(e)}
-                      onMouseLeave={(e) => removeMagicOnHover(e)}
+                      onMouseMove={(e) =>
+                        useMagicOnHover && makeMagicOnHover(e)
+                      }
+                      onMouseLeave={(e) =>
+                        useMagicOnHover && removeMagicOnHover(e)
+                      }
                     >
                       <div className={decksStyles.card__item}>
                         <AddCardSvg />
@@ -498,8 +539,12 @@ function index() {
                     </div>
                     <div
                       className={decksStyles.card__wrapper}
-                      onMouseMove={(e) => makeMagicOnHover(e)}
-                      onMouseLeave={(e) => removeMagicOnHover(e)}
+                      onMouseMove={(e) =>
+                        useMagicOnHover && makeMagicOnHover(e)
+                      }
+                      onMouseLeave={(e) =>
+                        useMagicOnHover && removeMagicOnHover(e)
+                      }
                     >
                       <div className={decksStyles.card__item}>
                         <StatisticsSvg />
@@ -513,8 +558,12 @@ function index() {
                       onClick={(e) => {
                         !emptyCards && openStudyCards();
                       }}
-                      onMouseMove={(e) => makeMagicOnHover(e)}
-                      onMouseLeave={(e) => removeMagicOnHover(e)}
+                      onMouseMove={(e) =>
+                        useMagicOnHover && makeMagicOnHover(e)
+                      }
+                      onMouseLeave={(e) =>
+                        useMagicOnHover && removeMagicOnHover(e)
+                      }
                     >
                       <div className={decksStyles.card__item}>
                         <ReviewSvg />
@@ -564,7 +613,7 @@ function index() {
                 </div>
               </section>
 
-              <div className="decks">
+              <div className={`decks ${decksStyles.container}`}>
                 <h3>Sub mazos</h3>
 
                 {decks.length > 0 && (
@@ -642,8 +691,8 @@ function index() {
       <style jsx>{`
         h3 {
           padding: 1em 0;
-          font-weight: 600;
-          font-size: 12px;
+          font-weight: 700;
+          font-size: 1.28rem;
           color: rgba(0, 0, 0, 0.8);
           user-select: none;
         }

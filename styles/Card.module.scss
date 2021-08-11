@@ -36,6 +36,27 @@
   background-color: $bg-color;
   box-shadow: 0 0 10px rgba(#000, 0.03);
 
+  background-color: transparent;
+
+  background-image: linear-gradient(
+      rgba($text-gray, 0.03) 1.1px,
+      transparent 1.1px
+    ),
+    linear-gradient(to right, rgba($text-gray, 0.03) 1.1px, transparent 1.1px);
+  background-size: 20px 20px;
+  background-position: center;
+
+  // background-image: linear-gradient(
+  //     rgba($text-gray, 0.06) 2.2px,
+  //     transparent 2.2px
+  //   ),
+  //   linear-gradient(90deg, rgba($text-gray, 0.02) 2.2px, transparent 2.2px),
+  //   linear-gradient(rgba($text-gray, 0.02) 1.1px, transparent 1.1px),
+  //   linear-gradient(90deg, rgba($text-gray, 0.02) 1.1px, transparent 1.1px);
+  // background-size: 55px 55px, 55px 55px, 11px 11px, 11px 11px;
+  // background-position: -2.2px -2.2px, -2.2px -2.2px, -1.1px -1.1px,
+  //   -1.1px -1.1px;
+
   &__info {
     display: flex;
     align-items: center;

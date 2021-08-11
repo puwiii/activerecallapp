@@ -203,8 +203,6 @@
   // );
 
   display: flex;
-  padding: 2em;
-  margin: 1em 0;
   flex-direction: column;
   gap: 4em;
   flex-wrap: wrap-reverse;
@@ -226,7 +224,6 @@
 
   .title {
     letter-spacing: 0.2px;
-    padding-bottom: 2em;
     color: $text-gray;
     font-size: $font-size-xSmall;
     font-weight: $font-weight-bold;
@@ -256,7 +253,6 @@
     }
 
     &__wrapper {
-      max-width: 255px;
       min-width: 120px;
       cursor: pointer;
       width: 100%;
@@ -269,6 +265,9 @@
         filter: grayscale(95%);
       }
 
+      @include breakpoint-up(medium) {
+        min-width: 175px;
+      }
       &:hover {
         .card__item {
           & > svg {

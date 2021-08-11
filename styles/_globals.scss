@@ -79,8 +79,21 @@
   align-items: center;
 }
 
+.flex_jc_sb {
+  display: flex;
+  justify-content: space-between;
+}
+
 .p_1 {
   padding: 1em;
+}
+
+.pb_2 {
+  padding-bottom: 2em;
+}
+
+.gap_1 {
+  gap: 1em;
 }
 
 .roundedButtonTerciary {
@@ -148,60 +161,6 @@
   }
 }
 
-.infoBox {
-  position: relative;
-  cursor: pointer;
-  border-radius: 50%;
-  width: 30px;
-  height: 30px;
-  display: grid;
-  place-items: center;
-
-  &__info {
-    //animation: Fade-In 125ms linear forwards;
-    //$backgroundInfo: #272732;
-    //font-size: $font-size-xSmall;
-    //font-weight: $font-weight-medium;
-    //color: $text-white;
-    //position: absolute;
-    //top: 50%;
-    //right: calc(100% + 10px);
-    //transform: translateY(-50%);
-    //background-color: rgba($backgroundInfo, 1);
-    //border-radius: 3px;
-    //padding: 1em;
-    //display: none;
-    //z-index: 2000;
-    //white-space: nowrap;
-
-    // &::before,
-    // &::after {
-    //   content: "";
-    //   position: absolute;
-    //   top: 50%;
-    //   right: 0;
-    //   background-color: rgba($backgroundInfo, 1);
-    //   width: 20px;
-    //   height: 20px;
-    // }
-
-    // &::before {
-    //   transform: skew(-35deg);
-    // }
-
-    // &::after {
-    //   transform: translateY(-99%) skew(35deg);
-    // }
-  }
-
-  &:hover,
-  &:focus {
-    .infoBox__info {
-      display: block;
-    }
-  }
-}
-
 .inputNumber {
   display: inline-flex;
   align-items: stretch;
@@ -249,7 +208,7 @@
     padding: 1em;
     border-radius: 17px;
     font-size: $font-size-small;
-    font-weight: $font-weight-medium;
+    font-weight: $font-weight-regular;
     text-align: center;
     color: $text-gray;
     text-shadow: 5px 5px 10px rgba(#fff, 0.8);
@@ -265,7 +224,7 @@
     }
 
     & > strong {
-      font-family: "Lora", "Roboto", sans-serif;
+      //font-family: "Lora", "Roboto", sans-serif;
       display: block;
       font-size: $font-size-medium;
       color: $text-primary;
@@ -282,7 +241,7 @@
   }
 
   & > svg {
-    //opacity: 0.3;
+    opacity: 1;
     max-width: 100%;
     height: auto;
   }
@@ -296,16 +255,18 @@
 
 //container
 .container {
-  width: 100vw;
+  width: 100%;
   padding: 0px 20px;
-
+  margin: 2em 0;
   @include breakpoint-up(medium) {
-    margin: auto;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    //margin: auto !important;
+    margin: 3em 0;
   }
 
   @include breakpoint-up(large) {
-    padding: 0;
-    //max-width: 1440px;
+    max-width: 1440px;
   }
 }
 

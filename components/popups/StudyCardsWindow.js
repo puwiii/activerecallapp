@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 //styles
 import popupStyles from "styles/Popup.module.scss";
 import decksStyles from "styles/Decks.module.scss";
+import componentsStyles from "styles/ComponentsStyles.module.scss";
 
 //icons
 import CloseIcon from "icons/CloseIcon";
@@ -11,6 +12,7 @@ import BackIcon from "icons/BackIcon";
 import MinusIcon from "icons/minusIcon";
 import PlusIcon from "icons/PlusIcon";
 import SwipeIcon from "icons/SwipeIcon";
+import InfoIcon from "icons/InfoIcon";
 
 //svgs
 import StudyingSvg from "svgs/StudyingSvg";
@@ -20,7 +22,6 @@ import ScreenLoadingComponent from "components/ScreenLoadingComponent";
 import SpinnerComponentCircle from "components/SpinnerComponentCircle";
 import CardContainer from "components/CardContainer";
 import SpinnerComponent from "components/SpinnerComponent";
-import InfoIcon from "icons/InfoIcon";
 
 //functions
 import { sortCardsByNextInterval } from "helpers/sortFunctions";
@@ -53,13 +54,12 @@ function StudyCardsWindow({ isOpen, closeWindow, cards }) {
 
     if (cardsForSession[cardIndex + 1]) {
       setCardLoading(true);
-      setFlipCard(false);
 
       setCardIndex(cardIndex + 1);
       setCardInScreen(cardsForSession[cardIndex + 1]);
-      setTimeout(() => {
-        setCardLoading(false);
-      }, [120]);
+
+      setFlipCard(false);
+      //setCardLoading(false);
     } else {
       setStage(3);
       setCardInScreen(cardsForSession[0]);
@@ -67,6 +67,11 @@ function StudyCardsWindow({ isOpen, closeWindow, cards }) {
     }
   };
 
+  useEffect(() => {
+    if (cardInScreen) {
+      setCardLoading(false);
+    }
+  }, [cardInScreen]);
   // useEffect(() => {
   //   if (cardsForSession) {
   //     setCardInScreen(cardsForSession[cardIndex]);
@@ -434,9 +439,9 @@ function StudyCardsWindow({ isOpen, closeWindow, cards }) {
                   >
                     <span>😐</span>Muy mal
                   </button>
-                  <div className={popupStyles.infoBox}>
+                  <div className={componentsStyles.infoBox}>
                     <InfoIcon />
-                    <span className={popupStyles.infoBox__info}>
+                    <span>
                       Bloqueo total, no pudiste recordar ni patata 🥔.
                     </span>
                   </div>
@@ -453,9 +458,9 @@ function StudyCardsWindow({ isOpen, closeWindow, cards }) {
                   >
                     <span>🤔</span>Mal
                   </button>
-                  <div className={popupStyles.infoBox}>
+                  <div className={componentsStyles.infoBox}>
                     <InfoIcon />
-                    <span className={popupStyles.infoBox__info}>
+                    <span>
                       Respuesta incorrecta pero al leer la respuesta se siente
                       familiar 🤔.
                     </span>
@@ -473,9 +478,9 @@ function StudyCardsWindow({ isOpen, closeWindow, cards }) {
                   >
                     <span>🙂</span>Regular
                   </button>
-                  <div className={popupStyles.infoBox}>
+                  <div className={componentsStyles.infoBox}>
                     <InfoIcon />
-                    <span className={popupStyles.infoBox__info}>
+                    <span>
                       Respuesta correcta pero con dificultad de recordar 😵.
                     </span>
                   </div>
@@ -492,9 +497,9 @@ function StudyCardsWindow({ isOpen, closeWindow, cards }) {
                   >
                     <span>😎</span>Bien
                   </button>
-                  <div className={popupStyles.infoBox}>
+                  <div className={componentsStyles.infoBox}>
                     <InfoIcon />
-                    <span className={popupStyles.infoBox__info}>
+                    <span>
                       Respuesta correcta despues de un poco de tiempo pensando
                       😅.
                     </span>
@@ -512,11 +517,9 @@ function StudyCardsWindow({ isOpen, closeWindow, cards }) {
                   >
                     <span>🤩</span> Muy bien
                   </button>
-                  <div className={popupStyles.infoBox}>
+                  <div className={componentsStyles.infoBox}>
                     <InfoIcon />
-                    <span className={popupStyles.infoBox__info}>
-                      Respuesta correcta a la perfección 🤓.
-                    </span>
+                    <span>Respuesta correcta a la perfección 🤓.</span>
                   </div>
                 </div>
               </div>
@@ -685,7 +688,6 @@ function StudyCardsWindow({ isOpen, closeWindow, cards }) {
         }
 
         .score__buttons {
-          position: relative;
           display: flex;
           gap: 1em;
           justify-content: space-between;

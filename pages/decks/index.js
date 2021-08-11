@@ -73,7 +73,7 @@ function index() {
           />
         )}
 
-        <div className={`decks`}>
+        <div className={`decks ${styles.container}`}>
           <h3>Mazos</h3>
           {loading ? (
             <ScreenLoadingComponent />
