@@ -8,10 +8,6 @@ import { EditorState, convertToRaw, convertFromRaw } from "draft-js";
 import "node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import styles from "styles/Texteditor.module.scss";
 
-// //fa
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import { faCoffee } from "@fortawesome/free-solid-svg-icons";
-
 // import ExploreIcon from "components/icons/ExploreIcon";
 
 const Editor = dynamic(

@@ -1,3 +1,5 @@
+import * as React from "react";
+
 function SvgComponent(props) {
   return (
     <svg

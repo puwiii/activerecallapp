@@ -15,15 +15,26 @@ import decks from "pages/api/decks";
 //   measurementId: "G-K95VWWN3GB",
 // };
 
-//dev
+// //dev
+// const firebaseConfig = {
+//   apiKey: "AIzaSyCJzbWGekUN17pTOGUZHnw3eCp8DSkqduc",
+//   authDomain: "active-recall-dev.firebaseapp.com",
+//   projectId: "active-recall-dev",
+//   storageBucket: "active-recall-dev.appspot.com",
+//   messagingSenderId: "74295123727",
+//   appId: "1:74295123727:web:b14bcc6103f5bdafd1e87a",
+//   measurementId: "G-NGE0F7QT5K",
+// };
+
+//dev dev
 const firebaseConfig = {
   apiKey: "AIzaSyCJzbWGekUN17pTOGUZHnw3eCp8DSkqduc",
   authDomain: "active-recall-dev.firebaseapp.com",
   projectId: "active-recall-dev",
   storageBucket: "active-recall-dev.appspot.com",
   messagingSenderId: "74295123727",
-  appId: "1:74295123727:web:b14bcc6103f5bdafd1e87a",
-  measurementId: "G-NGE0F7QT5K",
+  appId: "1:74295123727:web:bcd2379d22fa0095d1e87a",
+  measurementId: "G-TSZ2L0T7G4",
 };
 
 if (!firebase.apps.length) {
