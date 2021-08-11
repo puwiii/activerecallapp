@@ -158,21 +158,21 @@
   place-items: center;
 
   &__info {
-    animation: Fade-In 125ms linear forwards;
-    $backgroundInfo: #272732;
-    font-size: $font-size-xSmall;
-    font-weight: $font-weight-medium;
-    color: $text-white;
-    position: absolute;
-    top: 50%;
-    right: calc(100% + 10px);
-    transform: translateY(-50%);
-    background-color: rgba($backgroundInfo, 1);
-    border-radius: 3px;
-    padding: 1em;
-    display: none;
-    z-index: 2000;
-    white-space: nowrap;
+    //animation: Fade-In 125ms linear forwards;
+    //$backgroundInfo: #272732;
+    //font-size: $font-size-xSmall;
+    //font-weight: $font-weight-medium;
+    //color: $text-white;
+    //position: absolute;
+    //top: 50%;
+    //right: calc(100% + 10px);
+    //transform: translateY(-50%);
+    //background-color: rgba($backgroundInfo, 1);
+    //border-radius: 3px;
+    //padding: 1em;
+    //display: none;
+    //z-index: 2000;
+    //white-space: nowrap;
 
     // &::before,
     // &::after {
