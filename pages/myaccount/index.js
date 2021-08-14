@@ -67,7 +67,7 @@ function index() {
         />
       )}
 
-      {loading ? (
+      {!user ? (
         <ScreenLoadingComponent />
       ) : (
         <div className={`${accountPage.form} ${styles.container}`}>
@@ -77,15 +77,17 @@ function index() {
               <PhotoIcon />
               Foto de perfil
             </span>
-            <div className={accountPage.avatar}>
-              <Image
-                src={user?.avatar}
-                layout="fill"
-                objectFit="cover"
-                alt={user?.username}
-                quality={1}
-              />
-            </div>
+            {user && (
+              <div className={accountPage.avatar}>
+                <Image
+                  src={user?.avatar}
+                  layout="fill"
+                  objectFit="cover"
+                  alt={user?.username}
+                  quality={1}
+                />
+              </div>
+            )}
             <ChevronRightIcon />
           </div>
 

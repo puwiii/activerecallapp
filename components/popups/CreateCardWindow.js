@@ -14,10 +14,12 @@ import BackIcon from "icons/BackIcon";
 import DownArrowIcon from "icons/DownArrowIcon";
 import ExpandIcon from "icons/ExpandIcon";
 import CloseIcon from "icons/CloseIcon";
+import CardsIcon from "icons/CardsIcon";
 
 //components
 import SpinnerComponentCircle from "components/SpinnerComponentCircle";
 import TextEditor from "components/TextEditor";
+import TextEditorV2 from "components/TextEditorV2";
 
 function CreateCardWindow({ isOpen, closeWindow, deckId, cards, setCards }) {
   const [front, setFront] = useState("");
@@ -102,7 +104,7 @@ function CreateCardWindow({ isOpen, closeWindow, deckId, cards, setCards }) {
           <title>Crear nueva tarjeta</title>
         </Head>
       )}
-      <div className={popupStyles.window}>
+      <div className={`${popupStyles.window}`}>
         {loading && (
           <div className={popupStyles.loader}>
             <SpinnerComponentCircle />
@@ -121,7 +123,9 @@ function CreateCardWindow({ isOpen, closeWindow, deckId, cards, setCards }) {
           <CloseIcon />
         </button>
 
-        <h1 className={popupStyles.title}>Crear tarjeta</h1>
+        <h1 className={popupStyles.title}>
+          <CardsIcon width={32} height={32} /> Crear tarjeta
+        </h1>
 
         <form className={popupStyles.form} id="createCardForm">
           <div
@@ -134,10 +138,11 @@ function CreateCardWindow({ isOpen, closeWindow, deckId, cards, setCards }) {
               Frente de la tarjeta{" "}
               <span className={popupStyles.required}>*</span>
             </label>
-            <TextEditor
+            {/* <TextEditor
               wrapperClassName={styles.inputRounded}
               callback={setFront}
-            />
+            /> */}
+            <TextEditorV2 />
           </div>
           <div
             className={`${popupStyles.toggleField} ${
@@ -153,6 +158,7 @@ function CreateCardWindow({ isOpen, closeWindow, deckId, cards, setCards }) {
               wrapperClassName={styles.inputRounded}
               callback={setBack}
             />
+            {/* <TextEditorV2 /> */}
           </div>
           <span id="createCardErrorMsg" className={popupStyles.ErrorMsg}></span>
         </form>

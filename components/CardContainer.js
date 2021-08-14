@@ -54,7 +54,7 @@ function CardContainer({ cardId, data, createdAt, type = null, state = null }) {
         <span>·</span>
         <span>{cardStates[state]}</span>
       </div>
-      {false ? <SpinnerComponent /> : <TextEditor isView={true} data={data} />}
+      <TextEditor isView={true} data={data} />
     </div>
   );
 }

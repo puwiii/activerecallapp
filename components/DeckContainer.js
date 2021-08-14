@@ -24,6 +24,7 @@ function DeckContainer({
   isPublic,
   paramCards,
   paramSetCards,
+  loadingContainer = false,
 }) {
   const [xCoord, setXCoord] = useState(0);
   const [yCoord, setYCoord] = useState(0);
@@ -78,7 +79,7 @@ function DeckContainer({
   useEffect(() => {
     mounted = true;
 
-    if (mounted) {
+    if (mounted && !loadingContainer) {
       if (cards) {
         let created = 0;
         let studied = 0;
@@ -128,53 +129,63 @@ function DeckContainer({
 
   return (
     <div className={styles.deckContainer}>
-      <Link href={`/decks/${deckId}`}>
-        <a
-          className={styles.deck}
-          onContextMenu={(e) => handleContextMenu(e)}
-          title={`${name}: ${description}`}
-        >
-          <div className={styles.deck__icon}>
-            <FolderIcon />
-          </div>
-          <span id={`${deckId}name`} title={name}>
-            {name}
-          </span>
-          {isPublic && (
-            <span>
-              <ExploreIcon />
-            </span>
-          )}
-
-          <p
-            className={`${description === "" && "emptyDescription"}`}
-            title={description}
-          >
-            {description === "" ? "Sin descripción" : description}
-          </p>
-
-          {loadingCards ? (
-            <SpinnerComponentCircle />
-          ) : (
-            <>
-              {cards ? (
-                <div className={styles.cards}>
-                  <span title={createdCards}>{createdCards}</span>
-                  <span title={studiedCards}>{studiedCards}</span>
-                  <span title={learnedCards}>{learnedCards}</span>
-                </div>
-              ) : (
-                <button
-                  className={styles.roundedButtonTerciary}
-                  onClick={(e) => handleLoadCards(e)}
-                >
-                  Ver Tarjetas
-                </button>
-              )}
-            </>
-          )}
+      {loadingContainer ? (
+        <a className={`${styles.deck} ${styles.deck__loading}`}>
+          <div className={styles.deck__icon}></div>
+          <span></span>
+          <p></p>
         </a>
-      </Link>
+      ) : (
+        <Link href={`/decks/${deckId}`}>
+          <a
+            className={styles.deck}
+            onContextMenu={(e) => handleContextMenu(e)}
+            title={`${name}: ${description}`}
+          >
+            <div className={styles.deck__icon}>
+              <FolderIcon />
+            </div>
+            <span id={`${deckId}name`} title={name}>
+              {name}
+            </span>
+            {isPublic && (
+              <span>
+                <ExploreIcon />
+              </span>
+            )}
+
+            <p
+              className={`${description === "" && "emptyDescription"}`}
+              title={description}
+            >
+              {description === "" ? "Sin descripción" : description}
+            </p>
+
+            <div className={styles.deck__cards}>
+              {loadingCards ? (
+                <SpinnerComponentCircle />
+              ) : (
+                <>
+                  {cards ? (
+                    <div className={styles.cards}>
+                      <span title={createdCards}>{createdCards}</span>
+                      <span title={studiedCards}>{studiedCards}</span>
+                      <span title={learnedCards}>{learnedCards}</span>
+                    </div>
+                  ) : (
+                    <button
+                      className={styles.roundedButtonTerciary}
+                      onClick={(e) => handleLoadCards(e)}
+                    >
+                      Ver Tarjetas
+                    </button>
+                  )}
+                </>
+              )}
+            </div>
+          </a>
+        </Link>
+      )}
       {isOpenMenuDeck && (
         <MenuDeck
           xCoord={xCoord}

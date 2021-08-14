@@ -50,7 +50,7 @@ function RemoveDeckWindow({
         <button onClick={closeWindow} className={popupStyles.closeBtn}>
           <CloseIcon />
         </button>
-        <h1 className={popupStyles.title}>¡Cuidado!</h1>
+        <h1 className={popupStyles.title}>📣 ¡Cuidado!</h1>
         <p className={popupStyles.description}>
           Si eliminas el mazo <strong>"{name}"</strong>, todo su contenido
           tambien se eliminará. Asegurate de que eso es lo que quieres
@@ -72,9 +72,9 @@ function RemoveDeckWindow({
           display: grid !important;
         }
 
-        h1 {
-          text-align: center;
-        }
+        // h1 {
+        //   text-align: center;
+        // }
       `}</style>
     </div>
   );

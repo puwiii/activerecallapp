@@ -1,10 +1,10 @@
-import * as React from "react"
+import * as React from "react";
 
 function GmailLogo(props) {
   return (
     <svg
-      width={25}
-      height={19}
+      width={23}
+      height={17}
       viewBox="0 0 67 50"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -31,7 +31,7 @@ function GmailLogo(props) {
         fill="#C5221F"
       />
     </svg>
-  )
+  );
 }
 
-export default GmailLogo
+export default GmailLogo;

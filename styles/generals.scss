@@ -50,6 +50,13 @@ html {
   }
 }
 
+:root {
+  --jd-color-background-default: #fefeff;
+  --jd-color-border: #f3f3f3;
+  --jd-color-panel: #fcfcfc;
+  --jd-color-icon: #09202e;
+}
+
 body {
   font-size: $font-size-xxSmall;
   font-weight: $font-weight-medium;

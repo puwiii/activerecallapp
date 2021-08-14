@@ -27,11 +27,43 @@
   &:hover,
   &:focus {
     transform: scale(0.98);
+    // background-color: rgba(0, 0, 0, 0.02);
   }
 
   &:focus {
     outline: none;
     border: none;
+  }
+
+  &__loading {
+    animation: Fade-In 700ms ease-in-out infinite alternate;
+    & > div {
+      padding: 0.1em;
+      width: 21px;
+      height: 21px;
+      background: rgba($text-gray, 0.1);
+
+      @include breakpoint-up(medium) {
+        zoom: 200%;
+      }
+    }
+
+    gap: 1em;
+
+    & > p,
+    & > span {
+      background: rgba($text-gray, 0.1);
+      height: 21px;
+      border-radius: 7px;
+    }
+
+    & > span {
+      width: 150px;
+    }
+
+    & > p {
+      border: none !important;
+    }
   }
 
   .deckMenuButton {
@@ -78,24 +110,33 @@
   }
 
   & > p {
+    display: none;
     border-left: 1px solid rgba(0, 0, 0, 0.1);
     padding-left: 1em;
     flex: 1;
-    display: -webkit-box;
     -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
     overflow: hidden;
+
+    @include breakpoint-up(medium) {
+      display: -webkit-box;
+    }
 
     font-size: $font-size-xSmall;
     font-weight: $font-weight-medium;
     color: $text-gray;
   }
+
+  &__cards {
+    margin-left: auto;
+  }
 }
 
 .deck__icon {
-  padding: 0.2em;
+  padding: 0.1em;
   border-radius: 50px;
   margin-right: 0.5em;
+  font-size: $font-size-small;
   justify-self: center;
   align-self: center;
   display: grid;
@@ -117,7 +158,6 @@
 }
 
 .cards {
-  margin-left: auto;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 2px;

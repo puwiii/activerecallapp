@@ -17,6 +17,14 @@
   overflow: hidden;
   flex: 1;
   box-shadow: 0 0 10px rgba(#000, 0.05);
+
+  &__subtitle {
+    padding: 1em 0;
+    font-weight: 700;
+    font-size: 1.28rem;
+    color: rgba(0, 0, 0, 0.8);
+    user-select: none;
+  }
 }
 
 .floatButton {
@@ -70,19 +78,27 @@
 }
 
 .header {
+  &__container {
+    padding: 1em 0;
+    display: grid;
+    place-items: center;
+    background: $bg-color;
+  }
+
   display: flex;
   flex-wrap: wrap-reverse;
   justify-content: flex-start;
   align-items: center;
-  gap: 2em;
+  gap: 1em;
 
   & > span {
+    transition: background-color 125ms linear;
     display: grid;
     place-items: center;
     cursor: pointer;
     width: 40px;
     height: 40px;
-    border-radius: 7px;
+    border-radius: 100px;
     transform: rotateZ(180deg);
     &:hover {
       background-color: rgba(0, 0, 0, 0.05);
@@ -153,19 +169,24 @@
       }
 
       &:nth-child(1) {
-        transition: border-color 125ms ease-in-out;
-        border: 1px solid transparent;
+        transition: background-color 125ms linear, color 125ms linear;
+        //border: 1px solid transparent;
         color: $error;
-        //background-color: rgba($error, 0.05);
+        background-color: rgba($error, 0.05);
         &:hover {
-          border-color: rgba($error, 0.5);
+          color: $text-white;
+          background-color: rgba($error, 0.9);
         }
       }
 
       &:nth-child(2) {
-        background-color: transparent;
-        & > svg {
-          margin-left: 0;
+        transition: background-color 125ms linear, color 125ms linear;
+        //border: 1px solid transparent;
+        color: $text-secondary;
+        background-color: rgba($primary-color, 0.05);
+        &:hover {
+          //color: $text-white;
+          background-color: rgba($primary-color, 0.1);
         }
       }
 
@@ -275,6 +296,8 @@
           }
           & > span {
             transform: translateZ(80px);
+            transform: translateZ(100px) scale(0.8);
+            //zoom: 0.5;
           }
 
           background-position: center center;
@@ -286,7 +309,7 @@
           background: linear-gradient(
             180deg,
             rgba($primary-color, 0.8) 50%,
-            rgba($primary-dark-color, 1) 70%
+            rgba($primary-color, 1) 70%
           );
           background-size: 150% 300%;
           background-position: center top;
@@ -301,7 +324,8 @@
     }
 
     &__item {
-      perspective: 800px;
+      -webkit-font-smoothing: subpixel-antialiased;
+      perspective: 500px;
       transform-style: preserve-3d;
       pointer-events: none;
       border-radius: 12px;
@@ -315,15 +339,12 @@
       box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
       padding: 1.5em;
 
-      transition: background-position 0.36s ease-in-out;
+      transition: background-position 400ms ease-in-out,
+        transform 300ms ease-in-out;
 
-      background: linear-gradient(180deg, $bg-color 40%, rgba(#f4f4f4, 1) 70%);
+      background: linear-gradient(180deg, $bg-color 50%, rgba(#f5f8fa, 1) 50%);
       background-size: 150% 300%;
       background-position: center top;
-
-      &:hover {
-        transition: background-position 0.36s ease-in-out;
-      }
 
       & > svg {
         //margin-top: calc(-1.5em - 40px);
@@ -337,6 +358,7 @@
       }
 
       span {
+        -webkit-font-smoothing: subpixel-antialiased;
         user-select: none;
         //letter-spacing: -0.3px;
         padding-top: 1em;
@@ -406,7 +428,7 @@
 
       > span {
         font-family: "Roboto Slab", "Roboto", sans-serif;
-        padding: 0 0.5em;
+        // padding: 0 0.5em;
         font-size: $font-size-xLarge;
         font-weight: $font-weight-black;
 
@@ -420,10 +442,13 @@
       }
 
       > p {
+        text-align: center;
+        min-width: 58px;
         font-size: $font-size-xxSmall;
         font-weight: $font-weight-bold;
 
         @include breakpoint-up(medium) {
+          min-width: 70px;
           font-size: $font-size-xSmall;
         }
       }

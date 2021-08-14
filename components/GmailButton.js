@@ -1,24 +1,27 @@
-import GmailLogo from 'components/logos/GmailLogo'
-import styles from 'styles/Global.module.scss'
-import { loginWithGmail } from 'firebase/client'
-import {useRouter} from 'next/router'
+import GmailLogo from "components/logos/GmailLogo";
+import styles from "styles/Global.module.scss";
+import { loginWithGmail } from "firebase/client";
+import { useRouter } from "next/router";
 
-function GmailButton(){
+function GmailButton() {
+  const router = useRouter();
 
-    const router = useRouter()
+  const login = (e) => {
+    e.preventDefault();
+    loginWithGmail().then((credentials) => {
+      router.push("/");
+      console.log(credentials);
+    });
+  };
 
-    const login = e => {
-        e.preventDefault()
-        loginWithGmail().then(credentials=>{
-            router.push('/')
-        })
-    }
-
-    return(
-        <>
-        <button className={styles.roundedButtonSecondary} onClick={e=>login(e)}>Continuar con<GmailLogo height={25}/></button>
-        </>
-    )
+  return (
+    <>
+      <button onClick={(e) => login(e)}>
+        Continuar con Google <br />
+        <GmailLogo />
+      </button>
+    </>
+  );
 }
 
-export default GmailButton
+export default GmailButton;

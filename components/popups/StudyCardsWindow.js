@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from "react";
 
+//firebase
+import {
+  UpdateIntervalDataCard,
+  firebaseTimeStampFromDate,
+} from "firebase/client";
+
 //styles
 import popupStyles from "styles/Popup.module.scss";
 import decksStyles from "styles/Decks.module.scss";
@@ -26,7 +32,7 @@ import SpinnerComponent from "components/SpinnerComponent";
 //functions
 import { sortCardsByNextInterval } from "helpers/sortFunctions";
 
-function StudyCardsWindow({ isOpen, closeWindow, cards }) {
+function StudyCardsWindow({ isOpen, closeWindow, cards, paramSetCards }) {
   const [stage, setStage] = useState(0);
 
   const [newCards, setNewCards] = useState(null);
@@ -49,22 +55,96 @@ function StudyCardsWindow({ isOpen, closeWindow, cards }) {
 
   let mounted;
 
+  const handleCalcIntervalForCard = (score, card) => {
+    let { EF, I, n, nextTimestamp } = card.intervalData;
+
+    let status = card.status;
+
+    const initialInterval = 60000 * 5; //60000(ms) ==> 1min
+
+    try {
+      if (card.status === 0) status = 1; //setting card to studied/studying status if its new
+
+      if (score >= 2) {
+        //correct response
+        switch (n) {
+          case 0:
+            I = initialInterval;
+            break;
+
+          case 1:
+            I = initialInterval * 6;
+            break;
+
+          default:
+            //setting card to learned/reviewing status
+            status = 2;
+            I = I * EF;
+            break;
+        }
+        EF = EF + (0.1 - (4 - score) * (0.08 + (4 - score) * 0.02));
+        if (EF < 1.3) EF = 1.3;
+        n++;
+      } else {
+        //incorrect response
+        //setting card to studied/studying status
+        status = 1;
+        n = 0;
+        I = initialInterval;
+      }
+
+      const nextIntervalDate = new Date(Date.now() + I);
+
+      //console.log(EF, I, n);
+      return UpdateIntervalDataCard(
+        card.id,
+        n,
+        EF,
+        I,
+        nextIntervalDate,
+        status
+      ).then(() => {
+        let updatedCard = card;
+        updatedCard.intervalData = {
+          n: n,
+          EF: EF,
+          I: I,
+          nextTimestamp: firebaseTimeStampFromDate(nextIntervalDate),
+        };
+        updatedCard.status = status;
+        let cardsUpdated = cards.filter((itemCard) => itemCard.id !== card.id);
+        cardsUpdated.push(updatedCard);
+        paramSetCards(cardsUpdated);
+        return true;
+      });
+    } catch (error) {
+      console.error(error);
+      return false;
+    }
+  };
+
   const handleNextCard = (score) => {
     formStageTwo.focus();
+    setCardLoading(true);
+    handleCalcIntervalForCard(score, cardInScreen)
+      .then(() => {
+        if (cardsForSession[cardIndex + 1]) {
+          setCardIndex(cardIndex + 1);
+          setCardInScreen(cardsForSession[cardIndex + 1]);
 
-    if (cardsForSession[cardIndex + 1]) {
-      setCardLoading(true);
-
-      setCardIndex(cardIndex + 1);
-      setCardInScreen(cardsForSession[cardIndex + 1]);
-
-      setFlipCard(false);
-      //setCardLoading(false);
-    } else {
-      setStage(3);
-      setCardInScreen(cardsForSession[0]);
-      setCardIndex(0);
-    }
+          setFlipCard(false);
+          //setCardLoading(false);
+        } else {
+          setStage(3);
+          setCardInScreen(cardsForSession[0]);
+          setCardIndex(0);
+        }
+        setCardLoading(false);
+      })
+      .catch((error) => {
+        setCardLoading(false);
+        alert(error);
+      });
   };
 
   useEffect(() => {
@@ -79,6 +159,7 @@ function StudyCardsWindow({ isOpen, closeWindow, cards }) {
   // }, [cardIndex]);
 
   const handleStartSession = () => {
+    if (cardsForStudying.length === 0) return;
     setStage(1);
 
     if (limitCards) {
@@ -237,6 +318,24 @@ function StudyCardsWindow({ isOpen, closeWindow, cards }) {
               <h1>Configurar sesión</h1>
               <div className="sessionConfig__box">
                 <div className={popupStyles.checkbox}>
+                  <label
+                    className={componentsStyles.switch}
+                    htmlFor="limitCards"
+                  >
+                    <input
+                      type="checkbox"
+                      name="limitCards"
+                      id="limitCards"
+                      defaultChecked={limitCards}
+                      onChange={(e) => {
+                        if (limitCards) setPrioritizeCards(false);
+                        setLimitCards(!limitCards);
+                      }}
+                      // onClick={(e) => setUseMagicOnHover(!useMagicOnHover)}
+                    />
+                    <span className={componentsStyles.switch__slider}></span>
+                  </label>
+                  {/* 
                   <input
                     type="checkbox"
                     id="limitCards"
@@ -245,7 +344,7 @@ function StudyCardsWindow({ isOpen, closeWindow, cards }) {
                     onChange={(e) => {
                       setLimitCards(!limitCards);
                     }}
-                  />
+                  /> */}
                   <label htmlFor="limitCards">
                     Limitar numeros de tarjetas
                   </label>
@@ -255,7 +354,7 @@ function StudyCardsWindow({ isOpen, closeWindow, cards }) {
                     <label htmlFor="limitNumber">
                       Numero maximo de tarjetas para esta sesión
                     </label>
-                    <div className={popupStyles.inputNumber}>
+                    <div className={componentsStyles.inputNumber}>
                       <button
                         onClick={(e) => {
                           if (limitCardsNumber > 1) {
@@ -292,7 +391,24 @@ function StudyCardsWindow({ isOpen, closeWindow, cards }) {
                   </div>
                   <div className={popupStyles.field}>
                     <div className={popupStyles.checkbox}>
-                      <input
+                      <label
+                        className={componentsStyles.switch}
+                        htmlFor="priorizeCards"
+                      >
+                        <input
+                          type="checkbox"
+                          name="priorizeCards"
+                          id="priorizeCards"
+                          defaultChecked={prioritizeCards}
+                          onChange={(e) => setPrioritizeCards(!prioritizeCards)}
+                          // onClick={(e) => setUseMagicOnHover(!useMagicOnHover)}
+                          disabled={!limitCards}
+                        />
+                        <span
+                          className={componentsStyles.switch__slider}
+                        ></span>
+                      </label>
+                      {/* <input
                         type="checkbox"
                         id="priorizeCards"
                         name="priorizeCards"
@@ -301,7 +417,7 @@ function StudyCardsWindow({ isOpen, closeWindow, cards }) {
                           setPrioritizeCards(!prioritizeCards);
                         }}
                         disabled={!limitCards}
-                      />
+                      /> */}
                       <label htmlFor="priorizeCards">
                         Priorizar las tarjetas por su estado
                       </label>
@@ -451,7 +567,7 @@ function StudyCardsWindow({ isOpen, closeWindow, cards }) {
                   <button
                     className={popupStyles.scoreBtn1}
                     onClick={(e) => {
-                      handleNextCard(0);
+                      handleNextCard(1);
                       e.target.blur();
                     }}
                     disabled={!flipCard}
@@ -471,7 +587,7 @@ function StudyCardsWindow({ isOpen, closeWindow, cards }) {
                   <button
                     className={popupStyles.scoreBtn2}
                     onClick={(e) => {
-                      handleNextCard(0);
+                      handleNextCard(2);
                       e.target.blur();
                     }}
                     disabled={!flipCard}
@@ -490,7 +606,7 @@ function StudyCardsWindow({ isOpen, closeWindow, cards }) {
                   <button
                     className={popupStyles.scoreBtn3}
                     onClick={(e) => {
-                      handleNextCard(0);
+                      handleNextCard(3);
                       e.target.blur();
                     }}
                     disabled={!flipCard}
@@ -510,7 +626,7 @@ function StudyCardsWindow({ isOpen, closeWindow, cards }) {
                   <button
                     className={popupStyles.scoreBtn4}
                     onClick={(e) => {
-                      handleNextCard(0);
+                      handleNextCard(4);
                       e.target.blur();
                     }}
                     disabled={!flipCard}
@@ -535,6 +651,7 @@ function StudyCardsWindow({ isOpen, closeWindow, cards }) {
                 handleStartSession();
                 e.target.blur();
               }}
+              disabled={cardsForStudying?.length === 0}
             >
               Comenzar sesión
               <RightArrowIcon />
@@ -617,17 +734,17 @@ function StudyCardsWindow({ isOpen, closeWindow, cards }) {
           margin-top: 20px;
         }
 
-        .sessionConfig__box::before {
-          content: "";
-          position: absolute;
-          display: block;
-          z-index: -1;
-          height: 90%;
-          width: 1px;
-          left: 7px;
-          top: 25px;
-          background: rgba(0, 0, 0, 0.1);
-        }
+        // .sessionConfig__box::before {
+        //   content: "";
+        //   position: absolute;
+        //   display: block;
+        //   z-index: -1;
+        //   height: 90%;
+        //   width: 1px;
+        //   left: 7px;
+        //   top: 25px;
+        //   background: rgba(0, 0, 0, 0.1);
+        // }
 
         // #formStageOne {
         //   ${stage === 0 ? "display: flex" : "display:none"}
@@ -637,8 +754,32 @@ function StudyCardsWindow({ isOpen, closeWindow, cards }) {
         //   ${stage === 1 ? "display: flex" : "display:none"}
         // }
 
+        #formStageTwo {
+          padding-top: 2em;
+        }
+
         #formStageTwo:focus-visible {
           outline: none;
+          position: relative;
+        }
+
+        #formStageTwo::before {
+          content: "";
+          display: block;
+          position: absolute;
+          top: 0;
+          left: 2.5em;
+          width: calc(
+            ${cardsForSession
+                ? (100 / (cardsForSession.length - 1)) * cardIndex
+                : 0}% - 5em
+          );
+          height: 4px;
+          background: #21a047;
+          box-shadow: 5px 5px 6px rgba(0, 0, 0, 0.1);
+          opacity: 0.3;
+          border-radius: 50px;
+          transition: width 1s ease-in-out;
         }
 
         .card {

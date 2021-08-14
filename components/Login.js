@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styles from "styles/Signin.module.scss";
+import popupStyles from "styles/Popup.module.scss";
 
 import { auth } from "firebase/client";
 import { useRouter } from "next/router";
@@ -122,7 +123,7 @@ function index() {
             </button>
           )}
           {/* <a href="">¿Has olvidado tu contraseña?</a> */}
-          {/* <GmailButton/> */}
+          <GmailButton />
         </div>
       </form>
     </div>

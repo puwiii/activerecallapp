@@ -38,13 +38,16 @@ $padding-fields: 1.2em;
 }
 
 .title {
+  display: flex;
+  align-items: center;
+  gap: 0.2em;
   text-align: left;
   font-size: $font-size-medium;
   font-weight: $font-weight-black;
   color: $text-primary;
   padding: 0.5em 0;
-  margin: 0 1em;
-  margin-top: 0.5em;
+  margin: 0.5em 1em;
+
   border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 
   @include breakpoint-up(medium) {
@@ -77,6 +80,7 @@ $padding-fields: 1.2em;
   flex-direction: column;
   //margin-bottom: .5em;
   gap: 10px;
+  overflow-y: auto;
 
   // > label{
   //     // margin-top: 1.5em;

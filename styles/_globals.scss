@@ -121,9 +121,10 @@
   font-size: $font-size-xSmall;
   font-weight: $font-weight-regular;
   color: $text-black;
-  padding: 1em;
+  padding: 0.8em;
   border-radius: 0.5em;
   transition: border-color 0.21s ease-in-out;
+  overflow: hidden;
 
   @include breakpoint-up(medium) {
     font-size: $font-size-small;
@@ -158,30 +159,6 @@
 
   &:focus-within {
     border-color: $primary-color;
-  }
-}
-
-.inputNumber {
-  display: inline-flex;
-  align-items: stretch;
-  border: 2px solid rgba(0, 0, 0, 0.05);
-  transition: border-color 100ms ease-in-out;
-
-  &:focus-within {
-    border-color: $primary-color;
-  }
-
-  & > input {
-    font-weight: $font-weight-medium;
-  }
-
-  & > button {
-    display: grid;
-    place-items: center;
-    background-color: $primary-color;
-    color: $text-white;
-    border-radius: 0;
-    padding: 0 0.2em;
   }
 }
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Suspense } from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
 
@@ -17,6 +17,7 @@ import {
 //hooks
 import { useModal } from "hooks/useModal";
 import useUser, { USER_STATES } from "hooks/useUser";
+import { useLocalStorage } from "hooks/useLocalStorage";
 
 //components
 import DeckContainer from "components/DeckContainer";
@@ -28,8 +29,11 @@ import AddFolderSvg from "svgs/AddFolderSvg";
 import AddCardSvg from "svgs/AddCardSvg";
 import StatisticsSvg from "svgs/StatisticsSvg";
 import ReviewSvg from "svgs/ReviewSvg";
-import EmptySvg from "svgs/EmptySvg";
 import NoResultsSvg from "svgs/NoResultsSvg";
+import SpinnerComponent from "components/SpinnerComponentCircle";
+import StudyCardsWindow from "components/popups/StudyCardsWindow";
+
+const DecksList = React.lazy(() => import("components/DecksList"));
 
 //icons
 import CardsIcon from "icons/CardsIcon";
@@ -38,12 +42,8 @@ import CreateIcon from "icons/CreateIcon";
 import TrashIcon from "icons/TrashIcon";
 import SettingsIcon from "icons/SettingsIcon";
 import ChevronRightIcon from "icons/ChevronRightIcon";
-import SearchIcon from "icons/SearchIcon";
-import SortAscAlphIcon from "icons/SortAscAlphIcon";
-import SortAscCalIcon from "icons/SortAscCalIcon";
-import SortDescCalIcon from "icons/SortDescCalIcon";
-import SortDescAlphIcon from "icons/SortDescAlphIcon";
 import BackIcon from "icons/BackIcon";
+import ExploreIcon from "icons/ExploreIcon";
 
 //popups
 import CreateDeckWindow from "components/popups/CreateDeckWindow";
@@ -51,11 +51,6 @@ import RemoveDeckWindow from "components/popups/RemoveDeckWindow";
 import CreateCardWindow from "components/popups/CreateCardWindow";
 import MenuHeaderDeck from "components/menus/MenuHeaderDeck";
 import CardsWindow from "components/popups/CardsWindow";
-import ExploreIcon from "icons/ExploreIcon";
-
-import SpinnerComponent from "components/SpinnerComponentCircle";
-import StudyCardsWindow from "components/popups/StudyCardsWindow";
-import { useLocalStorage } from "hooks/useLocalStorage";
 
 function index() {
   const [isOpenCreateDeck, openCreateDeck, closeCreateDeck] = useModal(false);
@@ -68,8 +63,6 @@ function index() {
   const [loading, setLoading] = useState(true);
   const [idDeck, setIdDeck] = useState(null);
   const [actualDeck, setActualDeck] = useState(null);
-  const [decks, setDecks] = useState(null);
-  const [decksForShow, setDeckForShow] = useState(null);
   const [cards, setCards] = useState(null);
   const [createdCards, setCreatedCards] = useState(null);
   const [studiedCards, setStudiedCards] = useState(null);
@@ -77,13 +70,10 @@ function index() {
   const [xCoord, setXCoord] = useState(null);
   const [yCoord, setYCoord] = useState(null);
   const [emptyCards, setEmptyCards] = useState(true);
-  const [searchValue, setSearchValue] = useState("");
   const [useMagicOnHover, setUseMagicOnHover] = useLocalStorage(
     "magicOnHoverCards",
     false
   );
-
-  const [decksLoading, setDecksLoading] = useState(true);
 
   let user = useUser();
 
@@ -142,8 +132,6 @@ function index() {
     };
   }, [cards]);
 
-  const handleStudyButton = (e) => {};
-
   const goBack = () => {
     if (actualDeck.parentDeckId) {
       router.push(actualDeck.parentDeckId);
@@ -171,46 +159,25 @@ function index() {
 
   useEffect(() => {
     let unsubscribeActualDeck;
-    let unsubscribeDecks;
-
-    //handleCardsStatus(getCardsForStudy(idDeck));
 
     if (user && idDeck) {
-      //getAllCardsFromDeck(idDeck, setCards);
       getCardsForStudyV2(idDeck).then((cards) => {
         setCards(cards);
       });
 
       unsubscribeActualDeck = listenForDeckV2(idDeck, setActualDeck);
-      unsubscribeDecks = listenForDecksV2(idDeck, setDecks);
-      // unsubscribeCards = listenForCardsV2(idDeck, setCards);
     }
 
     return () => {
       unsubscribeActualDeck && unsubscribeActualDeck();
-      unsubscribeDecks && unsubscribeDecks();
       setCards(null);
       setLoading(true);
-      //unsubscribeCards && unsubscribeCards();
     };
   }, [user, idDeck]);
 
   useEffect(() => {
-    mounted = true;
-
-    if (mounted) {
-      if (decks) {
-        setDeckForShow(decks);
-        setLoading(false);
-      }
-    }
-
-    return () => {
-      mounted = false;
-      setDeckForShow(null);
-      setLoading(true);
-    };
-  }, [decks]);
+    if (actualDeck) setLoading(false);
+  }, [actualDeck]);
 
   //CARD EFFECT
   const makeMagicOnHover = (e) => {
@@ -226,7 +193,7 @@ function index() {
       7;
 
     e.target.firstChild.style.transition =
-      "transform 0ms ease-in-out, background-position 0.26s ease-in-out";
+      "transform 0ms ease-in-out, background-position 400ms ease-in-out";
     e.target.firstChild.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg) rotateZ(${
       -xAxis / 7
     }deg)`;
@@ -237,103 +204,6 @@ function index() {
       "transform 300ms linear ,background-position 0.26s ease-in-out";
     e.target.firstChild.style.transform = `rotateY(0deg) rotateX(0deg)`;
   };
-
-  const handleSearch = (value) => {
-    if (value.trim() === "") {
-      setDeckForShow(decks);
-    } else {
-      setSearchValue(value.trim());
-      const checkForInclude = (object) => {
-        return object.name.toLowerCase().includes(value.trim().toLowerCase());
-      };
-
-      const newDecks = decks.filter(checkForInclude);
-
-      setDeckForShow(newDecks);
-    }
-  };
-
-  const sortDecksByNameAsc = () => {
-    const newDecks = decksForShow.sort((a, b) => {
-      if (a.name < b.name) return -1;
-      if (a.name > b.name) return 1;
-      if (a.name === b.name) return 0;
-    });
-    setDeckForShow(newDecks);
-  };
-
-  const sortDecksByNameDesc = () => {
-    const newDecks = decksForShow.sort((a, b) => {
-      if (a.name < b.name) return 1;
-      if (a.name > b.name) return -1;
-      if (a.name === b.name) return 0;
-    });
-
-    setDeckForShow(newDecks);
-  };
-
-  const sortDecksByCreatedAsc = () => {
-    const newDecks = decksForShow.sort((a, b) => {
-      if (a.createdAt.seconds < b.createdAt.seconds) return -1;
-      if (a.createdAt.seconds > b.createdAt.seconds) return 1;
-      if (a.createdAt.seconds === b.createdAt.seconds) return 0;
-    });
-
-    setDeckForShow(newDecks);
-  };
-
-  const sortDecksByCreatedDesc = () => {
-    const newDecks = decksForShow.sort((a, b) => {
-      if (a.createdAt.seconds < b.createdAt.seconds) return 1;
-      if (a.createdAt.seconds > b.createdAt.seconds) return -1;
-      if (a.createdAt.seconds === b.createdAt.seconds) return 0;
-    });
-
-    setDeckForShow(newDecks);
-  };
-
-  const sortOptions = [
-    {
-      value: "nameAsc",
-      action: sortDecksByNameAsc,
-      component: (
-        <>
-          <SortAscAlphIcon />
-          <span>Nombre ascendete</span>
-        </>
-      ),
-    },
-    {
-      value: "nameDesc",
-      action: sortDecksByNameDesc,
-      component: (
-        <>
-          <SortDescAlphIcon />
-          <span>Nombre descendiente</span>
-        </>
-      ),
-    },
-    {
-      value: "createdAsc",
-      action: sortDecksByCreatedAsc,
-      component: (
-        <>
-          <SortAscCalIcon />
-          <span>Fecha de creación (asc)</span>
-        </>
-      ),
-    },
-    {
-      value: "createdDesc",
-      action: sortDecksByCreatedDesc,
-      component: (
-        <>
-          <SortDescCalIcon />
-          <span>Fecha de creación (decs)</span>
-        </>
-      ),
-    },
-  ];
 
   return (
     <main className={styles.main}>
@@ -388,49 +258,51 @@ function index() {
               </div>
 
               {/* header */}
-              {actualDeck && (
-                <div
-                  className={`${decksStyles.header} ${decksStyles.container}`}
-                >
-                  <span title="Volver atras" onClick={goBack}>
-                    <ChevronRightIcon />
-                  </span>
-                  <h1 className={styles.title} title={actualDeck?.name}>
-                    {actualDeck?.name}
+              <div className={decksStyles.header__container}>
+                {actualDeck && (
+                  <div
+                    className={`${decksStyles.header} ${decksStyles.container}`}
+                  >
+                    <span title="Volver atras" onClick={goBack}>
+                      <ChevronRightIcon />
+                    </span>
+                    <h1 className={styles.title} title={actualDeck?.name}>
+                      {actualDeck?.name}
 
-                    {actualDeck?.isPublic && (
-                      <>
-                        <span> · Mazo público</span>
-                        <ExploreIcon title="Mazo público" />
-                      </>
-                    )}
-                  </h1>
-                  <div>
-                    <button onClick={openRemoveDeck}>
-                      <TrashIcon />
-                      <span>Eliminar mazo</span>
-                    </button>
-                    <button
-                      className={styles.roundedButtonTerciary}
-                      onClick={(e) => handleMenuHeaderDeck(e)}
-                    >
-                      <SettingsIcon />
-                      <span>Modificar mazo</span>
-                    </button>
-                    {isOpenMenuHeaderDeck && (
-                      <MenuHeaderDeck
-                        xCoord={xCoord}
-                        yCoord={yCoord}
-                        deckId={idDeck}
-                        isOpen={isOpenMenuHeaderDeck}
-                        closeWindow={closeMenuHeaderDeck}
-                        deckName={actualDeck.name}
-                        deckDescription={actualDeck.description}
-                      />
-                    )}
+                      {actualDeck?.isPublic && (
+                        <>
+                          <span> · Mazo público</span>
+                          <ExploreIcon title="Mazo público" />
+                        </>
+                      )}
+                    </h1>
+                    <div>
+                      <button onClick={openRemoveDeck}>
+                        <TrashIcon />
+                        <span>Eliminar mazo</span>
+                      </button>
+                      <button
+                        //className={styles.roundedButtonTerciary}
+                        onClick={(e) => handleMenuHeaderDeck(e)}
+                      >
+                        <SettingsIcon />
+                        <span>Modificar mazo</span>
+                      </button>
+                      {isOpenMenuHeaderDeck && (
+                        <MenuHeaderDeck
+                          xCoord={xCoord}
+                          yCoord={yCoord}
+                          deckId={idDeck}
+                          isOpen={isOpenMenuHeaderDeck}
+                          closeWindow={closeMenuHeaderDeck}
+                          deckName={actualDeck.name}
+                          deckDescription={actualDeck.description}
+                        />
+                      )}
+                    </div>
                   </div>
-                </div>
-              )}
+                )}
+              </div>
 
               {/* popups */}
               {isOpenCreateDeck && (
@@ -474,6 +346,7 @@ function index() {
                   isOpen={isOpenStudyCards}
                   closeWindow={closeStudyCards}
                   cards={cards}
+                  paramSetCards={setCards}
                 />
               )}
 
@@ -613,76 +486,23 @@ function index() {
                 </div>
               </section>
 
-              <div className={`decks ${decksStyles.container}`}>
-                <h3>Sub mazos</h3>
-
-                {decks.length > 0 && (
-                  <div className={decksStyles.toolbar}>
-                    <div className={styles.searchInput}>
-                      <SearchIcon />
-                      <input
-                        type="text"
-                        name="searchInput"
-                        id="searchInput"
-                        autoComplete="off"
-                        placeholder="Buscar mazo 🛰️..."
-                        onChange={(e) => handleSearch(e.target.value)}
-                      />
-                    </div>
-                    <CustomSelect
-                      options={sortOptions}
-                      setActualState={setDecksLoading}
-                      defaultAction={sortDecksByNameAsc}
-                    />
-                  </div>
-                )}
-
-                {decks?.length > 0 ? (
-                  <>
-                    {decksForShow.length > 0 ? (
-                      <div className={decksStyles.decks}>
-                        {decksForShow.map((deck) => (
-                          <DeckContainer
-                            key={deck.id}
-                            deckId={deck.id}
-                            name={deck.name}
-                            description={deck.description}
-                            isPublic={deck.isPublic}
-                            parentDeckId={idDeck}
-                            paramCards={cards}
-                            paramSetCards={setCards}
-                          />
-                        ))}
-                      </div>
-                    ) : (
-                      <div className={decksStyles.noResults}>
-                        <h2>
-                          No hay resultados para esta busqueda... <br />
-                          <strong>{searchValue}</strong>
-                        </h2>
-                        <NoResultsSvg />
-                      </div>
-                    )}
-                  </>
-                ) : (
-                  <div className={decksStyles.emptyData}>
-                    <EmptySvg />
-                    <div>
-                      <h2>Aun no tienes submazos creados.</h2>
-                      <p>
-                        Comienza creando uno presionando en el boton "Crear un
-                        nuevo mazo"
-                      </p>
-                      <button
-                        className={`${styles.roundedButtonTerciary}`}
-                        onClick={openCreateDeck}
-                      >
-                        <NewFolderIcon /> Crear un nuevo mazo
-                      </button>
+              <Suspense
+                fallback={
+                  <div className={decksStyles.container}>
+                    <h3 className={decksStyles.decks__subtitle}>Sub mazos</h3>
+                    <div className={`${decksStyles.decks}`}>
+                      <DeckContainer loadingContainer={true} />
                     </div>
                   </div>
-                )}
-              </div>
+                }
+              >
+                <DecksList
+                  parentDeckId={actualDeck?.id}
+                  openCreateDeck={openCreateDeck}
+                  parentCards={cards}
+                  parentSetCards={setCards}
+                />
+              </Suspense>
             </>
           )}
         </>

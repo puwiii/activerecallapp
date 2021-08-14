@@ -2,13 +2,13 @@ import DownArrowIcon from "icons/DownArrowIcon";
 import React, { useState, useEffect } from "react";
 import styles from "styles/CustomSelect.module.scss";
 
-function CustomSelect({ options, setActualState, defaultAction }) {
+function CustomSelect({ options, setState, defaultAction }) {
   const [selectState, setSelectState] = useState(options[0]);
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
     defaultAction();
-  }, []);
+  }, [defaultAction]);
 
   return (
     <div className={styles.select}>
@@ -30,7 +30,7 @@ function CustomSelect({ options, setActualState, defaultAction }) {
             className={styles.select__option}
             onClick={(e) => {
               setSelectState(option);
-              setActualState(option.value);
+              setState(option.value);
               option.action();
               setOpen(false);
             }}

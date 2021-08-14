@@ -14,6 +14,7 @@ import RightArrowIcon from "icons/RightArrowIcon";
 import BackIcon from "icons/BackIcon";
 import ExploreIcon from "icons/ExploreIcon";
 import CloseIcon from "icons/CloseIcon";
+import FolderIcon from "icons/FolderIcon";
 
 //components
 import SpinnerComponentCircle from "components/SpinnerComponentCircle";
@@ -87,7 +88,9 @@ function CreateDeckWindow({ isOpen, closeWindow, deckId }) {
         <button onClick={(e) => closeForm()} className={popupStyles.closeBtn}>
           <CloseIcon />
         </button>
-        <h1 className={popupStyles.title}>Crear mazo</h1>
+        <h1 className={popupStyles.title}>
+          <FolderIcon width={32} height={32} /> Crear mazo
+        </h1>
         <form className={popupStyles.form} id="createDeckForm">
           <label>
             Nombre del mazo <span className={popupStyles.required}>*</span>

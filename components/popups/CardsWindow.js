@@ -17,6 +17,10 @@ import SpinnerComponentCircle from "components/SpinnerComponentCircle";
 //svgs
 import NoResultsSvg from "svgs/NoResultsSvg";
 
+const CardLoader = () => {
+  <div>loading</div>;
+};
+
 function CardsWindow({ cards = null, isOpen, closeWindow }) {
   const [loading, setLoading] = useState(false);
   const [cardsToShow, setCardsToShow] = useState(cards);

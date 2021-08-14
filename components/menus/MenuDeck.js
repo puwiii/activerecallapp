@@ -71,14 +71,6 @@ function MenuDeck({
       <div className={styles.menu} id="menu">
         <span className={styles.title}>{name}</span>
         <ul className={styles.options}>
-          <li
-            className={`${styles.mainOption}`}
-            //onClick={(e) => handleStudyButton(e)}
-          >
-            <LightningIcon />
-            Estudiar mazo
-          </li>
-
           <li onClick={openUpdateNameDeck}>
             <WriteIcon />
             Cambiar nombre
