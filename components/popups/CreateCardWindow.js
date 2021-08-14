@@ -138,11 +138,11 @@ function CreateCardWindow({ isOpen, closeWindow, deckId, cards, setCards }) {
               Frente de la tarjeta{" "}
               <span className={popupStyles.required}>*</span>
             </label>
-            {/* <TextEditor
+            <TextEditor
               wrapperClassName={styles.inputRounded}
               callback={setFront}
-            /> */}
-            <TextEditorV2 />
+            />
+            {/* <TextEditorV2 /> */}
           </div>
           <div
             className={`${popupStyles.toggleField} ${
