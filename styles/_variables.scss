@@ -5,6 +5,7 @@ $primary-dark-color: #065a8d; //0e6aa3
 $primary-lighter-color: #c9e3fd;
 $primary-light-color: #a1d1f5;
 $secondary-color: #f56e1a; //f78944
+
 $bg-color: #fefeff;
 $bg-color-dark: #f8fafb;
 $light-gray: #acacac;
@@ -13,12 +14,21 @@ $text-primary: #000f14;
 $text-secondary: #065a8d;
 $text-gray: #4a4a4a;
 $text-white: #ffffff;
+
+//dark theme??
+// $bg-color: #1e1e1f;
+// $bg-color-dark: #2a2a2c;
+// $text-primary: #efefef;
+// $text-secondary: #78c7f8;
+// $text-gray: #aeaeae;
+
 $info: #b6b312;
 $error: #c43d3d;
 $succes: #21a047;
 
 //fonts
 
+$font-size-SuperSmall: 0.9rem;
 $font-size-xxSmall: 1rem;
 $font-size-xSmall: 1.28rem;
 $font-size-small: 1.6rem;

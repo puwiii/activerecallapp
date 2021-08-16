@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Head from "next/head";
+import Link from "next/link";
 import { useRouter } from "next/router";
 
 //styles
@@ -11,19 +12,63 @@ import { auth, isUsernameAvalaible } from "firebase/client";
 //icons
 import RightArrowIcon from "icons/RightArrowIcon";
 
+//svgs
+import LogoSvg from "svgs/LogoSvg";
+
 //hooks
 import useUser from "hooks/useUser";
+import useInput from "hooks/useInput";
+import LogoIcon from "icons/Logo";
+import DoorIcon from "icons/DoorIcon";
+import SpinnerComponentCircle from "components/SpinnerComponentCircle";
 
 function index() {
-  const [username, setUsername] = useState("");
-  const [userEmail, setUserEmail] = useState("");
-  const [userPassword, setUserPassword] = useState("");
-  const [userRepeatedPassword, setUserRepeatedPassword] = useState("");
+  // const [username, setUsername] = useState("");
+  // const [userEmail, setUserEmail] = useState("");
+  // const [userPassword, setUserPassword] = useState("");
+  // const [userRepeatedPassword, setUserRepeatedPassword] = useState("");
+
+  const [loading, setLoading] = useState(false);
+
+  const [username, usernameInput] = useInput("Nombre de Usuario", {
+    type: "text",
+    name: "username",
+    required: true,
+    id: "createAccountInput",
+  });
+
+  const [userEmail, emailInput] = useInput("Correo Electrónico", {
+    type: "email",
+    name: "email",
+    autocomplete: "email",
+    required: true,
+    id: "email",
+  });
+
+  const [userPassword, passwordInput] = useInput("Contraseña", {
+    type: "password",
+    name: "password",
+    autocomplete: "password",
+    required: true,
+    id: "password",
+  });
+
+  const [userRepeatedPassword, repeatedPasswordInput] = useInput(
+    "Repetir Contrasñea",
+    {
+      type: "password",
+      name: "repeatPassword",
+      autocomplete: "repeatPassword",
+      required: true,
+      id: "repeatPassword",
+    }
+  );
 
   let user = useUser();
   const router = useRouter();
 
   const register = (e) => {
+    setLoading(true);
     e.preventDefault();
 
     isUsernameAvalaible(username).then((res) => {
@@ -43,6 +88,7 @@ function index() {
                 router.replace("/signin/emailverification");
               })
               .catch((error) => {
+                setLoading(false);
                 ErrorMsg.innerText = error.message;
                 ErrorMsg.style.display = "block";
               });
@@ -56,7 +102,7 @@ function index() {
               "auth/email-already-in-use":
                 "Parece que este correo ya esta en uso, ¿olvidaste tu contraseña?",
             };
-
+            setLoading(false);
             console.log(error);
             const DEFAULT_ERROR_MESSAGE =
               "Aparentemente hay un error, ponte en contacto con bla bla bla...";
@@ -66,16 +112,13 @@ function index() {
             ErrorMsg.style.display = "block";
           });
       } else {
+        setLoading(false);
         ErrorMsg.innerText =
           "Ups... este nombre de usuario ya esta en uso. Intenta con otro";
         ErrorMsg.style.display = "block";
       }
     });
   };
-
-  useEffect(() => {
-    createAccountInput.focus();
-  }, []);
 
   useEffect(() => {
     if (user) {
@@ -98,69 +141,57 @@ function index() {
       <Head>
         <title>Registrarte / Liza</title>
       </Head>
-      <div className={styles.formContainer}>
-        <div className={styles.text}>
-          <h1 className={styles.subtitle}>¡Vamos a crear tu cuenta!</h1>
-          <h2 className={styles.subtitle}>
-            Presentate con Liza, ella estará muy feliz de conocerte 😁
-          </h2>
+      <div className={styles.signin__background}></div>
+      <div className={styles.container}>
+        <div className={styles.logo}>
+          <LogoSvg width={300} />
         </div>
-        <form className={styles.form}>
-          <input
-            type="text"
-            placeholder="Ingresa un nombre de usuario"
-            aria-label="Ingresa un nombre de usuario"
-            className={styles.inputRounded}
-            onChange={(e) => setUsername(e.target.value)}
-            required
-            id="createAccountInput"
-          />
-          <input
-            type="email"
-            placeholder="Ingresa un Email"
-            aria-label="Ingresa un Email"
-            className={styles.inputRounded}
-            onChange={(e) => setUserEmail(e.target.value)}
-            required
-          />
-          <input
-            type="password"
-            placeholder="Ingresa una contraseña"
-            aria-label="Ingresa una contraseña"
-            className={styles.inputRounded}
-            onChange={(e) => setUserPassword(e.target.value)}
-            required
-          />
-          <input
-            type="password"
-            placeholder="Repetir contraseña"
-            aria-label="Repetir contraseña"
-            className={styles.inputRounded}
-            onChange={(e) => setUserRepeatedPassword(e.target.value)}
-            required
-          />
-          <span id="ErrorMsg" className={styles.ErrorMsg}></span>
-          <div className={styles.buttonsBox}>
-            <button
-              type="submit"
-              className={styles.roundedButtonFilled}
-              id="submitButton"
-              onClick={(e) => register(e)}
-              disabled={
-                userPassword !== userRepeatedPassword || !username || !userEmail
-              }
-            >
-              Crear cuenta
-              <RightArrowIcon />
-            </button>
-          </div>
-        </form>
+        <div className={styles.formContainer}>
+          {loading ? (
+            <SpinnerComponentCircle />
+          ) : (
+            <>
+              <div className={styles.text}>
+                <h1>¡Vamos a crear tu cuenta! 😁</h1>
+                <h2>
+                  Presentate con Liza, ella estará muy feliz de conocerte.
+                </h2>
+              </div>
+              <form className={styles.form}>
+                {usernameInput}
+                {emailInput}
+                {passwordInput}
+                {repeatedPasswordInput}
+                <span id="ErrorMsg" className={styles.ErrorMsg}></span>
+                <div className={styles.buttonsBox}>
+                  <button
+                    type="submit"
+                    className={styles.roundedButtonFilled}
+                    id="submitButton"
+                    onClick={(e) => register(e)}
+                    disabled={
+                      userPassword !== userRepeatedPassword ||
+                      username === "" ||
+                      userEmail === "" ||
+                      userPassword === "" ||
+                      userRepeatedPassword === ""
+                    }
+                  >
+                    Continuar y crear cuenta
+                    <RightArrowIcon />
+                  </button>
+
+                  <Link href="/signin">
+                    <a className={styles.roundedButtonTerciary}>
+                      Ya tengo cuenta, iniciar sesión <DoorIcon />
+                    </a>
+                  </Link>
+                </div>
+              </form>
+            </>
+          )}
+        </div>
       </div>
-      <style jsx>{`
-        div div form div button {
-          align-self: flex-end;
-        }
-      `}</style>
     </div>
   );
 }

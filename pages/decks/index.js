@@ -74,11 +74,11 @@ function index() {
         )}
 
         <div className={`decks ${styles.container}`}>
-          <h3>Mazos</h3>
           {loading ? (
             <ScreenLoadingComponent />
           ) : (
             <>
+              <h3>Mazos</h3>
               {decks.length > 0 ? (
                 <>
                   <div className={decksStyles.decks}>
@@ -140,7 +140,7 @@ function index() {
 
         .decks,
         .cards {
-          margin-bottom: 40px;
+          margin: 2em 0;
         }
 
         .decks > button {

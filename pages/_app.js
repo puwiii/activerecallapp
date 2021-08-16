@@ -4,12 +4,12 @@ import Layout from "components/Layout";
 import "styles/generals.scss";
 import "styles/blabla.css";
 import Header from "components/Header";
-import Nav from "components/Nav";
-import styles from "styles/Global.module.scss";
+import Head from "components/Head";
 
 export default function MyApp({ Component, pageProps }) {
   return (
     <Layout>
+      <Head />
       <Header />
 
       <Component {...pageProps} />

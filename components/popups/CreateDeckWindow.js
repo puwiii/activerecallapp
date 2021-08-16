@@ -19,19 +19,36 @@ import FolderIcon from "icons/FolderIcon";
 //components
 import SpinnerComponentCircle from "components/SpinnerComponentCircle";
 
+//hooks
+import useInput from "hooks/useInput";
+
 function CreateDeckWindow({ isOpen, closeWindow, deckId }) {
-  const [deckName, setDeckName] = useState("");
-  const [deckDescription, setDeckDescription] = useState("");
   const [publicDeck, setPublicDeck] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  const [deckName, deckNameInput] = useInput("Nombre del Mazo", {
+    type: "text",
+    name: "deckName",
+    required: true,
+    id: "deckName",
+  });
+
+  const [deckDescription, deckDescriptionInput] = useInput(
+    "Descripción del Mazo",
+    {
+      type: "text",
+      name: "deckDesc",
+      id: "deckDesc",
+      rows: 5,
+    },
+    true
+  );
 
   const router = useRouter();
 
   const closeForm = () => {
     createDeckForm.reset();
     createDeckErrorMsg.style.display = "none";
-    setDeckDescription("");
-    setDeckName("");
     closeWindow();
   };
 
@@ -62,16 +79,6 @@ function CreateDeckWindow({ isOpen, closeWindow, deckId }) {
     }
   };
 
-  const handleEsc = (e) => {
-    if (e.key === "Escape") {
-      closeForm();
-    }
-  };
-
-  useEffect(() => {
-    createDeckInput.focus();
-  }, []);
-
   return (
     <div className={popupStyles.windowBg + " " + (isOpen && "is-open")}>
       {isOpen && (
@@ -92,7 +99,9 @@ function CreateDeckWindow({ isOpen, closeWindow, deckId }) {
           <FolderIcon width={32} height={32} /> Crear mazo
         </h1>
         <form className={popupStyles.form} id="createDeckForm">
-          <label>
+          {deckNameInput}
+          {deckDescriptionInput}
+          {/* <label>
             Nombre del mazo <span className={popupStyles.required}>*</span>
           </label>
           <input
@@ -111,7 +120,7 @@ function CreateDeckWindow({ isOpen, closeWindow, deckId }) {
             rows={5}
             className={styles.inputRounded}
             onChange={(e) => setDeckDescription(e.target.value)}
-          />
+          /> */}
           <div className={popupStyles.checkbox}>
             <input
               type="checkbox"

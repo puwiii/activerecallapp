@@ -451,7 +451,7 @@ function index() {
                   <div className={decksStyles.cards__groups}>
                     <div>
                       {createdCards === null ? (
-                        <SpinnerComponent />
+                        <SpinnerComponent withoutText={true} />
                       ) : (
                         <span>{createdCards}</span>
                       )}
@@ -460,7 +460,7 @@ function index() {
 
                     <div>
                       {studiedCards === null ? (
-                        <SpinnerComponent />
+                        <SpinnerComponent withoutText={true} />
                       ) : (
                         <span>{studiedCards}</span>
                       )}
@@ -469,7 +469,7 @@ function index() {
 
                     <div>
                       {learnedCards === null ? (
-                        <SpinnerComponent />
+                        <SpinnerComponent withoutText={true} />
                       ) : (
                         <span>{learnedCards}</span>
                       )}

@@ -133,7 +133,7 @@ function CreateCardWindow({ isOpen, closeWindow, deckId, cards, setCards }) {
               maximized && popupStyles.open
             }`}
           >
-            <label onClick={handleFields}>
+            <label onClick={handleFields} className={popupStyles.form__label}>
               <DownArrowIcon />
               Frente de la tarjeta{" "}
               <span className={popupStyles.required}>*</span>
@@ -149,7 +149,7 @@ function CreateCardWindow({ isOpen, closeWindow, deckId, cards, setCards }) {
               maximized && popupStyles.open
             }`}
           >
-            <label onClick={handleFields}>
+            <label onClick={handleFields} className={popupStyles.form__label}>
               <DownArrowIcon />
               Reverso de la tarjeta{" "}
               <span className={popupStyles.required}>*</span>

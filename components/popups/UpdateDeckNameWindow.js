@@ -14,8 +14,14 @@ import CloseIcon from "icons/CloseIcon";
 //firebase
 import { updateDeckName } from "firebase/client";
 
+//hooks
+import useInput from "hooks/useInput";
+
 function UpdateDeckNameWindow({ isOpen, closeWindow, deckId, deckName }) {
   const [newName, setNewName] = useState(deckName);
+
+  // const [newName, newNameInput] = useInput()
+
   const [loading, setLoading] = useState(false);
 
   const updateName = (e) => {

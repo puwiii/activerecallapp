@@ -27,7 +27,7 @@ import StudyingSvg from "svgs/StudyingSvg";
 import ScreenLoadingComponent from "components/ScreenLoadingComponent";
 import SpinnerComponentCircle from "components/SpinnerComponentCircle";
 import CardContainer from "components/CardContainer";
-import SpinnerComponent from "components/SpinnerComponent";
+import SpinnerComponent from "components/SpinnerComponentCircle";
 
 //functions
 import { sortCardsByNextInterval } from "helpers/sortFunctions";
@@ -208,14 +208,11 @@ function StudyCardsWindow({ isOpen, closeWindow, cards, paramSetCards }) {
 
       setCardsForSession(newCards.slice(0, limitCardsNumber));
 
-      setTimeout(() => {
-        setStage(2);
-      }, [1700]);
+      setStage(2);
     } else {
       setCardsForSession(cardsForStudying);
-      setTimeout(() => {
-        setStage(2);
-      }, [1000]);
+
+      setStage(2);
     }
   };
 
@@ -256,9 +253,9 @@ function StudyCardsWindow({ isOpen, closeWindow, cards, paramSetCards }) {
     return () => {
       setCardsForStudying(null);
       setCardIndex(null);
-      setNewCards(0);
-      setLearningCards(0);
-      setReviewingCards(0);
+      setNewCards(null);
+      setLearningCards(null);
+      setReviewingCards(null);
       mounted = false;
     };
   }, []);
@@ -504,7 +501,9 @@ function StudyCardsWindow({ isOpen, closeWindow, cards, paramSetCards }) {
             ) : (
               <div className="card">
                 {cardLoading ? (
-                  <SpinnerComponent />
+                  <div className="frontCard">
+                    <SpinnerComponent propsCss={"height: 100%; width: 100%;"} />
+                  </div>
                 ) : (
                   <>
                     <div className="frontCard">

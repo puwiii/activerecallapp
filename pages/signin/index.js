@@ -6,10 +6,12 @@ import styles from "/styles/Signin.module.scss";
 
 //components
 import Login from "components/Login";
+import LogoSvg from "svgs/LogoSvg";
 
 function index() {
   return (
     <div className={styles.signin}>
+      <div className={styles.signin__background}></div>
       <div className={styles.container}>
         <Head>
           <title>Iniciar Sesión / Liza</title>
@@ -18,6 +20,9 @@ function index() {
                 <p className={styles.subtitle}>
                 Aplicando mis metodos de estudio vas a aprender mas rapido y de forma eficiente. Si no tienes cuenta no te preocupes, vamos a crear una para comenzar!
                 </p> */}
+        <div className={styles.logo}>
+          <LogoSvg width={200} />
+        </div>
         <Login />
       </div>
     </div>

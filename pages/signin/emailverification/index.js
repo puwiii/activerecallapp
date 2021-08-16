@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Head from "next/head";
+import Link from "next/link";
 
 //styles
 import styles from "styles/Signin.module.scss";
@@ -17,6 +18,10 @@ import RightArrowIcon from "icons/RightArrowIcon";
 
 //hooks
 import useUser, { USER_STATES } from "hooks/useUser";
+import LogoSvg from "svgs/LogoSvg";
+import SpinnerComponentCircle from "components/SpinnerComponentCircle";
+import LogoIcon from "icons/Logo";
+import DoorIcon from "icons/DoorIcon";
 
 function index() {
   const [loading, setLoading] = useState(true);
@@ -29,11 +34,14 @@ function index() {
         saveUserInFirestore(auth.currentUser);
         router.replace("/");
       } else {
-        ErrorMsg.style.borderColor = "#c43d3d30";
-        ErrorMsg.style.background = "#c43d3d0f";
-        ErrorMsg.style.color = "#c43d3d";
-        ErrorMsg.innerText = "El email no se ha verificado aún 📪";
-        ErrorMsg.style.display = "block";
+        setLoading(false);
+        setTimeout(() => {
+          ErrorMsg.style.borderColor = "#c43d3d30";
+          ErrorMsg.style.background = "#c43d3d0f";
+          ErrorMsg.style.color = "#c43d3d";
+          ErrorMsg.innerText = "El email no se ha verificado aún 📪";
+          ErrorMsg.style.display = "block";
+        }, [1000]);
       }
     }
 
@@ -67,6 +75,10 @@ function index() {
       });
   };
 
+  const logout = () => {
+    auth.signOut();
+  };
+
   const checkForVerification = (e) => {
     e.preventDefault();
     router.reload(window.location.pathname);
@@ -77,45 +89,70 @@ function index() {
       <Head>
         <title>Verificacion de email / Liza</title>
       </Head>
-      <div className={styles.formContainer}>
-        {
-          // loading ?
-          // :
-          <>
-            <div className={styles.text}>
-              <h1 className={styles.subtitle}>
-                Hola {user?.username ? user.username : <SpinnerComponent />},
-                primero tenemos que verificar tu email 🚀
-              </h1>
-              <h2>
-                Cuando estes listo presiona{" "}
-                <strong>"Enviar email de verificación"</strong> para que
-                enviemos un email a tu cuenta{" "}
-                <strong>
-                  {user?.email ? user.email : <SpinnerComponent />}
-                </strong>
-              </h2>
-            </div>
-
-            <form className={styles.form}>
-              <div className={styles.buttonsBox}>
-                <button
-                  className={styles.roundedButtonTerciary}
-                  onClick={(e) => resendEmailVerification(e)}
-                >
-                  Enviar email de verificación <AirplaneIcon />{" "}
-                </button>
-                <button
-                  className={styles.roundedButtonFilled}
-                  onClick={(e) => checkForVerification(e)}
-                >
-                  Ya he verificado mi email <RightArrowIcon />{" "}
-                </button>
+      <div className={styles.signin__background}></div>
+      <div className={styles.container}>
+        <div className={styles.logo}>
+          <LogoSvg width={200} />
+        </div>
+        <div className={styles.formContainer}>
+          {loading ? (
+            <SpinnerComponentCircle />
+          ) : (
+            <>
+              <div className={styles.text}>
+                <h1>
+                  Hola {user?.username ? user.username : <SpinnerComponent />}
+                </h1>
+                <h2>
+                  <strong>
+                    Te damos la bienvenida a la comunidad de Liza 🎂
+                  </strong>
+                </h2>
+                <br />
+                <h2>Primero tenemos que verificar tu email 🚀</h2>
+                <br />
+                <h2>
+                  Cuando estes listo presiona
+                  <strong> "Enviar email de verificación"</strong> para que
+                  enviemos un email a tu cuenta
+                  <strong>
+                    {" "}
+                    {user?.email ? user.email : <SpinnerComponent />}
+                  </strong>
+                </h2>
               </div>
-              <span id="ErrorMsg" className={styles.ErrorMsg}></span>
-            </form>
-          </>
-        }
+
+              <form className={styles.form}>
+                <span id="ErrorMsg" className={styles.ErrorMsg}></span>
+                <div className={styles.buttonsBox}>
+                  <button
+                    className={styles.roundedButtonTerciary}
+                    onClick={(e) => resendEmailVerification(e)}
+                  >
+                    Enviar email de verificación <AirplaneIcon />{" "}
+                  </button>
+                  <button
+                    className={styles.roundedButtonFilled}
+                    onClick={(e) => checkForVerification(e)}
+                  >
+                    Ya he verificado mi email <RightArrowIcon />{" "}
+                  </button>
+                  <Link href="/">
+                    <a className={styles.roundedButtonTerciary}>
+                      Ir al inicio de Liza <LogoIcon height={21} />
+                    </a>
+                  </Link>
+                  <button
+                    className={styles.roundedButtonTerciary}
+                    onClick={logout}
+                  >
+                    Cerrar sesión <DoorIcon />
+                  </button>
+                </div>
+              </form>
+            </>
+          )}
+        </div>
       </div>
       <style jsx>{`
         #ErrorMsg {

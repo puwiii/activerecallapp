@@ -163,7 +163,7 @@ function DeckContainer({
 
             <div className={styles.deck__cards}>
               {loadingCards ? (
-                <SpinnerComponentCircle />
+                <SpinnerComponentCircle withoutText={true} />
               ) : (
                 <>
                   {cards ? (

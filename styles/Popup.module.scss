@@ -79,7 +79,7 @@ $padding-fields: 1.2em;
   display: flex;
   flex-direction: column;
   //margin-bottom: .5em;
-  gap: 10px;
+  gap: 12px;
   overflow-y: auto;
 
   // > label{
@@ -128,7 +128,8 @@ $padding-fields: 1.2em;
   //     padding: .5em;
   // }
 
-  label {
+  & > label,
+  &__label {
     font-size: $font-size-xSmall;
     font-weight: $font-weight-bold;
     opacity: 0.8;

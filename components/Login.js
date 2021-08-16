@@ -1,23 +1,43 @@
 import React, { useState, useEffect } from "react";
+import Link from "next/link";
+
+//styles
 import styles from "styles/Signin.module.scss";
-import popupStyles from "styles/Popup.module.scss";
+import componentsStyles from "styles/ComponentsStyles.module.scss";
 
 import { auth } from "firebase/client";
 import { useRouter } from "next/router";
 
+//components
+import SpinnerComponentCircle from "components/SpinnerComponentCircle";
 import GmailButton from "components/GmailButton";
 
+//hooks
 import useUser from "hooks/useUser";
-import RightArrowIcon from "icons/RightArrowIcon";
+import useInput from "hooks/useInput";
 
-import SpinnerComponentCircle from "components/SpinnerComponentCircle";
+//icons
+import RightArrowIcon from "icons/RightArrowIcon";
+import LogoIcon from "icons/Logo";
 
 function index() {
-  const [userEmail, setUserEmail] = useState("");
-  const [userPassword, setUserPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const router = useRouter();
   let user = useUser();
+
+  const [userEmail, Input] = useInput("Correo Electrónico", {
+    type: "email",
+    name: "username",
+    autoComplete: "email",
+    id: "username",
+  });
+
+  const [userPassword, PasswordInput] = useInput("Contraseña", {
+    type: "password",
+    name: "password",
+    autoComplete: "password",
+    id: "password",
+  });
 
   useEffect(() => {
     if (user) {
@@ -28,10 +48,6 @@ function index() {
       }
     }
   }, [user]);
-
-  useEffect(() => {
-    loginInput.focus();
-  }, []);
 
   const login = (e) => {
     e.preventDefault();
@@ -82,50 +98,41 @@ function index() {
     //     <div className={styles.container}>
     //
     <div className={styles.formContainer}>
-      <div className={styles.text}>
-        <h1 className={styles.subtitle}>¡Hola, otra vez tú!</h1>
-        <h2 className={styles.subtitle}>
-          Esperamos que Liza te este ayudando 😊
-        </h2>
-      </div>
-      <form className={styles.form}>
-        <input
-          type="email"
-          name="username"
-          placeholder="Ingresa tu email"
-          aria-label="Ingresa tu email"
-          autoComplete="username"
-          className={styles.inputRounded}
-          onChange={(e) => setUserEmail(e.target.value)}
-          id="loginInput"
-        />
-        <input
-          type="password"
-          name="password"
-          placeholder="Ingresa tu contraseña"
-          aria-label="Ingresa tu contraseña"
-          autoComplete="current-password"
-          //autoComplete="current-password"
-          className={styles.inputRounded}
-          onChange={(e) => setUserPassword(e.target.value)}
-        />
-        <span id="ErrorMsg" className={styles.ErrorMsg}></span>
-        <div className={styles.buttonsBox}>
-          {loading ? (
-            <SpinnerComponentCircle />
-          ) : (
-            <button
-              type="submit"
-              className={styles.roundedButtonFilled}
-              onClick={(e) => login(e)}
-            >
-              Iniciar sesión <RightArrowIcon />
-            </button>
-          )}
-          {/* <a href="">¿Has olvidado tu contraseña?</a> */}
-          <GmailButton />
-        </div>
-      </form>
+      {loading ? (
+        <SpinnerComponentCircle />
+      ) : (
+        <>
+          <div className={styles.text}>
+            <h1>¡Hola, que gusto verte! 👋</h1>
+            <h2>Esperamos que Liza te este ayudando 😊.</h2>
+          </div>
+          <form className={styles.form}>
+            {Input}
+            {PasswordInput}
+
+            <span id="ErrorMsg" className={styles.ErrorMsg}></span>
+            <div className={styles.buttonsBox}>
+              <button
+                type="submit"
+                className={styles.roundedButtonFilled}
+                onClick={(e) => login(e)}
+              >
+                Iniciar sesión <RightArrowIcon />
+              </button>
+
+              {/* <a href="">¿Has olvidado tu contraseña?</a> */}
+              <GmailButton />
+
+              <Link href="signin/createaccount">
+                <a className={styles.roundedButtonTerciary}>
+                  Registrarme a Liza <LogoIcon height={21} />
+                </a>
+              </Link>
+              <a href="">¿Has olvidado tu contraseña?</a>
+            </div>
+          </form>
+        </>
+      )}
     </div>
     //     </div>
     // </div>

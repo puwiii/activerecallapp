@@ -52,7 +52,8 @@
   background-size: 200% 100%;
   background-position: right bottom;
 
-  &:hover {
+  &:hover,
+  &:focus {
     background-position: left bottom;
   }
 }
@@ -69,7 +70,8 @@
   background-size: 250% 100%;
   background-position: right bottom;
 
-  &:hover {
+  &:hover,
+  &:focus {
     background-position: left bottom;
   }
 }
@@ -104,7 +106,8 @@
   font-weight: $font-weight-medium;
   //text-shadow: 2px 2px 3px rgba(0,0,0,.1);
 
-  &:hover {
+  &:hover,
+  &:focus {
     border: 1px solid rgba($primary-color, 0.2);
     background-color: rgba($primary-color, 0.1);
   }
@@ -117,7 +120,8 @@
   width: 100%;
   outline: none;
   background-color: transparent;
-  border: 2px solid rgba(0, 0, 0, 0.05);
+  border: 2px solid rgba($text-primary, 0.05);
+  //box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.03);
   font-size: $font-size-xSmall;
   font-weight: $font-weight-regular;
   color: $text-black;
@@ -143,7 +147,8 @@
   justify-content: space-between;
   border-radius: 5px;
   background-color: $bg-color;
-  border: 2px solid rgba(0, 0, 0, 0.05);
+  border: 2px solid rgba($text-primary, 0.05);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
   //box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
   padding: 0 1em;
   transition: border-color 100ms ease-in-out;
@@ -234,12 +239,12 @@
 .container {
   width: 100%;
   padding: 0px 20px;
-  margin: 2em 0;
+  // margin: 2em 0;
   @include breakpoint-up(medium) {
     margin-left: auto !important;
     margin-right: auto !important;
     //margin: auto !important;
-    margin: 3em 0;
+    // margin: 3em 0;
   }
 
   @include breakpoint-up(large) {
