@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import componentsStyles from "styles/ComponentsStyles.module.scss";
 
@@ -21,6 +21,15 @@ function useInput(spanValue, propsInput, isTextArea = false) {
     }
   };
 
+  // useEffect(()=>{
+  //   if(propsInput.defaultValue) {
+  //     setInputValue(propsInput.defaultValue)
+  //     // const Input = document.getElementById(propsInput.id)
+  //     // Input.focus()
+  //     // Input.select()
+  //   }
+  // },[propsInput])
+
   const component = (
     <div
       className={`${componentsStyles.input} ${
@@ -32,12 +41,14 @@ function useInput(spanValue, propsInput, isTextArea = false) {
         <textarea
           className={componentsStyles.inputRounded}
           {...input}
+          value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
         />
       ) : (
         <input
           className={componentsStyles.inputRounded}
           {...input}
+          value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
         />
       )}

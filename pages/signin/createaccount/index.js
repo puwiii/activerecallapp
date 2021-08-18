@@ -34,13 +34,14 @@ function index() {
     type: "text",
     name: "username",
     required: true,
+    autoComplete: "nati",
     id: "createAccountInput",
   });
 
   const [userEmail, emailInput] = useInput("Correo Electrónico", {
     type: "email",
     name: "email",
-    autocomplete: "email",
+    autoComplete: "email",
     required: true,
     id: "email",
   });
@@ -48,7 +49,7 @@ function index() {
   const [userPassword, passwordInput] = useInput("Contraseña", {
     type: "password",
     name: "password",
-    autocomplete: "password",
+    autoComplete: "password",
     required: true,
     id: "password",
   });
@@ -58,7 +59,7 @@ function index() {
     {
       type: "password",
       name: "repeatPassword",
-      autocomplete: "repeatPassword",
+      autoComplete: "repeatPassword",
       required: true,
       id: "repeatPassword",
     }
@@ -141,11 +142,14 @@ function index() {
       <Head>
         <title>Registrarte / Liza</title>
       </Head>
+      <div className={styles.signin__backgroundDoodles}></div>
       <div className={styles.signin__background}></div>
       <div className={styles.container}>
-        <div className={styles.logo}>
-          <LogoSvg width={300} />
-        </div>
+        <Link href={"/"} passHref={true}>
+          <a className={styles.logo} title="Página principal de Liza">
+            <LogoSvg width={300} />
+          </a>
+        </Link>
         <div className={styles.formContainer}>
           {loading ? (
             <SpinnerComponentCircle />
@@ -181,7 +185,7 @@ function index() {
                     <RightArrowIcon />
                   </button>
 
-                  <Link href="/signin">
+                  <Link href="/signin" replace={true}>
                     <a className={styles.roundedButtonTerciary}>
                       Ya tengo cuenta, iniciar sesión <DoorIcon />
                     </a>

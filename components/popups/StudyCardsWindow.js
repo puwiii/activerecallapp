@@ -501,7 +501,7 @@ function StudyCardsWindow({ isOpen, closeWindow, cards, paramSetCards }) {
             ) : (
               <div className="card">
                 {cardLoading ? (
-                  <div className="frontCard">
+                  <div className="backCard">
                     <SpinnerComponent propsCss={"height: 100%; width: 100%;"} />
                   </div>
                 ) : (

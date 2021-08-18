@@ -123,7 +123,7 @@ function index() {
               {/* <a href="">¿Has olvidado tu contraseña?</a> */}
               <GmailButton />
 
-              <Link href="signin/createaccount">
+              <Link href="signin/createaccount" replace={true}>
                 <a className={styles.roundedButtonTerciary}>
                   Registrarme a Liza <LogoIcon height={21} />
                 </a>

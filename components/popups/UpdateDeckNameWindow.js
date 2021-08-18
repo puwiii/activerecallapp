@@ -18,27 +18,37 @@ import { updateDeckName } from "firebase/client";
 import useInput from "hooks/useInput";
 
 function UpdateDeckNameWindow({ isOpen, closeWindow, deckId, deckName }) {
-  const [newName, setNewName] = useState(deckName);
-
-  // const [newName, newNameInput] = useInput()
+  const [newName, newNameInput] = useInput("Nuevo nombre del mazo", {
+    type: "text",
+    name: "newNameInput",
+    id: "newNameInput",
+  });
 
   const [loading, setLoading] = useState(false);
 
   const updateName = (e) => {
     e.preventDefault();
-    if (!newName.trim()) {
-      updateDeckNameErrorMsg.innerText =
-        "(*) Ups... no puedes dejar el nombre vacio";
+    if (newName.trim() === deckName) {
+      updateDeckNameErrorMsg.innerText = "Este mazo ya tiene este nombre.";
       updateDeckNameErrorMsg.style.display = "block";
     } else {
-      setLoading(true);
-      updateDeckName(deckId, newName)
-        .then(() => {
-          closeForm();
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      if (!newName.trim()) {
+        updateDeckNameErrorMsg.innerText =
+          "(*) Ups... no puedes dejar el nombre vacio";
+        updateDeckNameErrorMsg.style.display = "block";
+      } else {
+        setLoading(true);
+        updateDeckName(deckId, newName)
+          .then(() => {
+            closeForm();
+          })
+          .catch((error) => {
+            setLoading(false);
+            console.log(error);
+            updateDeckNameErrorMsg.innerText = `Ups... ha habido un problema: ${error.message}`;
+            updateDeckNameErrorMsg.style.display = "block";
+          });
+      }
     }
   };
 
@@ -47,11 +57,6 @@ function UpdateDeckNameWindow({ isOpen, closeWindow, deckId, deckName }) {
     updateDeckNameErrorMsg.style.display = "none";
     closeWindow();
   };
-
-  useEffect(() => {
-    updateDeckNameInput.focus();
-    updateDeckNameInput.select();
-  }, []);
 
   return (
     <div className={popupStyles.windowBg + " " + (isOpen && "is-open")}>
@@ -64,24 +69,10 @@ function UpdateDeckNameWindow({ isOpen, closeWindow, deckId, deckName }) {
         <button onClick={(e) => closeForm()} className={popupStyles.closeBtn}>
           <CloseIcon />
         </button>
-        <h1 className={popupStyles.title}>Cambiar nombre</h1>
+        <h1 className={popupStyles.title}>📝 Cambiar nombre</h1>
 
         <form className={popupStyles.form} id="updateDeckNameForm">
-          <label>
-            Nuevo nombre del mazo{" "}
-            <span className={popupStyles.required}>*</span>
-          </label>
-          <input
-            type="text"
-            placeholder="Ingresa un nombre"
-            defaultValue={deckName}
-            aria-label="Ingresa un nombre"
-            className={popupStyles.inputRounded}
-            onChange={(e) => {
-              setNewName(e.target.value);
-            }}
-            id="updateDeckNameInput"
-          />
+          {newNameInput}
           <span
             id="updateDeckNameErrorMsg"
             className={popupStyles.ErrorMsg}

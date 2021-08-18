@@ -128,13 +128,8 @@ function CreateCardWindow({ isOpen, closeWindow, deckId, cards, setCards }) {
         </h1>
 
         <form className={popupStyles.form} id="createCardForm">
-          <div
-            className={`${popupStyles.toggleField} ${popupStyles.open} ${
-              maximized && popupStyles.open
-            }`}
-          >
-            <label onClick={handleFields} className={popupStyles.form__label}>
-              <DownArrowIcon />
+          <div className={`${popupStyles.field}`}>
+            <label className={popupStyles.form__label}>
               Frente de la tarjeta{" "}
               <span className={popupStyles.required}>*</span>
             </label>
@@ -144,13 +139,8 @@ function CreateCardWindow({ isOpen, closeWindow, deckId, cards, setCards }) {
             />
             {/* <TextEditorV2 /> */}
           </div>
-          <div
-            className={`${popupStyles.toggleField} ${
-              maximized && popupStyles.open
-            }`}
-          >
-            <label onClick={handleFields} className={popupStyles.form__label}>
-              <DownArrowIcon />
+          <div className={`${popupStyles.field}`}>
+            <label className={popupStyles.form__label}>
               Reverso de la tarjeta{" "}
               <span className={popupStyles.required}>*</span>
             </label>
@@ -192,6 +182,11 @@ function CreateCardWindow({ isOpen, closeWindow, deckId, cards, setCards }) {
           
 
           `}
+        }
+
+        .${popupStyles.form} {
+          height: 560px;
+          overflow-y: auto;
         }
 
         .maximizeButton {

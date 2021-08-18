@@ -9,14 +9,26 @@
   left: 0;
   width: 100%;
   flex: 1;
-  background-color: $bg-color;
   height: 100%;
   overflow-x: hidden;
   display: grid;
   place-items: center;
-  background-position: right;
-  background-repeat: no-repeat;
-  background-size: cover;
+  background-color: $bg-color;
+
+  &__backgroundDoodles {
+    position: absolute;
+    opacity: 1;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-position: center;
+    background-repeat: repeat;
+    background-size: 500px;
+    opacity: 0.02;
+    background-color: $bg-color;
+    background-image: url("/images/doodles.png");
+  }
 
   &__background {
     display: none;
@@ -32,11 +44,13 @@
 
     // background: linear-gradient(to left bottom, #fa709a, #fee140);
 
-    opacity: 0.5;
+    opacity: 0.6;
     top: 0;
     left: 0;
     width: 100%;
-    height: 30%;
+    height: 25%;
+    //transform: rotate(180deg);
+    overflow: hidden;
 
     clip-path: polygon(
       100% 0%,
@@ -162,11 +176,13 @@
     justify-content: center;
 
     & > .logo {
+      cursor: pointer;
       display: grid;
       place-items: center;
       padding: 20px;
 
       & > svg {
+        pointer-events: none;
         width: 200px;
         @include breakpoint-up(medium) {
           width: 300px;
@@ -189,12 +205,14 @@
   }
 
   .formContainer {
+    // background-color: rgba($bg-color, 0.2);
+    // box-shadow: -3px -3px 5px #dedede, 5px 5px 5px rgba(0, 0, 0, 0.06);
     padding: 1em 2em;
     width: 90%;
     border-radius: 5px;
 
     @include breakpoint-up(medium) {
-      padding: 2em 4em;
+      padding: 2em 6em;
       max-width: 500px;
     }
 
@@ -239,6 +257,9 @@
     gap: 15px;
     padding: 2em 0;
 
+    input {
+      background-color: $bg-color;
+    }
     .buttonsBox {
       margin-top: 20px;
       display: flex;
@@ -267,12 +288,12 @@
     font-size: $font-size-xSmall;
     font-weight: $font-weight-medium;
     color: $error;
-    border: 2px dashed rgba($error, 0.2);
+    // border: 2px dashed rgba($error, 0.2);
     background-color: rgba($error, 0.1);
     display: none;
     text-align: left;
     align-self: flex-start;
-    padding: 0.5em 0.7em;
+    padding: 1em;
     border-radius: 0.7em;
     // position: absolute;
     // bottom: 70px;

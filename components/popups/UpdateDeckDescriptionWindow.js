@@ -14,26 +14,46 @@ import CloseIcon from "icons/CloseIcon";
 //firebase
 import { updateDeckDescription } from "firebase/client";
 
+//hooks
+import useInput from "hooks/useInput";
+
 function UpdateDeckDescriptionWindow({
   isOpen,
   closeWindow,
   deckId,
   description,
 }) {
-  const [newDescription, setNewDescription] = useState(description);
   const [loading, setLoading] = useState(false);
+
+  const [newDescription, newDescriptionInput] = useInput(
+    "Nueva descripción del mazo",
+    {
+      rows: 5,
+      type: "text",
+      name: "newDescriptionInput",
+      id: "newDescriptionInput",
+    },
+    true
+  );
 
   const updateDescription = (e) => {
     e.preventDefault();
-    setLoading(true);
-    updateDeckDescription(deckId, newDescription)
-      .then(() => {
-        closeForm();
-      })
-      .catch((error) => {
-        updateDeckDescriptionErrorMsg.innerText = error;
-        updateDeckDescriptionErrorMsg.style.display = "block";
-      });
+    if (newDescription.trim() === description) {
+      updateDeckNameErrorMsg.innerText = "Este mazo ya tiene esta descripción.";
+      updateDeckNameErrorMsg.style.display = "block";
+    } else {
+      setLoading(true);
+
+      updateDeckDescription(deckId, newDescription)
+        .then(() => {
+          closeForm();
+        })
+        .catch((error) => {
+          setLoading(false);
+          updateDeckDescriptionErrorMsg.innerText = error;
+          updateDeckDescriptionErrorMsg.style.display = "block";
+        });
+    }
   };
 
   const closeForm = () => {
@@ -41,10 +61,6 @@ function UpdateDeckDescriptionWindow({
     updateDeckDescriptionErrorMsg.style.display = "none";
     closeWindow();
   };
-
-  useEffect(() => {
-    updateDeckDescriptionInput.select();
-  }, []);
 
   return (
     <div className={popupStyles.windowBg + " " + (isOpen && "is-open")}>
@@ -60,20 +76,7 @@ function UpdateDeckDescriptionWindow({
         <h1 className={popupStyles.title}>Cambiar descripción</h1>
 
         <form className={popupStyles.form} id="updateDeckDescriptionForm">
-          <label>
-            Nueva descripción del mazo{" "}
-            <span className={popupStyles.required}>*</span>
-          </label>
-          <textarea
-            defaultValue={description}
-            rows={4}
-            type="text"
-            placeholder="Ingresa una descripción"
-            aria-label="Ingresa una descripción"
-            className={popupStyles.inputRounded}
-            onChange={(e) => setNewDescription(e.target.value.trim())}
-            id="updateDeckDescriptionInput"
-          />
+          {newDescriptionInput}
           <span
             id="updateDeckDescriptionErrorMsg"
             className={popupStyles.ErrorMsg}

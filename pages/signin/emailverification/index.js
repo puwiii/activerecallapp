@@ -89,11 +89,14 @@ function index() {
       <Head>
         <title>Verificacion de email / Liza</title>
       </Head>
+      <div className={styles.signin__backgroundDoodles}></div>
       <div className={styles.signin__background}></div>
       <div className={styles.container}>
-        <div className={styles.logo}>
-          <LogoSvg width={200} />
-        </div>
+        <Link href={"/"} passHref={true}>
+          <a className={styles.logo} title="Página principal de Liza">
+            <LogoSvg width={300} />
+          </a>
+        </Link>
         <div className={styles.formContainer}>
           {loading ? (
             <SpinnerComponentCircle />

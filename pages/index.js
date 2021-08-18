@@ -1,8 +1,6 @@
-import Header from "components/Header";
-import Head from "next/head";
-import styles from "../styles/Home.module.scss";
 import { useState, useEffect } from "react";
-import Nav from "components/Nav";
+import Head from "next/head";
+import styles from "styles/Home.module.scss";
 
 export default function Home() {
   return (

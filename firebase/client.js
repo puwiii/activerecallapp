@@ -449,8 +449,8 @@ export const UpdateIntervalDataCard = (
     .collection("cards")
     .doc(cardID)
     .update({
-      intervalData: intervalData,
-      status: status,
+      // intervalData: intervalData,
+      // status: status,
       timestamp: firebase.firestore.FieldValue.serverTimestamp(),
     })
     .then(() => {

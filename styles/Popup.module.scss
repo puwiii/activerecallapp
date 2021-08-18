@@ -339,19 +339,29 @@ $padding-fields: 1.2em;
 }
 
 .toggleField {
-  background-color: rgba($text-secondary, 0.1);
+  // background-color: rgba($text-secondary, 0.1);
   border-radius: 7px;
   max-height: 58px;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
   //transition: max-height 600ms ease-in-out;
   border: 1px solid transparent;
-  background-color: rgba($text-secondary, 0.04);
+  // background-color: rgba($text-secondary, 0.04);
 
-  &:hover {
-    border: 1px solid rgba($primary-color, 0.2);
-    background-color: rgba($primary-color, 0.1);
+  @include breakpoint-up(large) {
+    flex-direction: row;
+    align-items: stretch;
+  }
+
+  max-height: none;
+
+  // &:hover {
+  //   border: 1px solid rgba($primary-color, 0.2);
+  //   background-color: rgba($primary-color, 0.1);
+  // }
+
+  &:nth-child(2) {
+    min-height: 400px;
   }
 
   & > label {
@@ -370,30 +380,31 @@ $padding-fields: 1.2em;
       transition: opacity 125ms linear;
       zoom: 1.25;
       pointer-events: none;
+      transform: rotate(-90deg);
     }
   }
 
-  &.open {
-    overflow: visible;
-    //transition-delay: 0.2s;
-    max-height: 1000px;
-    //background-color: rgba($primary-color, 0.02);
-    //color: $text-secondary;
-    background-color: transparent;
+  // &.open {
+  //   overflow: visible;
+  //   //transition-delay: 0.2s;
+  //   max-height: 1000px;
+  //   //background-color: rgba($primary-color, 0.02);
+  //   //color: $text-secondary;
+  //   background-color: transparent;
 
-    &:hover {
-      border: 1px solid transparent;
-    }
+  //   &:hover {
+  //     border: 1px solid transparent;
+  //   }
 
-    & > label {
-      color: $text-primary;
-      pointer-events: none;
+  //   & > label {
+  //     color: $text-primary;
+  //     pointer-events: none;
 
-      > svg {
-        transform: rotate(-90deg);
-      }
-    }
-  }
+  //     > svg {
+  //       transform: rotate(-90deg);
+  //     }
+  //   }
+  // }
 }
 
 .closeBtn {

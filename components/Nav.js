@@ -66,7 +66,7 @@ function Nav() {
     <nav className={styles.nav} id="nav">
       <ul>
         <li title="Explorar" id="ExploreLink">
-          <Link href={"/"}>
+          <Link href={"/"} passHref={true}>
             <a>
               <ExploreIcon />
               <span>Explorar</span>
@@ -74,19 +74,19 @@ function Nav() {
           </Link>
         </li>
         <li title="Mis mazos" id="DecksLink">
-          <Link href={`/decks`}>
+          <Link href={`/decks`} passHref={true}>
             <a>
               <CardsIcon />
               <span>Mis mazos</span>
             </a>
           </Link>
         </li>
-        <li title="Mis amigos" id="FriendsLink">
+        {/* <li title="Mis amigos" id="FriendsLink">
           <a>
             <FriendsIcon />
             <span>Amigos</span>
           </a>
-        </li>
+        </li> */}
       </ul>
 
       {/* <button

@@ -1,6 +1,12 @@
 import React, { useState, useEffect } from "react";
 import dynamic from "next/dynamic";
-import { EditorState, convertToRaw, convertFromRaw } from "draft-js";
+import {
+  EditorState,
+  convertToRaw,
+  convertFromRaw,
+  Entity,
+  AtomicBlockUtils,
+} from "draft-js";
 
 //styles
 // import "node_modules/blabla/blabla.css";
@@ -16,6 +22,21 @@ const Editor = dynamic(
     ssr: false,
   }
 );
+
+const handleImageUpload = (file) => {
+  return new Promise((resolve, reject) => {
+    if (file) {
+      let reader = new FileReader();
+      reader.onload = (e) => {
+        console.log(e);
+        e.total > 1000000
+          ? reject(alert("El archivo que intentas subir es muy pesado."))
+          : resolve({ data: { link: e.target.result } });
+      };
+      reader.readAsDataURL(file);
+    }
+  });
+};
 
 const toolbarConfig = {
   options: [
@@ -219,13 +240,13 @@ const toolbarConfig = {
     urlEnabled: true,
     uploadEnabled: true,
     alignmentEnabled: true,
-    uploadCallback: undefined,
+    uploadCallback: handleImageUpload,
     previewImage: true,
     inputAccept: "image/gif,image/jpeg,image/jpg,image/png,image/svg",
     alt: { present: false, mandatory: false },
     defaultSize: {
       height: "auto",
-      width: "auto",
+      width: "400",
     },
   },
 
@@ -246,6 +267,8 @@ const toolbarConfig = {
 function TextEditor({ wrapperClassName, callback, isView, data }) {
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
 
+  const [hideToolbar, setHideToolbar] = useState(true);
+
   const onEditorStateChange = (editorState) => {
     if (!isView) {
       setEditorState(editorState);
@@ -264,6 +287,34 @@ function TextEditor({ wrapperClassName, callback, isView, data }) {
     }
   }, [data]);
 
+  const handlePastedFiles = (files) => {
+    console.log(files);
+    try {
+      if (files) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          if (e.total > 1000000)
+            alert("El archivo que intentas subir es muy pesado.");
+          else {
+            const key = Entity.create("IMAGE", "IMMUTABLE", {
+              src: e.target.result,
+            });
+            const newState = AtomicBlockUtils.insertAtomicBlock(
+              editorState,
+              key,
+              " "
+            );
+            console.log(newState);
+            setEditorState(newState);
+          }
+        };
+        reader.readAsDataURL(files[0]);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div
       // ${isView && styles.isView}
@@ -271,15 +322,21 @@ function TextEditor({ wrapperClassName, callback, isView, data }) {
     >
       <Editor
         // tabIndex="-1"
+        onFocus={(e) => setHideToolbar(false)}
+        onBlur={(e) => setHideToolbar(true)}
         editorState={editorState}
-        toolbarClassName={styles.toolbar}
+        toolbarClassName={
+          hideToolbar
+            ? `${styles.toolbar} ${styles.toolbar__hide}`
+            : styles.toolbar
+        }
         wrapperClassName={styles.wrapper}
         editorClassName={styles.editor}
         readOnly={isView}
         toolbarHidden={isView}
         onEditorStateChange={onEditorStateChange}
         toolbar={toolbarConfig}
-        placeholder="Comienza a escribir aquí..."
+        handlePastedFiles={handlePastedFiles}
       />
       <style jsx>{``}</style>
     </div>
