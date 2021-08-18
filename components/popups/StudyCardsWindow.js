@@ -95,7 +95,6 @@ function StudyCardsWindow({ isOpen, closeWindow, cards, paramSetCards }) {
 
       const nextIntervalDate = new Date(Date.now() + I);
 
-      //console.log(EF, I, n);
       return UpdateIntervalDataCard(
         card.id,
         n,
@@ -492,7 +491,6 @@ function StudyCardsWindow({ isOpen, closeWindow, cards, paramSetCards }) {
             id="formStageTwo"
             onKeyPress={(e) => {
               if (e.code === "Space") setFlipCard(!flipCard);
-              console.log(e.code);
             }}
             tabIndex="0"
           >
@@ -782,7 +780,7 @@ function StudyCardsWindow({ isOpen, closeWindow, cards, paramSetCards }) {
         }
 
         .card {
-          max-width: 600px;
+          max-width: 620px;
           display: flex;
           width: 100%;
           position: relative;

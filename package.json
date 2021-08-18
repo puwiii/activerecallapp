@@ -8,6 +8,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "@tinymce/tinymce-react": "^3.12.6",
     "draft-js": "^0.11.7",
     "firebase": "^8.9.1",
     "firebase-admin": "^9.9.0",

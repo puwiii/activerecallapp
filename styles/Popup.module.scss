@@ -90,8 +90,13 @@ $padding-fields: 1.2em;
   .field {
     margin-top: 12px;
     display: flex;
+    flex-direction: column;
     align-items: center;
     gap: 1.2em;
+
+    @include breakpoint-up(medium) {
+      flex-direction: row;
+    }
 
     & > label {
       padding: 0;
@@ -314,9 +319,9 @@ $padding-fields: 1.2em;
   color: $error;
   text-align: left;
   align-self: flex-start;
-  border: 2px dashed rgba($error, 0.2);
+  // border: 2px dashed rgba($error, 0.2);
   background-color: rgba($error, 0.08);
-  padding: 0.5em 0.7em;
+  padding: 1em;
   border-radius: 0.7em;
   // position: absolute;
   // bottom: 70px;

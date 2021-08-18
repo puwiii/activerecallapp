@@ -10,11 +10,9 @@ const JoditEditor = dynamic(
 );
 
 function TextEditorV2() {
-  const editor = useRef(null);
   const [content, setContent] = useState("");
 
   const config = {
-    iframe: true,
     toolbarAdaptive: false,
     defaultMode: "1",
     uploader: {
@@ -37,18 +35,17 @@ function TextEditorV2() {
   };
 
   const handleContent = (content) => {
+    console.log(content);
     try {
       setContent(content);
-      console.log(content);
     } catch (error) {
       console.log(error);
     }
   };
 
   return (
-    <div className={styles.editor}>
+    <div className={styles.div}>
       <JoditEditor
-        ref={editor}
         value={content}
         config={config}
         // tabIndex={1} // tabIndex of textarea

@@ -52,7 +52,6 @@ function CardsWindow({ cards = null, isOpen, closeWindow }) {
 
         const newCards = cards.filter(checkForBlocks);
 
-        console.log(newCards);
         setCardsToShow(newCards);
       }
       setLoading(false);

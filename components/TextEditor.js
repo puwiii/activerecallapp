@@ -28,7 +28,6 @@ const handleImageUpload = (file) => {
     if (file) {
       let reader = new FileReader();
       reader.onload = (e) => {
-        console.log(e);
         e.total > 1000000
           ? reject(alert("El archivo que intentas subir es muy pesado."))
           : resolve({ data: { link: e.target.result } });
@@ -283,12 +282,10 @@ function TextEditor({ wrapperClassName, callback, isView, data }) {
   useEffect(() => {
     if (isView) {
       setEditorState(EditorState.createWithContent(convertFromRaw(data)));
-      //console.log(editorState.getCurrentContent().getPlainText());
     }
   }, [data]);
 
   const handlePastedFiles = (files) => {
-    console.log(files);
     try {
       if (files) {
         const reader = new FileReader();
@@ -304,7 +301,7 @@ function TextEditor({ wrapperClassName, callback, isView, data }) {
               key,
               " "
             );
-            console.log(newState);
+
             setEditorState(newState);
           }
         };
@@ -337,6 +334,7 @@ function TextEditor({ wrapperClassName, callback, isView, data }) {
         onEditorStateChange={onEditorStateChange}
         toolbar={toolbarConfig}
         handlePastedFiles={handlePastedFiles}
+        placeholder="comienza a escribir aquí"
       />
       <style jsx>{``}</style>
     </div>

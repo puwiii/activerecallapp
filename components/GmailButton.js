@@ -11,7 +11,6 @@ function GmailButton() {
     e.preventDefault();
     loginWithGmail().then((credentials) => {
       router.push("/");
-      console.log(credentials);
     });
   };
 

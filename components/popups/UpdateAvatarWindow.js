@@ -121,25 +121,6 @@ function UpdateAvatarWindow({ isOpen, closeWindow }) {
     //setLoading(true);
     const task = uploadAvatarImage(file);
 
-    console.log(task);
-    //   let onComplete = () => {
-    //     task.snapshot.ref.getDownloadURL().then((url) => {
-    //       setLoadingImage(false);
-    //       updateUserAvatar(imgURL)
-    //         .then(() => {
-    //           setLoading(false);
-    //           //router.reload();
-    //           closeForm();
-    //         })
-    //         .catch((error) => {
-    //           setLoading(false);
-    //           console.error(error);
-    //         });
-    //     });
-    //   };
-    //   setLoading(false);
-    //   console.log(task);
-    //   task.on("state_changed", onComplete);
     let onProgress = () => {};
     let onError = () => {};
     let onComplete = () => {
@@ -170,7 +151,6 @@ function UpdateAvatarWindow({ isOpen, closeWindow }) {
       };
       let onComplete = () => {
         task.snapshot.ref.getDownloadURL().then((url) => {
-          console.log(url);
           setImgURL(url);
           setLoadingImage(false);
         });

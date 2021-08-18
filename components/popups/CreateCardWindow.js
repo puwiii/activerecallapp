@@ -111,13 +111,13 @@ function CreateCardWindow({ isOpen, closeWindow, deckId, cards, setCards }) {
           </div>
         )}
 
-        <button
+        {/* <button
           className={`${popupStyles.closeBtn} maximizeButton`}
           onClick={(e) => toggleMaximized()}
           title={`${maximized ? "Minimizar" : "Maximizar"}`}
         >
           <ExpandIcon />
-        </button>
+        </button> */}
 
         <button onClick={(e) => closeForm()} className={popupStyles.closeBtn}>
           <CloseIcon />
@@ -128,7 +128,7 @@ function CreateCardWindow({ isOpen, closeWindow, deckId, cards, setCards }) {
         </h1>
 
         <form className={popupStyles.form} id="createCardForm">
-          <div className={`${popupStyles.field}`}>
+          <div className={`${popupStyles.field}`} id="frontCard">
             <label className={popupStyles.form__label}>
               Frente de la tarjeta{" "}
               <span className={popupStyles.required}>*</span>
@@ -139,7 +139,7 @@ function CreateCardWindow({ isOpen, closeWindow, deckId, cards, setCards }) {
             />
             {/* <TextEditorV2 /> */}
           </div>
-          <div className={`${popupStyles.field}`}>
+          <div className={`${popupStyles.field}`} id="backCard">
             <label className={popupStyles.form__label}>
               Reverso de la tarjeta{" "}
               <span className={popupStyles.required}>*</span>
@@ -148,7 +148,6 @@ function CreateCardWindow({ isOpen, closeWindow, deckId, cards, setCards }) {
               wrapperClassName={styles.inputRounded}
               callback={setBack}
             />
-            {/* <TextEditorV2 /> */}
           </div>
           <span id="createCardErrorMsg" className={popupStyles.ErrorMsg}></span>
         </form>
@@ -175,7 +174,7 @@ function CreateCardWindow({ isOpen, closeWindow, deckId, cards, setCards }) {
         }
 
         .is-open > div {
-          max-width: 800px;
+          max-width: 880px;
           ${maximized &&
           `
           max-width: none;
@@ -189,13 +188,27 @@ function CreateCardWindow({ isOpen, closeWindow, deckId, cards, setCards }) {
           overflow-y: auto;
         }
 
-        .maximizeButton {
-          right: 45px;
+        .${popupStyles.field} {
+          align-items: flex-start;
+          flex: 1;
+          justify-content: space-between;
+          min-height: 530px;
         }
 
-        .is-open > div > form {
-          ${maximized && "flex-direction: row;"}
+        #frontCard {
+          height: 100%;
         }
+
+        #backCard {
+          height: 100%;
+        }
+        // .maximizeButton {
+        //   right: 45px;
+        // }
+
+        // .is-open > div > form {
+        //   ${maximized && "flex-direction: row;"}
+        // }
 
         // .${popupStyles.toggleField} {
         //   max-height: none;
