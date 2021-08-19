@@ -1,6 +1,7 @@
-import firebase from "firebase";
-
-import decks from "pages/api/decks";
+import firebase from "firebase/app";
+import "firebase/firestore";
+import "firebase/storage";
+import "firebase/auth";
 // import 'firebase/firestore'
 // import 'firebase/storage'
 
