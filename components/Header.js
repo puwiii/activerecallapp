@@ -23,8 +23,9 @@ function Header() {
     <header className={styles.header}>
       <a href="/" title="Página principal de Liza" className={styles.logo}>
         {/* <img src="/logo_v4.png" alt="Liza" /> */}
-        <LogoSvg height={42} />
+        <LogoSvg height={42} width={70} />
       </a>
+      <Nav />
       <div className={`${styles.searchInput} ${styles.header__searcher}`}>
         <SearchIcon />
         <input
@@ -35,7 +36,6 @@ function Header() {
           placeholder="Buscar en la comunidad 🌏..."
         />
       </div>
-      <Nav />
       <div className={styles.header__user}>
         {user === USER_STATES.NOT_LOGGED && (
           <>

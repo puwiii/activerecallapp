@@ -27,6 +27,21 @@ const cardStates = {
 };
 
 function CardContainer({ cardId, data, createdAt, type = null, state = null }) {
+  // const [type, setType] = useState(propType);
+  // const [data, setData] = useState(propData);
+  // const [loading, setLoading] = useState(true);
+
+  // useEffect(() => {
+  //   console.log("data Cambio");
+  //   if (data) {
+  //     setLoading(false);
+  //   }
+  // }, [data]);
+
+  // // useEffect(() => {
+  // //   setData(propData);
+  // // }, [propData]);
+
   return (
     <div className={styles.card}>
       <div className={styles.card__info}>

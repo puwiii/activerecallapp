@@ -21,6 +21,7 @@
 
   &__user {
     border-left: 2px solid rgba(0, 0, 0, 0.05);
+    margin-left: auto;
     display: flex;
     align-items: center;
     gap: 5px;
@@ -29,7 +30,7 @@
 
   &__searcher {
     display: none;
-    flex: 1;
+    margin-right: auto;
     @include breakpoint-up(medium) {
       display: flex;
     }
@@ -43,10 +44,5 @@
     height: 32px;
     width: auto;
     object-fit: contain;
-  }
-
-  & > svg {
-    pointer-events: none;
-    width: auto;
   }
 }

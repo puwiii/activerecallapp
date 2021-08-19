@@ -18,27 +18,21 @@ import {
   updateUsernameFromFirebase,
 } from "firebase/client";
 
-//hooks
-import useInput from "hooks/useInput";
-
 function UpdateUsernameWindow({ isOpen, closeWindow }) {
   const router = useRouter();
 
+  const [newUsername, setNewUsername] = useState("");
   const [loading, setLoading] = useState(false);
-
-  const [newUsername, newUsernameInput] = useInput("Nuevo nombre de usuario", {
-    type: "text",
-    name: "newUsernameInput",
-    id: "newUsernameInput",
-  });
 
   const updateUsername = (e) => {
     e.preventDefault();
+    console.log(newUsername);
 
     if (!newUsername.trim()) {
       updateUsernameErrorMsg.innerText =
         "Ups... no puedes no tener nombre de usuario";
       updateUsernameErrorMsg.style.display = "block";
+      updateUsernameInput.focus();
       return;
     }
 
@@ -64,6 +58,10 @@ function UpdateUsernameWindow({ isOpen, closeWindow }) {
     closeWindow();
   };
 
+  useEffect(() => {
+    updateUsernameInput.focus();
+  }, []);
+
   return (
     <div className={popupStyles.windowBg + " " + (isOpen && "is-open")}>
       <div className={popupStyles.window}>
@@ -78,7 +76,18 @@ function UpdateUsernameWindow({ isOpen, closeWindow }) {
         <h1 className={popupStyles.title}>Cambiar nombre</h1>
 
         <form className={popupStyles.form} id="updateUsernameForm">
-          {newUsernameInput}
+          <label>
+            Nuevo nombre de usuario{" "}
+            <span className={popupStyles.required}>*</span>
+          </label>
+          <input
+            type="text"
+            placeholder="Ingresa un nombre de usuario"
+            aria-label="Ingresa un nombre de usuario"
+            className={popupStyles.inputRounded}
+            onChange={(e) => setNewUsername(e.target.value.trim())}
+            id="updateUsernameInput"
+          />
           <span
             id="updateUsernameErrorMsg"
             className={popupStyles.ErrorMsg}
