@@ -42,15 +42,15 @@ function Header() {
       <div className={styles.header__user}>
         {user === USER_STATES.NOT_LOGGED && (
           <>
-            <Link href={"/signin"} passHref={true}>
+            <Link href={"signin"} passHref={true}>
               <a className={styles.roundedButtonTerciary}>
-                Iniciar sesión
+                Acceder
                 {/* <RightArrowIcon /> */}
               </a>
             </Link>
-            <Link href={"/signin/createaccount"} passHref={true}>
+            <Link href={"signin/createaccount"} passHref={true}>
               <a className={styles.roundedButtonFilled}>
-                Crear cuenta
+                Resgistrarme
                 {/* <RightArrowIcon /> */}
               </a>
             </Link>
