@@ -81,12 +81,12 @@ function Nav() {
             </a>
           </Link>
         </li>
-        {/* <li title="Mis amigos" id="FriendsLink">
+        <li title="Mis amigos" id="FriendsLink">
           <a>
             <FriendsIcon />
             <span>Amigos</span>
           </a>
-        </li> */}
+        </li>
       </ul>
 
       {/* <button
