@@ -4,6 +4,7 @@ import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 //styles
 import cardsStyles from "styles/Cards.module.scss";
 import popupStyles from "styles/Popup.module.scss";
+import componentsStyles from "styles/ComponentsStyles.module.scss";
 
 //components
 import CardContainer from "components/CardContainer";
@@ -75,7 +76,7 @@ function CardsWindow({ cards = null, isOpen, closeWindow }) {
         </button>
         <h1 className={popupStyles.title}>Tarjetas</h1>
         <div className={popupStyles.toolbar}>
-          <div className={popupStyles.searchInput}>
+          <div className={componentsStyles.searchInput}>
             <SearchIcon />
             <input
               type="text"

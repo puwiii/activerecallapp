@@ -5,6 +5,7 @@ import { listenForDecksV2 } from "firebase/client";
 
 //styles
 import decksStyles from "styles/Decks.module.scss";
+import componentsStyles from "styles/ComponentsStyles.module.scss";
 
 //icons
 import SearchIcon from "icons/SearchIcon";
@@ -168,7 +169,7 @@ function DecksList({
 
       {decks?.length > 0 && (
         <div className={decksStyles.toolbar}>
-          <div className={decksStyles.searchInput}>
+          <div className={componentsStyles.searchInput}>
             <SearchIcon />
             <input
               type="text"

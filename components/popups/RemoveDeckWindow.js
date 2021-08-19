@@ -27,20 +27,40 @@ function RemoveDeckWindow({
   const [loading, setLoading] = useState(false);
 
   const remove = () => {
+    paramSetLoading && paramSetLoading(true);
     closeWindow();
-    removeDecksV2(deckId)
-      .then(() => {
-        paramSetLoading && paramSetLoading(true);
-        if (handleCardsOnDelete) {
-          handleCardsOnDelete();
-        }
-        if (!stay) {
-          router.back();
-        }
-      })
-      .catch(() => {
-        setLoading(false);
-      });
+
+    if (paramSetLoading) {
+      setTimeout(() => {
+        removeDecksV2(deckId)
+          .then(() => {
+            if (handleCardsOnDelete) {
+              handleCardsOnDelete();
+            }
+            if (!stay) {
+              router.back();
+            }
+          })
+          .catch(() => {
+            paramSetLoading && paramSetLoading(false);
+            setLoading(false);
+          });
+      }, [100]);
+    } else {
+      removeDecksV2(deckId)
+        .then(() => {
+          if (handleCardsOnDelete) {
+            handleCardsOnDelete();
+          }
+          if (!stay) {
+            router.back();
+          }
+        })
+        .catch(() => {
+          paramSetLoading && paramSetLoading(false);
+          setLoading(false);
+        });
+    }
   };
 
   return (

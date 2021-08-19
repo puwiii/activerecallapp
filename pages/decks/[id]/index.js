@@ -62,7 +62,7 @@ function index() {
   const [isOpenCards, openCards, closeCards] = useModal(false);
   const [loading, setLoading] = useState(true);
   const [idDeck, setIdDeck] = useState(null);
-  const [actualDeck, setActualDeck] = useState(null);
+  const [actualDeck, setActualDeck] = useState(undefined);
   const [cards, setCards] = useState(null);
   const [createdCards, setCreatedCards] = useState(null);
   const [studiedCards, setStudiedCards] = useState(null);
@@ -176,7 +176,7 @@ function index() {
   }, [user, idDeck]);
 
   useEffect(() => {
-    if (actualDeck) setLoading(false);
+    if (actualDeck === null || actualDeck) setLoading(false);
   }, [actualDeck]);
 
   //CARD EFFECT

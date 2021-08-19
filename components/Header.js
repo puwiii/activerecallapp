@@ -3,6 +3,7 @@ import Link from "next/link";
 
 //styles
 import styles from "styles/Header.module.scss";
+import componentsStyles from "styles/ComponentsStyles.module.scss";
 
 //components
 import Avatar from "components/Avatar";
@@ -26,7 +27,9 @@ function Header() {
         <LogoSvg height={42} width={70} />
       </a>
       <Nav />
-      <div className={`${styles.searchInput} ${styles.header__searcher}`}>
+      <div
+        className={`${componentsStyles.searchInput} ${styles.header__searcher}`}
+      >
         <SearchIcon />
         <input
           type="text"
