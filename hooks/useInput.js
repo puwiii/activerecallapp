@@ -21,6 +21,10 @@ function useInput(spanValue, propsInput, isTextArea = false) {
     }
   };
 
+  const setFocus = () => {
+    const inputElement = document.querySelector(`#${input.id}`);
+    inputElement.focus();
+  };
   // useEffect(()=>{
   //   if(propsInput.defaultValue) {
   //     setInputValue(propsInput.defaultValue)
@@ -42,14 +46,14 @@ function useInput(spanValue, propsInput, isTextArea = false) {
           className={componentsStyles.inputRounded}
           {...input}
           value={inputValue}
-          onChange={(e) => setInputValue(e.target.value)}
+          onChange={(e) => setInputValue(e.target.value.trim())}
         />
       ) : (
         <input
           className={componentsStyles.inputRounded}
           {...input}
           value={inputValue}
-          onChange={(e) => setInputValue(e.target.value)}
+          onChange={(e) => setInputValue(e.target.value.trim())}
         />
       )}
       {propsInput.type === "password" && (
@@ -63,7 +67,7 @@ function useInput(spanValue, propsInput, isTextArea = false) {
     </div>
   );
 
-  return [inputValue, component];
+  return [inputValue, component, setFocus];
 }
 
 export default useInput;

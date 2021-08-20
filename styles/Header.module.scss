@@ -3,55 +3,45 @@
 @import "globals";
 
 .header {
-  position: relative;
-  z-index: 2000;
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 1000;
+  padding: 1em;
   display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  gap: 3em;
-  padding: 1em 2em;
-  background-color: $bg-color;
-  box-shadow: 0 0px 10px rgba(0, 0, 0, 0.1);
-  border-bottom: 1px solid rgba(#000, 0.05);
-
-  @include breakpoint-up(large) {
-    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.05);
-    //box-shadow: none;
-  }
-
+  justify-content: flex-end;
   &__user {
-    border-left: 2px solid rgba(0, 0, 0, 0.05);
-    margin-left: auto;
     display: flex;
     align-items: center;
     gap: 5px;
     padding-left: 5px;
 
-    & > a {
-      color: $text-primary;
-      font-size: $font-size-xSmall;
-    }
-
-    & > .roundedButtonFilled {
-      color: $text-white;
-    }
-  }
-
-  &__searcher {
-    display: none;
-    margin-right: auto;
-    @include breakpoint-up(medium) {
+    &__buttons {
       display: flex;
+      gap: 1em;
     }
-  }
-}
 
-.logo {
-  display: grid;
-  place-items: center;
-  img {
-    height: 32px;
-    width: auto;
-    object-fit: contain;
+    &__signup,
+    &__login {
+      background-color: rgba(0, 0, 0, 0.1);
+      padding: 1em 1.4em;
+      font-size: $font-size-xSmall;
+      border-radius: 50px;
+
+      &:hover {
+        text-decoration: underline;
+        text-underline-offset: 5px;
+      }
+    }
+
+    &__signup {
+      background-color: $primary-dark-color;
+      color: $text-white !important;
+    }
+
+    &__login {
+      background-color: transparent;
+      color: $primary-dark-color !important;
+    }
   }
 }

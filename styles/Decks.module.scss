@@ -80,45 +80,42 @@
 .header {
   &__container {
     border-bottom: 1px solid rgba(#000, 0.05);
-    padding: 2em 0;
     display: grid;
     place-items: center;
-    background: $bg-color;
-
-    @include breakpoint-up(medium) {
-      padding: 3em 0;
-    }
+    padding: 2em 0;
   }
 
   display: flex;
-  flex-wrap: wrap-reverse;
+  flex-direction: column;
+  flex-wrap: wrap;
   justify-content: flex-start;
-  align-items: center;
+  align-items: flex-start;
   gap: 1em;
 
-  & > span {
-    transition: background-color 125ms linear;
-    display: grid;
-    place-items: center;
-    cursor: pointer;
-    width: 40px;
-    height: 40px;
-    border-radius: 100px;
-    transform: rotateZ(180deg);
-    &:hover {
-      background-color: rgba(0, 0, 0, 0.05);
-    }
-
-    & > svg {
-      zoom: 1.25;
-    }
-  }
-
   & > h1 {
+    //color: $text-primary;
+    letter-spacing: 1px;
     display: flex;
     align-items: center;
 
-    & > span,
+    & > span {
+      transition: background-color 125ms linear;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      width: 40px;
+      height: 40px;
+      border-radius: 100px;
+      transform: rotateZ(180deg);
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.05);
+      }
+
+      & > svg {
+        zoom: 1.25;
+      }
+    }
+
     & > svg {
       margin-left: 5px;
       color: $text-secondary;
@@ -144,7 +141,6 @@
   // }
 
   & > div {
-    margin-left: auto;
     display: flex;
     justify-content: flex-end;
     flex: 1;
@@ -176,22 +172,21 @@
       &:nth-child(1) {
         transition: background-color 125ms linear, color 125ms linear;
         //border: 1px solid transparent;
-        color: $error;
-        background-color: rgba($error, 0.05);
-        &:hover {
-          color: $text-white;
-          background-color: rgba($error, 0.9);
-        }
-      }
-
-      &:nth-child(2) {
-        transition: background-color 125ms linear, color 125ms linear;
-        //border: 1px solid transparent;
         color: $text-secondary;
         background-color: rgba($primary-color, 0.05);
         &:hover {
           //color: $text-white;
           background-color: rgba($primary-color, 0.1);
+        }
+      }
+      &:nth-child(2) {
+        transition: background-color 125ms linear, color 125ms linear;
+        //border: 1px solid transparent;
+        color: $error;
+        background-color: rgba($error, 0.05);
+        &:hover {
+          color: $text-white;
+          background-color: rgba($error, 0.9);
         }
       }
 
@@ -219,14 +214,16 @@
   );
   background-size: 7px 7px;
 
-  // background-size: 7px 7px;
-  // background-image: repeating-linear-gradient(
-  //   45deg,
-  //   #0876bb1a 0,
-  //   #0876bb1a 0.7000000000000001px,
-  //   $bg-color-dark 0,
-  //   $bg-color-dark 50%
-  // );
+  $color: rgba($primary-color, 0.1);
+
+  background-size: 7px 7px;
+  background-image: repeating-linear-gradient(
+    45deg,
+    $color 0,
+    $color 0.7000000000000001px,
+    $bg-color-dark 0,
+    $bg-color-dark 50%
+  );
 
   display: flex;
   flex-direction: column;
@@ -293,21 +290,24 @@
       }
 
       @include breakpoint-up(medium) {
-        min-width: 175px;
+        min-width: 155px;
+        max-width: 250px;
       }
       &:hover {
         .card__item {
           & > svg {
-            transform: translateZ(80px);
+            transform: translateZ(70px);
           }
           & > span {
-            transform: translateZ(80px);
-            transform: translateZ(100px) scale(0.8);
+            transform: translateZ(70px);
+            // transform: translateZ(100px) scale(0.8);
             //zoom: 0.5;
           }
-
+        }
+        .card__item {
           background-position: center center;
         }
+        // }
       }
 
       &:nth-child(4) {
@@ -345,10 +345,14 @@
       box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
       padding: 1.5em;
 
-      transition: background-position 400ms ease-in-out,
-        transform 300ms ease-in-out;
+      transition: background-position 200ms linear, transform 300ms ease-in-out;
 
-      background: linear-gradient(180deg, $bg-color 50%, rgba(#f5f8fa, 1) 50%);
+      background-color: $bg-color;
+      background-image: linear-gradient(
+        210deg,
+        $bg-color 50%,
+        rgba(0, 0, 0, 0.03) 50%
+      );
       background-size: 150% 300%;
       background-position: center top;
 
@@ -356,7 +360,7 @@
         //margin-top: calc(-1.5em - 40px);
         width: 60%;
         height: 100%;
-        transition: transform 300ms ease-in-out;
+        transition: transform 200ms ease-in-out;
         filter: drop-shadow(0 5px 3px rgba(#000, 0.05));
         @include breakpoint-up(medium) {
           width: 80%;
@@ -367,14 +371,13 @@
         -webkit-font-smoothing: subpixel-antialiased;
         user-select: none;
         //letter-spacing: -0.3px;
-        padding-top: 1em;
-        padding-bottom: 1em;
+        padding: 1em 0;
         text-align: center;
-        font-weight: $font-weight-medium;
+        font-weight: $font-weight-bold;
         font-size: $font-size-xSmall;
         color: $text-secondary;
         white-space: nowrap;
-        transition: transform 300ms ease-in-out;
+        transition: transform 200ms ease-in-out;
         //text-shadow: 0 3px 5px rgba(#000, 0.1);
 
         @include breakpoint-up(xlarge) {

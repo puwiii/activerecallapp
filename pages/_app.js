@@ -3,26 +3,28 @@ import reducer, { initialState } from "components/contexts/reducer";
 import Layout from "components/Layout";
 import "styles/generals.scss";
 import "styles/blabla.css";
-import Header from "components/Header";
+import NavBar from "components/NavBar";
 import Head from "components/Head";
+import Header from "components/Header";
 
 export default function MyApp({ Component, pageProps }) {
   return (
     <Layout>
       <Head />
-      <Header />
+      <NavBar />
 
-      <Component {...pageProps} />
-
-      {/* <style jsx>{`
-                div{
-                  position: relative;
-                  overflow-y: hidden;
-                  height:100%;
-                  display: flex;
-                  flex-direction: column-reverse;
-                }
-            `}</style> */}
+      <div className="main">
+        <Header />
+        <Component {...pageProps} />
+      </div>
+      <style jsx>{`
+        .main {
+          height: 100%;
+          width: 100%;
+          display: flex;
+          flex-direction: column;
+        }
+      `}</style>
     </Layout>
   );
 }

@@ -18,7 +18,7 @@ function GmailButton() {
   return (
     <>
       <button onClick={(e) => login(e)} className={styles.gmailButton}>
-        Continuar con Google
+        Acceder con Google
         <GmailLogo />
       </button>
     </>

@@ -67,11 +67,11 @@ body {
 }
 
 a {
-  color: unset;
+  color: inherit;
 }
 
 a:visited {
-  color: unset;
+  color: inherit;
 }
 
 @include breakpoint-up(medium) {
@@ -119,10 +119,6 @@ button {
   outline: none;
   cursor: pointer;
   user-select: none;
-
-  &:focus {
-    background-color: rgba(0, 0, 0, 0.05);
-  }
 }
 
 body,

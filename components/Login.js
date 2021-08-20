@@ -1,43 +1,54 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 //styles
 import styles from "styles/Signin.module.scss";
 import componentsStyles from "styles/ComponentsStyles.module.scss";
 
-import { auth } from "firebase/client";
-import { useRouter } from "next/router";
+//firebase
+import { auth, getUserByEmail } from "firebase/client";
 
 //components
 import SpinnerComponentCircle from "components/SpinnerComponentCircle";
 import GmailButton from "components/GmailButton";
 
+//popups
+import RestorePasswordWindow from "components/popups/RestorePasswordWindow";
+
 //hooks
 import useUser from "hooks/useUser";
 import useInput from "hooks/useInput";
+import { useModal } from "hooks/useModal";
 
 //icons
 import RightArrowIcon from "icons/RightArrowIcon";
 import LogoIcon from "icons/Logo";
 
 function index() {
+  const [isOpenPopup, openPopup, closePopup] = useModal(false);
   const [loading, setLoading] = useState(false);
+  const [stage, setStage] = useState(0);
+  const [firestoreUser, setFirestoreUser] = useState(undefined);
   const router = useRouter();
   let user = useUser();
 
-  const [userEmail, Input] = useInput("Correo Electrónico", {
+  const [userEmail, Input, userEmailSetFocus] = useInput("Correo Electrónico", {
     type: "email",
     name: "username",
     autoComplete: "email",
     id: "username",
   });
 
-  const [userPassword, PasswordInput] = useInput("Contraseña", {
-    type: "password",
-    name: "password",
-    autoComplete: "password",
-    id: "password",
-  });
+  const [userPassword, PasswordInput, passwordInputSetFocus] = useInput(
+    "Contraseña",
+    {
+      type: "password",
+      name: "password",
+      autoComplete: "password",
+      id: "password",
+    }
+  );
 
   useEffect(() => {
     if (user) {
@@ -55,12 +66,14 @@ function index() {
     if (!userEmail) {
       ErrorMsg.innerText = "El email no puede estar vacio";
       ErrorMsg.style.display = "block";
+      userEmailSetFocus();
       return;
     }
 
     if (!userPassword) {
       ErrorMsg.innerText = "La contraseña no puede estar vacia";
       ErrorMsg.style.display = "block";
+      passwordInputSetFocus();
       return;
     }
 
@@ -93,6 +106,26 @@ function index() {
       });
   };
 
+  const handleRestorePassword = (e) => {
+    e.preventDefault();
+    // setLoading(true);
+    // try {
+    //   console.log(userEmail);
+    //   getUserByEmail(userEmail).then((user) => {
+
+    //     if(user){
+    //       setFirestoreUser(user);
+    //     }
+
+    //     setLoading(false);
+    //   });
+    // } catch (error) {
+    //   ErrorMsg.innerText = error;
+    //   ErrorMsg.style.display = "block";
+    //   setLoading(false);
+    // }
+  };
+
   return (
     // <div className={styles.signin}>
     //     <div className={styles.container}>
@@ -102,37 +135,79 @@ function index() {
         <SpinnerComponentCircle />
       ) : (
         <>
+          {isOpenPopup && (
+            <RestorePasswordWindow
+              isOpen={isOpenPopup}
+              closeWindow={closePopup}
+            />
+          )}
           <div className={styles.text}>
-            <h1>¡Hola, que gusto verte! 👋</h1>
+            <h1>👋 ¡Hola, que gusto verte!</h1>
             <h2>Esperamos que Liza te este ayudando 😊.</h2>
           </div>
-          <form className={styles.form}>
+          <form className={styles.form} onSubmit={(e) => e.preventDefault()}>
+            {/* {stage === 0 && Input}
+            {stage === 1 && (
+              <>
+                PasswordInput
+                <button onClick={(e) => handleRestorePassword(e)}>
+                  He olvidado mi contraseña
+                </button>
+              </>
+            )} */}
             {Input}
             {PasswordInput}
 
             <span id="ErrorMsg" className={styles.ErrorMsg}></span>
             <div className={styles.buttonsBox}>
-              <button
-                type="submit"
-                className={styles.roundedButtonFilled}
-                onClick={(e) => login(e)}
-              >
-                Iniciar sesión <RightArrowIcon />
-              </button>
+              <label htmlFor="recoverPassword" className="lblButton">
+                He olvidado mi contraseña
+                <input
+                  type="button"
+                  onClick={openPopup}
+                  tabIndex={-1}
+                  name="recoverPassword"
+                  id="recoverPassword"
+                />
+              </label>
+
+              {/* {stage === 0 && (
+                <button
+                  type="submit"
+                  className={styles.roundedButtonFilled}
+                  onClick={(e) => handleEmail(e)}
+                >
+                  Continuar <RightArrowIcon />
+                </button>
+              )} */}
+              {stage === 0 && (
+                <button
+                  type="submit"
+                  className={styles.roundedButtonFilled}
+                  onClick={(e) => login(e)}
+                >
+                  Iniciar sesión <RightArrowIcon />
+                </button>
+              )}
 
               {/* <a href="">¿Has olvidado tu contraseña?</a> */}
               <GmailButton />
-
-              <Link href="signin/createaccount" replace={true}>
-                <a className={styles.roundedButtonTerciary}>
-                  Registrarme a Liza <LogoIcon height={21} />
-                </a>
+              <Link href="/signin/createaccount" replace={true}>
+                <a>¿No tienes cuenta? Registrarme</a>
               </Link>
-              <a href="">¿Has olvidado tu contraseña?</a>
             </div>
           </form>
         </>
       )}
+      <style jsx>{`
+        input[type="button"] {
+          display: none;
+        }
+
+        .lblButton {
+          cursor: pointer;
+        }
+      `}</style>
     </div>
     //     </div>
     // </div>

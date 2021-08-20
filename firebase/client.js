@@ -107,7 +107,7 @@ export const saveUserInFirestore = (user) => {
     username: displayName,
     usernameLC: usernameLC,
     avatar: photoURL,
-    email: email,
+    email: email.toLowerCase(),
   });
 };
 
@@ -182,6 +182,23 @@ export const updateDeckName = (deckId, newName) => {
     })
     .catch(() => {
       console.log("An error ocurred while updating deck");
+    });
+};
+
+export const getUserByEmail = (email) => {
+  return database
+    .collection("users")
+    .where("email", "==", email.toLowerCase())
+    .get()
+    .then((docs) => {
+      if (docs.docs.length > 0) {
+        return docs.docs[0].data();
+      } else {
+        return null;
+      }
+    })
+    .catch((error) => {
+      return error;
     });
 };
 

@@ -16,7 +16,7 @@
   overflow: hidden;
   background-color: $bg-color-dark;
 
-  // @include breakpoint-up(medium) {
-  //   padding: 0 1em;
-  // }
+  @include breakpoint-up(large) {
+    flex-direction: row;
+  }
 }

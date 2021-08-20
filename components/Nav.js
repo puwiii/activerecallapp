@@ -9,8 +9,7 @@ import styles from "styles/Nav.module.scss";
 import ExploreIcon from "icons/ExploreIcon";
 import CardsIcon from "icons/CardsIcon";
 import FriendsIcon from "icons/FriendsIcon";
-import PushLeftIcon from "icons/PushLeftIcon";
-import PushRightIcon from "icons/PushRightIcon";
+import HomeIcon from "icons/HomeIcon";
 
 //hooks
 import { useLocalStorage } from "hooks/useLocalStorage";
@@ -65,8 +64,16 @@ function Nav() {
   return (
     <nav className={styles.nav} id="nav">
       <ul>
+        <li title="Mis mazos" id="DecksLink">
+          <Link href={`/`} passHref={true}>
+            <a>
+              <HomeIcon />
+              <span>Home</span>
+            </a>
+          </Link>
+        </li>
         <li title="Explorar" id="ExploreLink">
-          <Link href={"/"} passHref={true}>
+          <Link href={"/explore"} passHref={true}>
             <a>
               <ExploreIcon />
               <span>Explorar</span>

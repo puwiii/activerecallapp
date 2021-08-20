@@ -1,0 +1,42 @@
+@import "mixins";
+@import "variables";
+@import "globals";
+
+.navbar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0em;
+  background-color: $bg-color;
+
+  @include breakpoint-up(large) {
+    border-right: 1px solid rgba(#000, 0.05);
+    flex-direction: column;
+    //box-shadow: none;
+  }
+
+  &__logo {
+    display: grid;
+    place-items: center;
+    width: 100%;
+    margin: 1em;
+    max-width: 100px;
+
+    @include breakpoint-up(large) {
+      margin: 2em;
+    }
+
+    & > svg {
+      height: auto;
+      // & > g[id="prefix__isotipo"] {
+      //   transform: translateY(2px);
+      // }
+
+      // & > g[id="prefix__text"] {
+      //   & > path {
+      //     fill: $text-primary;
+      //   }
+      // }
+    }
+  }
+}

@@ -132,13 +132,13 @@ function index() {
     };
   }, [cards]);
 
-  const goBack = () => {
-    if (actualDeck.parentDeckId) {
-      router.push(actualDeck.parentDeckId);
-    } else {
-      router.push("/decks");
-    }
-  };
+  // const goBack = () => {
+  //   if (actualDeck.parentDeckId) {
+  //     router.push(actualDeck.parentDeckId);
+  //   } else {
+  //     router.push("/decks");
+  //   }
+  // };
 
   useEffect(() => {
     if (user === USER_STATES.NOT_LOGGED) {
@@ -218,6 +218,7 @@ function index() {
         <>
           {actualDeck === null ? (
             <div className={styles.noResults}>
+              <h1 className={styles.title}>Oops!</h1>
               <h2>
                 <strong>404</strong> <br />
                 No hemos encontrado el mazo que buscas
@@ -263,9 +264,6 @@ function index() {
                   <div
                     className={`${decksStyles.header} ${decksStyles.container}`}
                   >
-                    <span title="Volver atras" onClick={goBack}>
-                      <ChevronRightIcon />
-                    </span>
                     <h1 className={styles.title} title={actualDeck?.name}>
                       {actualDeck?.name}
 
@@ -277,16 +275,16 @@ function index() {
                       )}
                     </h1>
                     <div>
-                      <button onClick={openRemoveDeck}>
-                        <TrashIcon />
-                        <span>Eliminar mazo</span>
-                      </button>
                       <button
                         //className={styles.roundedButtonTerciary}
                         onClick={(e) => handleMenuHeaderDeck(e)}
                       >
                         <SettingsIcon />
                         <span>Modificar mazo</span>
+                      </button>
+                      <button onClick={openRemoveDeck}>
+                        <TrashIcon />
+                        <span>Eliminar mazo</span>
                       </button>
                       {isOpenMenuHeaderDeck && (
                         <MenuHeaderDeck
@@ -354,9 +352,7 @@ function index() {
                 className={`${decksStyles.managmentContainer} ${decksStyles.container}`}
               >
                 <div className={decksStyles.managment}>
-                  <div
-                    className={`${styles.flex_ai_c} ${styles.flex_jc_sb} ${styles.pb_2}`}
-                  >
+                  <div className={`${styles.flex_jc_sb} ${styles.pb_2}`}>
                     <h2 className={decksStyles.title}>Administrar mazo</h2>
                     <div className={`${styles.flex_ai_c} ${styles.gap_1}`}>
                       <span className={componentsStyles.switch__icon}>🔮</span>

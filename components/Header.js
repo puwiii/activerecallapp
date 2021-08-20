@@ -3,60 +3,37 @@ import Link from "next/link";
 
 //styles
 import styles from "styles/Header.module.scss";
-import componentsStyles from "styles/ComponentsStyles.module.scss";
-
-//components
-import Avatar from "components/Avatar";
-import SpinnerComponent from "components/SpinnerComponent";
-import Nav from "components/Nav";
 
 //hooks
 import useUser, { USER_STATES } from "hooks/useUser";
-
-//icons
-import SearchIcon from "icons/SearchIcon";
-import LogoSvg from "svgs/LogoSvg";
+import SpinnerComponentCircle from "./SpinnerComponentCircle";
+import Avatar from "./Avatar";
 
 function Header() {
   let user = useUser();
 
   return (
-    <header className={styles.header}>
-      <a href="/" title="Página principal de Liza" className={styles.logo}>
-        {/* <img src="/logo_v4.png" alt="Liza" /> */}
-        <LogoSvg height={42} width={70} />
-      </a>
-      <Nav />
-      <div
-        className={`${componentsStyles.searchInput} ${styles.header__searcher}`}
-      >
-        <SearchIcon />
-        <input
-          type="text"
-          name="searchInput"
-          id="searchInput"
-          autoComplete="off"
-          placeholder="Buscar en la comunidad 🌏..."
-        />
-      </div>
+    <div className={styles.header}>
       <div className={styles.header__user}>
         {user === USER_STATES.NOT_LOGGED && (
-          <>
+          <div className={styles.header__user__buttons}>
             <Link href={"signin"} passHref={true}>
-              <a className={styles.roundedButtonTerciary}>
+              <a className={styles.header__user__login}>
                 Acceder
                 {/* <RightArrowIcon /> */}
               </a>
             </Link>
             <Link href={"signin/createaccount"} passHref={true}>
-              <a className={styles.roundedButtonFilled}>
+              <a className={styles.header__user__signup}>
                 Resgistrarme
                 {/* <RightArrowIcon /> */}
               </a>
             </Link>
-          </>
+          </div>
         )}
-        {user === USER_STATES.NOT_KNOWN && <SpinnerComponent />}
+        {user === USER_STATES.NOT_KNOWN && (
+          <SpinnerComponentCircle withoutText={true} />
+        )}
         {user && (
           <Avatar
             username={user.username}
@@ -65,14 +42,7 @@ function Header() {
           />
         )}
       </div>
-      <style jsx>
-        {`
-          svg {
-            margin-left: 25px;
-          }
-        `}
-      </style>
-    </header>
+    </div>
   );
 }
 

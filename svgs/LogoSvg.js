@@ -2,7 +2,7 @@ import * as React from "react";
 
 function LogoSvg(props) {
   return (
-     <svg
+    <svg
       id="prefix__Capa_4"
       data-name="Capa 4"
       xmlns="http://www.w3.org/2000/svg"
