@@ -3,6 +3,7 @@ import "firebase/firestore";
 import "firebase/storage";
 import "firebase/auth";
 import "firebase/analytics";
+
 // import 'firebase/firestore'
 // import 'firebase/storage'
 
@@ -47,7 +48,7 @@ export const firebaseTimeStampFromDate = (date) => {
   return firebase.firestore.Timestamp.fromDate(date);
 };
 
-const analytics = firebase.analytics();
+// const analytics = firebase.analytics();
 
 const auth = firebase.auth();
 
