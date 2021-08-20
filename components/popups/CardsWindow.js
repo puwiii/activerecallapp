@@ -87,7 +87,7 @@ function CardsWindow({ cards = null, isOpen, closeWindow }) {
               onKeyUp={(e) => handleSearch(e.target.value.trim())}
               onChange={handleLoadingSearch}
             />
-            {loading && <SpinnerComponentCircle size={30} />}
+            {loading && <SpinnerComponentCircle size={24} withoutText={true} />}
           </div>
         </div>
         <div className={cardsStyles.cards}>
