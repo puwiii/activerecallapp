@@ -9,6 +9,7 @@ import componentsStyles from "styles/ComponentsStyles.module.scss";
 import Avatar from "components/Avatar";
 import SpinnerComponent from "components/SpinnerComponent";
 import Nav from "components/Nav";
+import Header from "components/Header";
 
 //hooks
 import useUser, { USER_STATES } from "hooks/useUser";
@@ -31,6 +32,7 @@ function NavBar() {
         <LogoSvg />
       </a>
       <Nav />
+      <Header />
     </header>
   );
 }

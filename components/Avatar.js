@@ -30,14 +30,16 @@ function Avatar({ username, avatar, email }) {
   return (
     <div className={styles.avatarContainer}>
       <div onClick={(e) => setActive(!active)} className={styles.avatar}>
-        <div className={styles.avatar__image}>
-          <Image
-            src={avatar}
-            layout="fill"
-            objectFit="cover"
-            alt={username}
-            quality={1}
-          />
+        <div className={styles.avatar__image__container}>
+          <div className={styles.avatar__image}>
+            <Image
+              src={avatar}
+              layout="fill"
+              objectFit="cover"
+              alt={username}
+              quality={1}
+            />
+          </div>
         </div>
         <DownArrowIcon />
       </div>

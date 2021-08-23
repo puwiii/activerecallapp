@@ -4,14 +4,16 @@
 
 .navbar {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
+  justify-content: center;
   gap: 0em;
   background-color: $bg-color;
 
   @include breakpoint-up(large) {
     border-right: 1px solid rgba(#000, 0.05);
     flex-direction: column;
+    justify-content: flex-start;
     //box-shadow: none;
   }
 

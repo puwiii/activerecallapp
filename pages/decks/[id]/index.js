@@ -84,7 +84,7 @@ function index() {
   const handleMenuHeaderDeck = (e) => {
     e.preventDefault();
 
-    let newXCoord = e.target.offsetLeft + e.target.offsetWidth;
+    let newXCoord = e.target.offsetLeft;
     let newYCoord = e.target.offsetTop + e.target.offsetHeight;
 
     setXCoord(newXCoord);

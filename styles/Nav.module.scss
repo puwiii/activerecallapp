@@ -46,10 +46,8 @@
   }
 
   ul {
-    padding: 0 20px;
     width: 100%;
     display: flex;
-    gap: 20px;
     flex-direction: row;
     justify-content: space-evenly;
     transition: padding 0.4s cubic-bezier(0.215, 0.61, 0.355, 1);
@@ -58,8 +56,6 @@
       // flex-direction: column;
       width: max-content;
       flex-direction: column;
-      padding: 0;
-      gap: 0;
     }
 
     & > li {
@@ -107,7 +103,7 @@
         width: 100%;
         height: 100%;
         display: flex;
-        flex-direction: row;
+        flex-direction: column;
         align-items: center;
         justify-content: center;
         gap: 5px;
@@ -120,6 +116,7 @@
           justify-content: flex-start;
           padding: 1em 2em;
           border-top: none;
+          flex-direction: row;
         }
 
         &:hover {
@@ -130,8 +127,7 @@
           zoom: 110%;
         }
         & > span {
-          display: none;
-          font-size: $font-size-xxSmall;
+          font-size: $font-size-SuperSmall;
           font-weight: $font-weight-bold;
           white-space: nowrap;
 
@@ -140,7 +136,6 @@
           }
 
           @include breakpoint-up(large) {
-            display: block;
             font-size: $font-size-xSmall;
           }
         }

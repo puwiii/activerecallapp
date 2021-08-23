@@ -223,7 +223,7 @@ $padding-fields: 1.2em;
   border-radius: 3px;
   border: 2px solid transparent;
   // color: $text-white;
-
+  font-weight: $font-weight-bold;
   &:hover,
   &:focus {
     color: $text-primary;
@@ -245,16 +245,6 @@ $padding-fields: 1.2em;
 }
 
 .scoreBtn1 {
-  background-color: #ffb158;
-
-  &:hover,
-  &:focus {
-    background-color: transparent;
-    border-color: #ffb158;
-  }
-}
-
-.scoreBtn2 {
   background-color: #fecf6d;
 
   &:hover,
@@ -264,7 +254,7 @@ $padding-fields: 1.2em;
   }
 }
 
-.scoreBtn3 {
+.scoreBtn2 {
   background-color: rgba($succes, 0.25);
 
   &:hover,
@@ -273,13 +263,23 @@ $padding-fields: 1.2em;
     border-color: rgba($succes, 0.25);
   }
 }
-.scoreBtn4 {
-  background-color: rgba($succes, 0.5);
+
+.scoreBtn3 {
+  background-color: rgba($succes, 0.4);
 
   &:hover,
   &:focus {
     background-color: transparent;
-    border-color: rgba($succes, 0.5);
+    border-color: rgba($succes, 0.4);
+  }
+}
+.scoreBtn4 {
+  background-color: rgba($primary-color, 0.4);
+
+  &:hover,
+  &:focus {
+    background-color: transparent;
+    border-color: rgba($primary-color, 0.4);
   }
 }
 
