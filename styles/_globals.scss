@@ -315,3 +315,13 @@
     transform: translateX(0px);
   }
 }
+
+@keyframes Bounce {
+  0% {
+    transform: translateY(0);
+  }
+
+  100% {
+    transform: translateY(25px);
+  }
+}
