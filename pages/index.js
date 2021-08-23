@@ -6,7 +6,7 @@ export default function Home() {
   return (
     <main className={styles.main}>
       <Head>
-        <title>Inicio / Liza</title>
+        <title>Explorar / Liza</title>
       </Head>
       explore
     </main>
