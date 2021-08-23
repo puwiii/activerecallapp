@@ -90,15 +90,17 @@ function index() {
       })
       .catch((error) => {
         setLoading(false);
+        console.log(error);
         const ERROR_MESSAGES = {
           "auth/user-not-found":
             "No se ha encontrado un usuario registrado con ese Email.",
           "auth/wrong-password":
             "La contraseña y/o el email no son validos, verifique los datos ingresados.",
+          "auth/invalid-email":
+            "La caja de email tiene un problema, revisa si lo has escrito bien.",
         };
 
-        const DEFAULT_ERROR_MESSAGE =
-          "Aparentemente hay un error, ponte en contacto con bla bla bla...";
+        const DEFAULT_ERROR_MESSAGE = `Aparentemente hay un error, ponte en contacto con "sebastian.mathieur@gmail.com"`;
 
         ErrorMsg.innerText =
           ERROR_MESSAGES[error.code] || DEFAULT_ERROR_MESSAGE;
