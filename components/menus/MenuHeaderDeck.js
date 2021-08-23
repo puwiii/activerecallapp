@@ -71,9 +71,9 @@ function MenuHeaderDeck({
 
       <style jsx>{`
         .${styles.menu} {
-          transform-origin: top right;
+          transform-origin: top left;
           top: ${yCoord + 6}px;
-          right: ${window.innerWidth - xCoord}px;
+          left: ${xCoord}px;
         }
       `}</style>
     </div>

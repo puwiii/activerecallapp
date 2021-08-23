@@ -14,7 +14,6 @@ export default function MyApp({ Component, pageProps }) {
       <NavBar />
 
       <div className="main">
-        <Header />
         <Component {...pageProps} />
       </div>
       <style jsx>{`

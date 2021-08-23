@@ -552,7 +552,7 @@ function StudyCardsWindow({ isOpen, closeWindow, cards, paramSetCards }) {
                     }}
                     disabled={!flipCard}
                   >
-                    <span>😐</span>Muy mal
+                    Muy mal<span>😐</span>
                   </button>
                   <div className={componentsStyles.infoBox}>
                     <InfoIcon />
@@ -571,7 +571,7 @@ function StudyCardsWindow({ isOpen, closeWindow, cards, paramSetCards }) {
                     }}
                     disabled={!flipCard}
                   >
-                    <span>🤔</span>Mal
+                    Mal<span>🤔</span>
                   </button>
                   <div className={componentsStyles.infoBox}>
                     <InfoIcon />
@@ -591,7 +591,7 @@ function StudyCardsWindow({ isOpen, closeWindow, cards, paramSetCards }) {
                     }}
                     disabled={!flipCard}
                   >
-                    <span>🙂</span>Regular
+                    Regular <span>🙂</span>
                   </button>
                   <div className={componentsStyles.infoBox}>
                     <InfoIcon />
@@ -610,7 +610,7 @@ function StudyCardsWindow({ isOpen, closeWindow, cards, paramSetCards }) {
                     }}
                     disabled={!flipCard}
                   >
-                    <span>😎</span>Bien
+                    Bien<span>😎</span>
                   </button>
                   <div className={componentsStyles.infoBox}>
                     <InfoIcon />
@@ -630,7 +630,7 @@ function StudyCardsWindow({ isOpen, closeWindow, cards, paramSetCards }) {
                     }}
                     disabled={!flipCard}
                   >
-                    <span>🤩</span> Muy bien
+                    Muy bien<span>🤩</span>
                   </button>
                   <div className={componentsStyles.infoBox}>
                     <InfoIcon />
@@ -838,7 +838,8 @@ function StudyCardsWindow({ isOpen, closeWindow, cards, paramSetCards }) {
           width: 100%;
           text-align: left;
           display: flex;
-          flex-direction: column;
+          flex-direction: row;
+          justify-content: space-between;
         }
       `}</style>
     </div>

@@ -46,14 +46,14 @@ function useInput(spanValue, propsInput, isTextArea = false) {
           className={componentsStyles.inputRounded}
           {...input}
           value={inputValue}
-          onChange={(e) => setInputValue(e.target.value.trim())}
+          onChange={(e) => setInputValue(e.target.value)}
         />
       ) : (
         <input
           className={componentsStyles.inputRounded}
           {...input}
           value={inputValue}
-          onChange={(e) => setInputValue(e.target.value.trim())}
+          onChange={(e) => setInputValue(e.target.value)}
         />
       )}
       {propsInput.type === "password" && (
@@ -67,7 +67,7 @@ function useInput(spanValue, propsInput, isTextArea = false) {
     </div>
   );
 
-  return [inputValue, component, setFocus];
+  return [inputValue.trim(), component, setFocus];
 }
 
 export default useInput;

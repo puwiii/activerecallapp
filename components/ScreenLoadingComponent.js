@@ -3,6 +3,8 @@ import { css } from "@emotion/react";
 import Spinner from "react-spinners/BarLoader";
 import LogoSvg from "svgs/LogoSvg";
 
+import SpinnerComponentCircle from "components/SpinnerComponentCircle";
+
 const override = css`
   display: inline-block;
   margin: 0px;
@@ -11,14 +13,13 @@ const override = css`
 function ScreenLoadingComponent() {
   return (
     <div>
-      <LogoSvg width={200} height={150} />
-      <Spinner
-        color={"#0876bb"}
-        loading={true}
-        css={override}
-        height={4}
-        width={150}
-        speedMultiplier={1.5}
+      <SpinnerComponentCircle
+      // color={"#0876bb"}
+      // loading={true}
+      // css={override}
+      // height={4}
+      // width={150}
+      // speedMultiplier={1.5}
       />
       <style jsx>{`
         div {
