@@ -84,7 +84,7 @@ function index() {
                   layout="fill"
                   objectFit="cover"
                   alt={user?.username}
-                  quality={1}
+                  quality={75}
                 />
               </div>
             )}

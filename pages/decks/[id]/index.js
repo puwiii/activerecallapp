@@ -406,7 +406,7 @@ function index() {
                         <span>Crear nueva tarjeta</span>
                       </div>
                     </div>
-                    <div
+                    {/* <div
                       className={decksStyles.card__wrapper}
                       onMouseMove={(e) =>
                         useMagicOnHover && makeMagicOnHover(e)
@@ -419,7 +419,7 @@ function index() {
                         <StatisticsSvg />
                         <span>Ver estadísticas</span>
                       </div>
-                    </div>
+                    </div> */}
                     <div
                       className={`${decksStyles.card__wrapper} ${
                         emptyCards && decksStyles.card__wrapper_disabled

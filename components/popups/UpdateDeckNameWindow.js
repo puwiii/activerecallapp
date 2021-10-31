@@ -69,7 +69,7 @@ function UpdateDeckNameWindow({ isOpen, closeWindow, deckId, deckName }) {
         <button onClick={(e) => closeForm()} className={popupStyles.closeBtn}>
           <CloseIcon />
         </button>
-        <h1 className={popupStyles.title}>📝 Cambiar nombre</h1>
+        <h1 className={popupStyles.title}>Cambiar nombre</h1>
 
         <form className={popupStyles.form} id="updateDeckNameForm">
           {newNameInput}

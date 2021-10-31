@@ -37,7 +37,7 @@ function Avatar({ username, avatar, email }) {
               layout="fill"
               objectFit="cover"
               alt={username}
-              quality={1}
+              quality={10}
             />
           </div>
         </div>
